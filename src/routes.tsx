@@ -1,6 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { Login } from "./views/login";
-import { ViewLayoutComponent } from "./componentes/viewLayout/viewLayout";
+import { ViewLayoutComponent } from "./components/viewLayout/viewLayout";
+import { Home } from "./views/home";
 
 export const AppRouter = () => {
     return <>
@@ -8,7 +9,7 @@ export const AppRouter = () => {
             <Routes>
                 <Route element={<Login />} path='login'></Route>
                 <Route element={<ViewLayoutComponent></ViewLayoutComponent>}>
-                    <Route ></Route> 
+                    <Route element={<Home/>} path="Home"></Route> 
                     <Route></Route> {/*  */}
                     <Route></Route> {/*  */}
                     <Route></Route> {/*  */}
