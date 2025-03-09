@@ -4,7 +4,6 @@ export const Login = () => {
     return <>
         <Box sx={{border: '1px solid red', padding: '1rem'}}>
             <h1>Login</h1>
-
         </Box>
     </>
-};
+};  
