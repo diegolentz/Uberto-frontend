@@ -2,17 +2,15 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import AdbIcon from '@mui/icons-material/Adb';
 
 
-function ResponsiveAppBar() {
+export const HeaderComponent = () => {
 
 
-  return (
+  return <>
     <AppBar position="sticky" style={{ background: '#430c8c', borderRadius: '4%' }}>
-      <Container> 
+      <Container>
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
 
           <Typography
             variant="h5"
@@ -34,7 +32,5 @@ function ResponsiveAppBar() {
         </Toolbar>
       </Container>
     </AppBar>
-  );
-}
-export default ResponsiveAppBar;
-
+  </>
+};
