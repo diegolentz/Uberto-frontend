@@ -8,13 +8,12 @@ export const HeaderComponent = () => {
 
 
   return <>
-    <AppBar position="sticky" style={{ background: '#430c8c', borderRadius: '4%' }}>
+    <AppBar position="sticky" style={{ background: '#430c8c'}} className='AppBar' sx={{borderBottomRightRadius: '7%' , borderBottomLeftRadius: '7%', boxShadow: 0}}>
       <Container>
         <Toolbar disableGutters>
 
           <Typography
             variant="h5"
-            noWrap
             component="a"
             href="#header"
             sx={{

@@ -8,7 +8,7 @@ export const AppRouter = () => {
             <Routes>
                 <Route element={<Login />} path='login'></Route>
                 <Route element={<ViewLayoutComponent></ViewLayoutComponent>}>
-                    <Route></Route> {/*  */}
+                    <Route ></Route> 
                     <Route></Route> {/*  */}
                     <Route></Route> {/*  */}
                     <Route></Route> {/*  */}
