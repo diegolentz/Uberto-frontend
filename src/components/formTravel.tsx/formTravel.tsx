@@ -40,6 +40,7 @@ export const FormTravel = () => {
           color="secondary" 
           label="Cantidad de pasajeros" 
           type="number" 
+          inputProps={{ min: 0 }}
         />
         
         <Button
