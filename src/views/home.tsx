@@ -1,9 +1,13 @@
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { msjContext } from "../components/viewLayout/viewLayout"
 import axios, { AxiosError } from "axios"
+import { Recommendation, recommProps } from "../components/recommendation/recommendation"
 
 export const Home = () => {
     const {showToast} = useContext(msjContext)
+
+    const recomDelBack : recommProps = {name:'Matias', date:'1/1/2025', rating:5 , comment:"comentario", avatarUrl:'avatar.jpeg', isEdit:false, editMode: false}
+    const [recom, setRecom] = useState<recommProps>(recomDelBack)
 
     const cod200 = async () =>{
         try{
@@ -24,10 +28,20 @@ export const Home = () => {
             showToast((e as AxiosError<unknown>).response!)
         }
     }
+
+    const handleChange = (recom: recommProps) =>{
+        setRecom(recom)
+    }
+
+    const handleEdit = () =>{
+        setRecom({...recom, editMode:true})
+    }
+
     return(
         <>
             <p>Home de Usuario</p>
-            
+            <Recommendation recom={recom} handle={handleChange}></Recommendation>
+            {!recom.isEdit && <button onClick={handleEdit}>editar card recomendacion</button>}
             <button onClick={cod200}>cod 200</button>
             <button onClick={cod400}>cod 400</button>
         </>
