@@ -1,6 +1,6 @@
 import AppBar from '@mui/material/AppBar';
 import Typography from '@mui/material/Typography';
-import { appBarStyles, typographyStyles } from './header';
+import { appBarStyles, typographyStyles } from './headerStyle';
 
 export const HeaderComponent = () => {
  
