@@ -1,50 +1,45 @@
-import { useContext, useState } from "react"
-import { msjContext } from "../components/viewLayout/viewLayout"
 import axios, { AxiosError } from "axios"
-import { Recommendation, recommProps } from "../components/recommendation/recommendation"
+import { useContext, useState } from "react"
+import { HomeForm } from "../components/homeForm/homeForm"
+import { msjContext } from "../components/viewLayout/viewLayout"
+import { FormTravel } from "../components/formTravel.tsx/formTravel"
+import { CardDriver } from "../components/card-viajes/cardDriver"
+
+
 
 export const Home = () => {
-    const {showToast} = useContext(msjContext)
+    const { showToast } = useContext(msjContext)
+    const [isDriver, setIsDriver] = useState<Boolean>(false)
+    
 
-    const recomDelBack : recommProps = {name:'Matias', date:'1/1/2025', rating:5 , comment:"comentario", avatarUrl:'avatar.jpeg', isEdit:false, editMode: false}
-    const [recom, setRecom] = useState<recommProps>(recomDelBack)
 
-    const cod200 = async () =>{
-        try{
+    const cod200 = async () => {
+        try {
             const res = await axios.get('https://checkip.amazonaws.com')
             console.log('res => ', res)
             showToast(res)
-        }catch(e : unknown){
+        } catch (e: unknown) {
             showToast((e as AxiosError<unknown>).response!)
         }
     }
 
-    const cod400 = async () =>{
-        try{
+    const cod400 = async () => {
+        try {
             const res = await axios.get('https://www.google.com')
             console.log('res => ', res)
             showToast(res)
-        }catch(e : unknown){
+        } catch (e: unknown) {
             showToast((e as AxiosError<unknown>).response!)
         }
     }
-
-    const handleChange = (recom: recommProps) =>{
-        setRecom(recom)
-    }
-
-    const handleEdit = () =>{
-        setRecom({...recom, editMode:true})
-    }
-
-    return(
+   
+    return (
         <>
-            <p>Home de Usuario</p>
-            <Recommendation recom={recom} handle={handleChange}></Recommendation>
-            {!recom.isEdit && <button onClick={handleEdit}>editar card recomendacion</button>}
-            <button onClick={cod200}>cod 200</button>
-            <button onClick={cod400}>cod 400</button>
+            <HomeForm  type={isDriver}></HomeForm>
+            <CardDriver></CardDriver>
+            
+
         </>
-        
+
     )
 }

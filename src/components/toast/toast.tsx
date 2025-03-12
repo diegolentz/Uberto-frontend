@@ -15,7 +15,7 @@ export default function Toast({res} : {res:AxiosResponse}){
     return(
         <>
             { res.data && 
-                <Alert  variant="filled" severity={setStatus()} sx={{position:"absolute", width:"80%", marginLeft:"5%",zIndex:50}} data-testid="alert">
+                <Alert  variant="filled" severity={setStatus()} sx={{position:"absolute", width:"auto",height:'auto', right:"0",top:"0rem"}} data-testid="alert">
                         <AlertTitle>{message}</AlertTitle>
                 </Alert>
             }
