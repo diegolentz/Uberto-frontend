@@ -37,8 +37,7 @@ export const Home = () => {
         <>
             <HomeForm  type={isDriver}></HomeForm>
             <CardDriver></CardDriver>
-            <CardDriver></CardDriver>
-            <CardDriver></CardDriver>
+            
 
         </>
 
