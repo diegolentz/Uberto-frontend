@@ -18,7 +18,7 @@ export const ViewLayoutComponent = () => {
     }
 
     return <>
-    <CssBaseline></CssBaseline>
+    {/* <CssBaseline></CssBaseline> */}
         <HeaderComponent></HeaderComponent>
         <div className="content">
             <Toast res={toast}/>
