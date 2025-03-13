@@ -1,5 +1,5 @@
-import { Box, Input, styled, TextField } from "@mui/material";
-import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import { Box, styled, TextField } from "@mui/material";
+import { useForm, SubmitHandler } from "react-hook-form";
 
 const LoginFormContainerBox = styled(Box)(({ theme }) => ({
     backgroundColor: theme.palette.primary.main,
@@ -20,35 +20,67 @@ const StyledInputController = styled(TextField)(({ theme }) => ({
 }));
 
 type Inputs = {
-    example: string,
-    exampleRequired: string,
+    username: string,
+    password: string,
 };
 
+
 export const Login = () => {
-    const { register, handleSubmit, watch, formState: { errors } } = useForm<Inputs>();
-    const { control } = useForm({defaultValues:{firstName:''}});
-    const onSubmit: SubmitHandler<Inputs> = data => console.log(data);
-    
+    const { register, handleSubmit, watch, formState:{errors, touchedFields}} = useForm<Inputs>();
+    const onSubmit: SubmitHandler<Inputs> = data => {
+        console.log(data)
+        
+    };
+    console.log(touchedFields)
+    const INPUT_MAX_LENGTH = 20
+    const INPUT_MIN_LENGTH = 5
     return <>
 
         <LoginFormContainerBox>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <StyledInputController
-                    label='mock'
-                    // className="materialUIInput"
+                    {...register(
+                        "username",
+                        {
+                            required: true,
+                            minLength: INPUT_MIN_LENGTH,
+                            maxLength: INPUT_MAX_LENGTH
+                        }
+                    )}
+                    aria-invalid={errors.username ? "true" : "false"}
+                    label='Username'
                 />
+                {errors.username?.type === 'required' &&
+                    <p role="alert">Username is required</p>
+                }
+                {errors.username?.type === 'maxLength' &&
+                    <p role="alert">Max lenght of {INPUT_MAX_LENGTH}</p>
+                }
+                {errors.username?.type === 'maxLength' &&
+                    <p role="alert">Max lenght of {INPUT_MAX_LENGTH}</p>
+                }
 
-                {/* register your input into the hook by invoking the "register" function */}
-
-                {/* <input defaultValue="test" {...register("example")} /> */}
-
-                {/* include validation with required or other standard HTML validation rules */}
-                {/* <input {...register("exampleRequired", { required: true })} /> */}
-                {/* errors will return when field validation fails  */}
-                {/* {errors.exampleRequired && <span>This field is required</span>} */}
+                <StyledInputController
+                    {...register(
+                        "password",
+                        {
+                            required: true,
+                            minLength: INPUT_MIN_LENGTH,
+                            maxLength: INPUT_MAX_LENGTH
+                        }
+                    )}
+                    aria-invalid={errors.password ? "true" : "false"}
+                    label='Password'
+                />
+                {errors.password?.type === 'required' &&
+                    <p role="alert">Password required</p>
+                }
+                {errors.password?.type === 'maxLength' &&
+                    <p role="alert">Max lenght of {INPUT_MAX_LENGTH}</p>
+                }
 
                 <input type="submit" />
             </form>
         </LoginFormContainerBox>
     </>
-};  
+};
