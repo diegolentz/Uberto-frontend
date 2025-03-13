@@ -1,61 +1,51 @@
-import { Card, CardHeader, IconButton, Box, Divider, CardContent, Typography, CardMedia } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
-import { Driver, driverMock } from '../../domain/driver';
+import { Box, Card, CardContent, CardHeader, CardMedia, Typography } from '@mui/material';
 import { useState } from 'react';
+import { Driver, driverMock } from '../../domain/driver';
+import * as styles from './cardDriverStyle';
 
 export const CardDriver = () => {
   const [driver, setDriver] = useState<Driver>(driverMock);
 
+
+
   return (
     <>
-      <Card>
-        <CardHeader
-          sx={{
-            backgroundColor: '#430c8c',
-            padding: '16px',
-            color: '#ffffff',
-          }}
+
+      <Card sx={styles.cardBodyStyle}>
+        <CardHeader sx={styles.cardHeaderStyle}
           action={
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <IconButton sx={{ fontSize: '2rem', display: 'flex', alignItems: 'center' }}>
-                <StarIcon sx={{ color:'white', fontSize: 'inherit' }} />
-              </IconButton>
-              <Typography sx={{ color: 'white', fontSize: '1.2rem', marginLeft: '8px', fontWeight: 'bold' }}>
-                {3} 
+            <Box sx={styles.headerIconsStyle}>
+              <StarIcon sx={styles.starIconStyle} />
+              <Typography sx={styles.rateStyle}>
+                {3}
               </Typography>
             </Box>
           }
           title={
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <h1
-                style={{
-                  fontSize: '2rem',
-                  margin: 0,
-                }}
-              >
-                {driver.patent}
-              </h1>
-            </Box>
+            <Typography sx={styles.patentStyle}>
+              {driver.patent}
+            </Typography>
           }
         />
-        <Divider />
-        <CardContent>
-          <Typography variant="h5">{driver.name}</Typography>
-          <Typography>
-            {driver.brand} {driver.model}
-          </Typography>
+        <CardContent sx={styles.boxInfoStyle}>
+
+          <Box sx={styles.boxDataStyle}>
+            <Typography sx={styles.nameStyle}>{driver.name}</Typography>
+            <Typography sx={styles.brandModelStyle}>
+              {driver.brand}  {driver.model}
+            </Typography>
+            <Typography sx={styles.priceStyle}>
+              Price ${driver.price}
+            </Typography>
+          </Box>
+
           <CardMedia
             component="img"
             image="/camionetaUberto.jpeg"
             alt="Camioneta Uberto"
-            height={100}
-            sx={{
-              objectFit: 'contain',
-            }}
+            sx={styles.imgStyle}
           />
-          <Typography fontWeight = 'bold' fontSize={20} textAlign={'center'} marginTop={0}>
-            Price ${driver.price}
-          </Typography>
         </CardContent>
       </Card>
     </>
