@@ -1,6 +1,7 @@
+
 export const cardBodyStyle = {
     margin: '2rem',
-    borderRadius: '1rem'
+    borderRadius: ' 1rem 0'
 }
 
 export const cardHeaderStyle = {
@@ -56,7 +57,7 @@ export const nameStyle = {
 }
 
 export const brandModelStyle = {
-    fontSize: '0.8rem',
+    fontSize: '1rem',
     color: '#430c8c'
 }
 
@@ -70,4 +71,47 @@ export const imgStyle = {
     objectFit: 'contain',
     width: '7rem',
     height: '7rem',
+}
+
+
+// para el data del travel 
+
+export const boxInfoTravelStyle = {
+     display: 'flex', 
+     flexDirection: 'row', 
+    //  justifyContent: 'space-between', 
+     width: '100%'
+}
+
+export const boxDataTravelStyle = { 
+    display: 'flex', 
+    flexDirection: 'column',  
+    width: '100%'
+}
+
+export const dataTravelStyle = {
+    fontSize: '1rem',
+    fontWeight: 'bold',
+    color: '#430c8c',
+    width: '7rem'
+}
+
+export const priceTravelStyle ={
+    fontSize: '1.5rem',
+    color: '#430c8c',
+    fontWeight: 'bold',
+    width: '7rem'
+
+}
+
+export const infoTravelStyle = {
+    fontSize: '1rem',
+    color: '#430c8c',
+    width: '100%'
+}
+
+export const infoPriceStyle = {
+    fontSize: '1rem',
+    color: '#430c8c',
+    width: '100%'
 }

@@ -1,16 +1,20 @@
 import axios, { AxiosError } from "axios"
 import { useContext, useState } from "react"
+import { CardDriver } from "../components/card-viajes/cardDriver"
 import { HomeForm } from "../components/homeForm/homeForm"
 import { msjContext } from "../components/viewLayout/viewLayout"
-import { FormTravel } from "../components/formTravel.tsx/formTravel"
-import { CardDriver } from "../components/card-viajes/cardDriver"
+import { Driver, driverMock, Travel, travelMock } from "../domain/driver"
 
 
 
 export const Home = () => {
     const { showToast } = useContext(msjContext)
     const [isDriver, setIsDriver] = useState<Boolean>(false)
+    const [data,setData]= useState<Driver | Travel | null>(null)
     
+    // eliminar cuando se armen los endpoints
+    const driver = driverMock
+    const travel = travelMock
 
 
     const cod200 = async () => {
@@ -35,8 +39,13 @@ export const Home = () => {
    
     return (
         <>
-            <HomeForm  type={isDriver}></HomeForm>
-            <CardDriver></CardDriver>
+            <HomeForm  type={isDriver}></HomeForm>{/* faltaria el id de quiern se registra */}
+            <CardDriver type={isDriver} value={driver}></CardDriver>
+            <CardDriver type={true} value={travel}></CardDriver>
+            <CardDriver type={isDriver} value={driver}></CardDriver>
+            <CardDriver type={true} value={travel}></CardDriver>
+            <CardDriver type={isDriver} value={driver}></CardDriver>
+            <CardDriver type={true} value={travel}></CardDriver>
             
 
         </>
