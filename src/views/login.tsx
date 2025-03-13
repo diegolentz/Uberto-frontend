@@ -1,5 +1,6 @@
 import { Box, styled, TextField } from "@mui/material";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { tryLogin } from "../services/login.service";
 
 const LoginFormContainerBox = styled(Box)(({ theme }) => ({
     backgroundColor: theme.palette.primary.main,
@@ -29,7 +30,7 @@ export const Login = () => {
     const { register, handleSubmit, watch, formState:{errors, touchedFields}} = useForm<Inputs>();
     const onSubmit: SubmitHandler<Inputs> = data => {
         console.log(data)
-        
+        tryLogin()
     };
     console.log(touchedFields)
     const INPUT_MAX_LENGTH = 20
