@@ -50,8 +50,8 @@ export const HomeForm = ({ type }: { type: Boolean }) => {
                         {...register("name", { 
                             required: "name is required",
                             pattern: {
-                                value: /^[A-Za-z\s]/,
-                                message: "Name must only contain letters"
+                                value: /^[A-Za-z\s]{3,25}$/,
+                                message: "Name must only contain letters 3 - 25 characters"
                             }
                         })}
                         error={!!errors.name}
@@ -64,13 +64,13 @@ export const HomeForm = ({ type }: { type: Boolean }) => {
                         type="text"
                         {...register("origin", { required: "origin is required", 
                             pattern: {
-                                value: /^[A-Za-z0-9\s]+$/,
-                                message: "Origin must only contain letters and numbers"
+                                value: /^[A-Za-z0-9\s]{10,25}$/,
+                                message: "Origin must only contain letters and numbers 10-25 characters"
                             }
-                         })}
+                        })}
                         error={!!errors.origin}
                         helperText={errors.origin?.message}
-                    />
+                        />
 
                     <TextField
                         size="small"
@@ -78,8 +78,8 @@ export const HomeForm = ({ type }: { type: Boolean }) => {
                         type="text"
                         {...register("destination", { required: "destination is required",
                             pattern: {
-                                value: /^[A-Za-z0-9\s]+$/,
-                                message: "Destination must only contain letters and numbers"
+                                value: /^[A-Za-z0-9\s]{10,25}$/,
+                                message: "Origin must only contain letters and numbers 10-25 characters"
                             }
                          })}
                         error={!!errors.destination}
