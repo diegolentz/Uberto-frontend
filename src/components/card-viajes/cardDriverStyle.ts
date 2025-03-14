@@ -1,3 +1,4 @@
+import { Height } from "@mui/icons-material"
 
 export const cardBodyStyle = {
     margin: '2rem',
@@ -6,11 +7,9 @@ export const cardBodyStyle = {
 
 export const cardHeaderStyle = {
     backgroundColor: '#430c8c',
-    height: '2rem',
+    height: '3.5rem',
     color: '#ffffff',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignContent: 'center'
+    padding: '1rem',
 }
 
 export const headerIconsStyle = {
@@ -18,24 +17,29 @@ export const headerIconsStyle = {
     alignItems: 'center',
     justifyContent: 'space-arround',
     width: '4rem',
-    gap: '0.3rem'
+    gap: '0.3rem',
+    
 }
 
-export const starIconStyle = {
-    color: 'white',
-    fontSize: '1.5rem',
-    width: 'min-content'
-}
+// export const starIconStyle = {
+//     color: 'white',
+//     fontSize: '1.5rem',
+//     width: 'min-content',
+//     display: 'flex',
+//     alignItems: 'center',
+    
+// }
 
 export const rateStyle = {
     color: 'white',
-    fontSize: '1.5rem',
+    fontSize: '1rem',
     fontWeight: 'bold'
 }
 
 export const patentStyle = {
     fontSize: '1.5rem',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    height: '100%',
 }
 
 export const boxInfoStyle = {

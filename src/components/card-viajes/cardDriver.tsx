@@ -21,41 +21,45 @@ export const CardDriver = ({ type, value }: CardDriverProps) => {
     <>
 
       <Card sx={styles.cardBodyStyle}>
-        <CardHeader sx={styles.cardHeaderStyle}
+        <CardHeader
+          sx={styles.cardHeaderStyle}
+          title={
+            !isDriver ? (
+              <Typography sx={styles.patentStyle}>
+                {'patent' in data ? data.patent : ''}
+              </Typography>
+            ) : (
+              <Box>
+                <Typography sx={{ fontSize: '1rem', fontWeight: 'bold' }}>
+                  {data.name} {'lastName' in data ? data.lastName : ''}
+                </Typography>
+                <Box sx={{display: 'flex', alignItems: 'center', gap: '0.3rem'}}>
+                  <GroupIcon sx={{ fontSize: '1.2rem' }} />
+                <Typography sx={styles.rateStyle}>
+                  {'pasaenger' in data ? data.pasaenger : ''}
+                </Typography>
+                </Box>
+              </Box>
+            )
+          }
           action={
-            <Box sx={styles.headerIconsStyle}>
+            <Box sx={{marginRight: '1rem'}} >
               {!isDriver ? (
                 <>
-                  <StarIcon sx={styles.starIconStyle} />
+                <Box sx={{display: 'flex',height: '2rem', alignItems: 'center', gap: '0.3rem'}}>
+                  <StarIcon/>
                   <Typography sx={styles.rateStyle}>
                     {3}
                   </Typography>
+                  </Box>
                 </>
               ) : (
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                <Avatar sx={{height: '2.3rem', width: '2.3rem'}} alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
                 /* falta atributo imagen en el back */
               )}
             </Box>
           }
-          title={
-            <>
-              {!isDriver ? (
-                <Typography sx={styles.patentStyle}>
-                  {'patent' in data ? data.patent : ''}
-                </Typography>
-              ) : (
-                <Box>
-                  <Typography sx={{ fontSize: '1rem', fontWeight: 'bold' }}>
-                    {data.name} {'lastName' in data ? data.lastName : ''}
-                  </Typography>
-                  <Typography >
-                    <GroupIcon></GroupIcon>
-                    {'pasaenger' in data ? data.pasaenger : ''}
-                  </Typography>
-                </Box>
-              )}
-            </>
-          }
+         
         />
         <CardContent sx={styles.boxInfoStyle}>
 
