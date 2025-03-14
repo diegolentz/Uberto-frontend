@@ -1,10 +1,10 @@
-import { DevTool } from "@hookform/devtools";
-import { Button, Stack, TextField } from "@mui/material";
+import { DevTool } from "@hookform/devtools"
+import { Stack, TextField, Button } from "@mui/material"
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { msjContext } from "../viewLayout/viewLayout";
 
 type FormValues = {
-    filter: any;
     name: string;
     origin: string;
     destination: string;
@@ -24,16 +24,14 @@ export const HomeForm = ({ type }: { type: Boolean }) => {
             destination: '',
             date: '',
             passengers: 0
-        },
-        mode: 'onChange'
+        }
     })
     const { register, handleSubmit, formState, control } = form
     const { errors } = formState
 
 
-    const onsubmit = () => {
-        
-        console.log(form.getValues())
+    const onsubmit = (data: FormValues) => {
+        console.log(data)
         // showToast({status:200, data:'Success'})
     };
 
@@ -43,19 +41,11 @@ export const HomeForm = ({ type }: { type: Boolean }) => {
         <>
             <form onSubmit={handleSubmit(onsubmit)} noValidate>
                 <Stack spacing={2} width={'90vw'} margin={'1rem'}>
-                    
-                    {isDriver && 
-                    <TextField
+                    {isDriver && <TextField
                         size="small"
                         label='Name'
                         type="text"
-                        {...register("name", { 
-                            required: "name is required",
-                            pattern: {
-                                value: /^[A-Za-z\s]{3,25}$/,
-                                message: "Name must only contain letters 3 - 25 characters"
-                            }
-                        })}
+                        {...register("name", { required: "name is required" })}
                         error={!!errors.name}
                         helperText={errors.name?.message}
                     />
@@ -63,27 +53,17 @@ export const HomeForm = ({ type }: { type: Boolean }) => {
                     <TextField
                         size="small"
                         label='Origin'
-                        type="text"
-                        {...register("origin", { required: "origin is required", 
-                            pattern: {
-                                value: /^[A-Za-z0-9\s]{10,25}$/,
-                                message: "Origin must only contain letters and numbers 10-25 characters"
-                            }
-                        })}
+                        type="origin"
+                        {...register("origin", { required: "origin is required" })}
                         error={!!errors.origin}
                         helperText={errors.origin?.message}
-                        />
+                    />
 
                     <TextField
                         size="small"
                         label='Destination'
                         type="text"
-                        {...register("destination", { required: "destination is required",
-                            pattern: {
-                                value: /^[A-Za-z0-9\s]{10,25}$/,
-                                message: "Origin must only contain letters and numbers 10-25 characters"
-                            }
-                         })}
+                        {...register("destination", { required: "destination is required" })}
                         error={!!errors.destination}
                         helperText={errors.destination?.message}
                     />
@@ -94,23 +74,7 @@ export const HomeForm = ({ type }: { type: Boolean }) => {
                             label="Date"
                             type="date"
                             slotProps={{ inputLabel: { shrink: true } }}
-                            {...register("date", { 
-                                required: "Date is required",
-                                validate: (value) => {
-                                    const selectedDate = new Date(value);
-                                    const currentDate = new Date();
-                                    const maxDate = new Date();
-                                    maxDate.setMonth(maxDate.getMonth() + 3);
-
-                                    if (selectedDate < currentDate) {
-                                        return "Date cannot be earlier than today";
-                                    }
-                                    if (selectedDate > maxDate) {
-                                        return "Date cannot be more than 3 months from today";
-                                    }
-                                    return true;
-                                }
-                            })}
+                            {...register("date", { required: "Date is required" })}
                             error={!!errors.date}
                             helperText={errors.date?.message}
                         />
@@ -136,4 +100,8 @@ export const HomeForm = ({ type }: { type: Boolean }) => {
     )
 
 
+}
+
+function useContext(msjContext: any): { showToast: any; } {
+    throw new Error("Function not implemented.");
 }

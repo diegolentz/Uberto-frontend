@@ -9,7 +9,7 @@ export const appBarStyles: SxProps<Theme> = {
     display: 'flex',
     justifyContent: 'center',
     left: '1rem',
-    zIndex: 10,
+    zIndex: 0,
 };
 
 export const typographyStyles: SxProps<Theme> = {
