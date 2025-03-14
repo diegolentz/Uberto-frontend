@@ -1,8 +1,7 @@
-import { DevTool } from "@hookform/devtools"
-import { Stack, TextField, Button } from "@mui/material"
+import { DevTool } from "@hookform/devtools";
+import { Button, Stack, TextField } from "@mui/material";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { msjContext } from "../viewLayout/viewLayout";
 
 type FormValues = {
     name: string;
@@ -24,7 +23,8 @@ export const HomeForm = ({ type }: { type: Boolean }) => {
             destination: '',
             date: '',
             passengers: 0
-        }
+        },
+        mode: 'onChange'
     })
     const { register, handleSubmit, formState, control } = form
     const { errors } = formState
@@ -41,11 +41,19 @@ export const HomeForm = ({ type }: { type: Boolean }) => {
         <>
             <form onSubmit={handleSubmit(onsubmit)} noValidate>
                 <Stack spacing={2} width={'90vw'} margin={'1rem'}>
-                    {isDriver && <TextField
+                    
+                    {isDriver && 
+                    <TextField
                         size="small"
                         label='Name'
                         type="text"
-                        {...register("name", { required: "name is required" })}
+                        {...register("name", { 
+                            required: "name is required",
+                            pattern: {
+                                value: /^[A-Za-z\s]/,
+                                message: "Name must only contain letters"
+                            }
+                        })}
                         error={!!errors.name}
                         helperText={errors.name?.message}
                     />
@@ -53,8 +61,13 @@ export const HomeForm = ({ type }: { type: Boolean }) => {
                     <TextField
                         size="small"
                         label='Origin'
-                        type="origin"
-                        {...register("origin", { required: "origin is required" })}
+                        type="text"
+                        {...register("origin", { required: "origin is required", 
+                            pattern: {
+                                value: /^[A-Za-z0-9\s]+$/,
+                                message: "Origin must only contain letters and numbers"
+                            }
+                         })}
                         error={!!errors.origin}
                         helperText={errors.origin?.message}
                     />
@@ -63,7 +76,12 @@ export const HomeForm = ({ type }: { type: Boolean }) => {
                         size="small"
                         label='Destination'
                         type="text"
-                        {...register("destination", { required: "destination is required" })}
+                        {...register("destination", { required: "destination is required",
+                            pattern: {
+                                value: /^[A-Za-z0-9\s]+$/,
+                                message: "Destination must only contain letters and numbers"
+                            }
+                         })}
                         error={!!errors.destination}
                         helperText={errors.destination?.message}
                     />
@@ -100,8 +118,4 @@ export const HomeForm = ({ type }: { type: Boolean }) => {
     )
 
 
-}
-
-function useContext(msjContext: any): { showToast: any; } {
-    throw new Error("Function not implemented.");
 }
