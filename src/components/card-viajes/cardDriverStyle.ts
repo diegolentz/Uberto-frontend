@@ -25,8 +25,6 @@ export const patentStyle = {
 
 export const boxInfoStyle = {
     display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
     gap: '1rem',
     padding: '0.5rem'
 }
@@ -93,7 +91,6 @@ export const imgUserStyle = {
 export const boxInfoTravelStyle = {
     display: 'flex',
     flexDirection: 'row',
-    //  justifyContent: 'space-between', 
     width: '100%'
 }
 
