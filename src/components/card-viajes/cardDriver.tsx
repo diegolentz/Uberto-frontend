@@ -21,44 +21,44 @@ export const CardDriver = ({ type, value }: CardDriverProps) => {
     <>
 
       <Card sx={styles.cardBodyStyle}>
-        <CardHeader
-          sx={styles.cardHeaderStyle}
-          title={
-            !isDriver ? (
-              <Typography sx={styles.patentStyle}>
-                {'patent' in data ? data.patent : ''}
-              </Typography>
-            ) : (
-              <Box>
-                <Typography sx={styles.userNameLastnameStyle}>
-                  {data.name} {'lastName' in data ? data.lastName : ''}
-                </Typography>
-                <Box sx={styles.iconUserStyle}>
-                  <GroupIcon sx={{ fontSize: '1.2rem' }} />
-                  <Typography sx={styles.rateStyle}>
-                    {'pasaenger' in data ? data.pasaenger : ''}
-                  </Typography>
-                </Box>
-              </Box>
-            )
-          }
+        <CardHeader sx={styles.cardHeaderStyle}
           action={
-            <Box sx={styles.actionStyle}>
+            <Box sx={styles.headerIconsStyle}>
               {!isDriver ? (
-                <Box sx={styles.passangerCountStyle}>
-                  <StarIcon />
+                <>
+                  <StarIcon sx={styles.starIconStyle} />
                   <Typography sx={styles.rateStyle}>
                     {3}
                   </Typography>
-                </Box>
+                </>
               ) : (
-                <Avatar sx={styles.imgUserStyle} alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
                 /* falta atributo imagen en el back */
               )}
             </Box>
           }
+          title={
+            <>
+              {!isDriver ? (
+                <Typography sx={styles.patentStyle}>
+                  {'patent' in data ? data.patent : ''}
+                </Typography>
+              ) : (
+                <Box>
+                  <Typography sx={{ fontSize: '1rem', fontWeight: 'bold' }}>
+                    {data.name} {'lastName' in data ? data.lastName : ''}
+                  </Typography>
+                  <Typography >
+                    <GroupIcon></GroupIcon>
+                    {'pasaenger' in data ? data.pasaenger : ''}
+                  </Typography>
+                </Box>
+              )}
+            </>
+          }
         />
         <CardContent sx={styles.boxInfoStyle}>
+
           {!isDriver ? (
             <>
               <Box sx={styles.boxDataStyle}>
@@ -70,6 +70,7 @@ export const CardDriver = ({ type, value }: CardDriverProps) => {
                   Price ${data.price}
                 </Typography>
               </Box>
+
               <CardMedia
                 component="img"
                 image="/camionetaUberto.jpeg"
@@ -79,10 +80,12 @@ export const CardDriver = ({ type, value }: CardDriverProps) => {
             </>
           ) : (
             <Box sx={styles.boxInfoTravelStyle}>
-              <Box>
+
+              <Box >
+
                 <Typography sx={styles.dataTravelStyle}>
                   {'Origin'}
-                </Typography>
+                </Typography >
                 <Typography sx={styles.dataTravelStyle}>
                   {'Destination'}
                 </Typography>
@@ -92,8 +95,11 @@ export const CardDriver = ({ type, value }: CardDriverProps) => {
                 <Typography sx={styles.priceTravelStyle}>
                   {'Price'}
                 </Typography>
+
               </Box>
+
               <Box sx={styles.infoTravelStyle}>
+
                 <Typography sx={styles.infoTravelStyle}>
                   {'origin' in data ? data.origin : ''}
                 </Typography>
@@ -106,11 +112,13 @@ export const CardDriver = ({ type, value }: CardDriverProps) => {
                 <Typography sx={styles.priceTravelStyle}>
                   {'price' in data ? `$ ${data.price}` : ''}
                 </Typography>
+
               </Box>
+
             </Box>
           )}
         </CardContent>
-      </Card>
+      </Card >
     </>
   );
 };

@@ -7,10 +7,10 @@ const LoginFormContainerBox = styled(Box)(({ theme }) => ({
     display: 'flex',
     flexDirection:'column',
     gap:theme.spacing(5),
-    height: '100vh',
+    height: '100%',
     width: '100%',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
 }));
 
 const StyledInputController = styled(TextField)(({ theme }) => ({
