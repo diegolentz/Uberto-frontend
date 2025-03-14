@@ -30,39 +30,35 @@ export const CardDriver = ({ type, value }: CardDriverProps) => {
               </Typography>
             ) : (
               <Box>
-                <Typography sx={{ fontSize: '1rem', fontWeight: 'bold' }}>
+                <Typography sx={styles.userNameLastnameStyle}>
                   {data.name} {'lastName' in data ? data.lastName : ''}
                 </Typography>
-                <Box sx={{display: 'flex', alignItems: 'center', gap: '0.3rem'}}>
+                <Box sx={styles.iconUserStyle}>
                   <GroupIcon sx={{ fontSize: '1.2rem' }} />
-                <Typography sx={styles.rateStyle}>
-                  {'pasaenger' in data ? data.pasaenger : ''}
-                </Typography>
+                  <Typography sx={styles.rateStyle}>
+                    {'pasaenger' in data ? data.pasaenger : ''}
+                  </Typography>
                 </Box>
               </Box>
             )
           }
           action={
-            <Box sx={{marginRight: '1rem'}} >
+            <Box sx={styles.actionStyle}>
               {!isDriver ? (
-                <>
-                <Box sx={{display: 'flex',height: '2rem', alignItems: 'center', gap: '0.3rem'}}>
-                  <StarIcon/>
+                <Box sx={styles.passangerCountStyle}>
+                  <StarIcon />
                   <Typography sx={styles.rateStyle}>
                     {3}
                   </Typography>
-                  </Box>
-                </>
+                </Box>
               ) : (
-                <Avatar sx={{height: '2.3rem', width: '2.3rem'}} alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                <Avatar sx={styles.imgUserStyle} alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
                 /* falta atributo imagen en el back */
               )}
             </Box>
           }
-         
         />
         <CardContent sx={styles.boxInfoStyle}>
-
           {!isDriver ? (
             <>
               <Box sx={styles.boxDataStyle}>
@@ -74,7 +70,6 @@ export const CardDriver = ({ type, value }: CardDriverProps) => {
                   Price ${data.price}
                 </Typography>
               </Box>
-
               <CardMedia
                 component="img"
                 image="/camionetaUberto.jpeg"
@@ -84,12 +79,10 @@ export const CardDriver = ({ type, value }: CardDriverProps) => {
             </>
           ) : (
             <Box sx={styles.boxInfoTravelStyle}>
-
-              <Box >
-
+              <Box>
                 <Typography sx={styles.dataTravelStyle}>
                   {'Origin'}
-                </Typography >
+                </Typography>
                 <Typography sx={styles.dataTravelStyle}>
                   {'Destination'}
                 </Typography>
@@ -99,11 +92,8 @@ export const CardDriver = ({ type, value }: CardDriverProps) => {
                 <Typography sx={styles.priceTravelStyle}>
                   {'Price'}
                 </Typography>
-
               </Box>
-
               <Box sx={styles.infoTravelStyle}>
-
                 <Typography sx={styles.infoTravelStyle}>
                   {'origin' in data ? data.origin : ''}
                 </Typography>
@@ -116,13 +106,11 @@ export const CardDriver = ({ type, value }: CardDriverProps) => {
                 <Typography sx={styles.priceTravelStyle}>
                   {'price' in data ? `$ ${data.price}` : ''}
                 </Typography>
-
               </Box>
-
             </Box>
           )}
         </CardContent>
-      </Card >
+      </Card>
     </>
   );
 };

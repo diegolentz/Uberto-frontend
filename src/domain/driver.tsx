@@ -26,4 +26,4 @@ export class Travel {
 
 
 export const driverMock = new Driver("Pedro Geraghty" , "Volkswagen" , "Transporter 2005" , "AC 505 FT" ,500)
-export const travelMock = new Travel("Colo","Diaz",3,"Unsam Gral San Martin","Puerto de frutos",new Date(),new Date(),new Date(),500)
+export const travelMock = new Travel("Roberto","Diaz",3,"Av san martin 1500","Plaza San Martin",new Date(),new Date(),new Date(),500)
