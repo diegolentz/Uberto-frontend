@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 type FormValues = {
+    filter: any;
     name: string;
     origin: string;
     destination: string;
@@ -30,8 +31,9 @@ export const HomeForm = ({ type }: { type: Boolean }) => {
     const { errors } = formState
 
 
-    const onsubmit = (data: FormValues) => {
-        console.log(data)
+    const onsubmit = () => {
+        
+        console.log(form.getValues())
         // showToast({status:200, data:'Success'})
     };
 
@@ -92,7 +94,23 @@ export const HomeForm = ({ type }: { type: Boolean }) => {
                             label="Date"
                             type="date"
                             slotProps={{ inputLabel: { shrink: true } }}
-                            {...register("date", { required: "Date is required" })}
+                            {...register("date", { 
+                                required: "Date is required",
+                                validate: (value) => {
+                                    const selectedDate = new Date(value);
+                                    const currentDate = new Date();
+                                    const maxDate = new Date();
+                                    maxDate.setMonth(maxDate.getMonth() + 3);
+
+                                    if (selectedDate < currentDate) {
+                                        return "Date cannot be earlier than today";
+                                    }
+                                    if (selectedDate > maxDate) {
+                                        return "Date cannot be more than 3 months from today";
+                                    }
+                                    return true;
+                                }
+                            })}
                             error={!!errors.date}
                             helperText={errors.date?.message}
                         />

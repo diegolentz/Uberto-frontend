@@ -9,7 +9,7 @@ import { Driver, driverMock, Travel, travelMock } from "../domain/driver"
 
 export const Home = () => {
     const { showToast } = useContext(msjContext)
-    const [isDriver, setIsDriver] = useState<Boolean>(true)
+    const [isDriver, setIsDriver] = useState<Boolean>(false)
     const [data,setData]= useState<Driver | Travel | null>(null)
     
     // eliminar cuando se armen los endpoints
