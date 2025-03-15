@@ -113,6 +113,7 @@ export const HomeForm = ({ type }: { type: Boolean }) => {
                             })}
                             error={!!errors.date}
                             helperText={errors.date?.message}
+
                         />
                     )}
                     <TextField
@@ -125,8 +126,7 @@ export const HomeForm = ({ type }: { type: Boolean }) => {
                         error={!!errors.passengers}
                         helperText={errors.passengers?.message}
                     />
-
-                    <Button type="submit" variant="contained" color="primary">Filter</Button>
+                        <Button type="submit" variant="contained" color="primary">Filter</Button>
                 </Stack>
             </form>
             <DevTool control={control} />

@@ -4,6 +4,7 @@ import { CardDriver } from "../components/card-viajes/cardDriver"
 import { HomeForm } from "../components/homeForm/homeForm"
 import { msjContext } from "../components/viewLayout/viewLayout"
 import { Driver, driverMock, Travel, travelMock } from "../domain/driver"
+import { ConfirmationPage } from "../components/confirmationPage/confirmationPage"
 
 
 
@@ -11,10 +12,16 @@ export const Home = () => {
     const { showToast } = useContext(msjContext)
     const [isDriver, setIsDriver] = useState<Boolean>(false)
     const [data,setData]= useState<Driver | Travel | null>(null)
+    const [isConfirmation,setIsConfirmation] = useState<boolean>(true)
+    const [trip, setTrip] = useState<Travel>()
     
     // eliminar cuando se armen los endpoints
     const driver = driverMock
     const travel = travelMock
+
+    const asignTravel = () => {
+        
+    }
 
 
     const cod200 = async () => {
@@ -39,16 +46,20 @@ export const Home = () => {
    
     return (
         <>
-            <HomeForm  type={isDriver}></HomeForm>{/* faltaria el id de quiern se registra */}
-            <CardDriver type={isDriver} value={driver}></CardDriver>
-            <CardDriver type={true} value={travel}></CardDriver>
-            <CardDriver type={isDriver} value={driver}></CardDriver>
-            <CardDriver type={true} value={travel}></CardDriver>
-            <CardDriver type={isDriver} value={driver}></CardDriver>
-            <CardDriver type={true} value={travel}></CardDriver>
-            
-
+            {!isConfirmation ? (
+                <>
+                    <HomeForm type={isDriver} /> {/* faltaría el id de quien se registra */}
+                    <CardDriver type={isDriver} value={driver} />
+                    <CardDriver type={true} value={travel} />
+                    <CardDriver type={isDriver} value={driver} />
+                    <CardDriver type={true} value={travel} />
+                    <CardDriver type={isDriver} value={driver} />
+                    <CardDriver type={true} value={travel} />
+                </>
+            ) : (
+                <ConfirmationPage driver={driver} travel={travel} />
+            )}
         </>
-
     )
+    
 }
