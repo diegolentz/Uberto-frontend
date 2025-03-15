@@ -2,6 +2,7 @@ import { DevTool } from "@hookform/devtools";
 import { Button, Stack, TextField } from "@mui/material";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { Travel } from "../../domain/travel";
 
 type FormValues = {
     filter: any;
@@ -13,10 +14,11 @@ type FormValues = {
 }
 
 
-export const HomeForm = ({ type }: { type: Boolean }) => {
+export const HomeForm = ({ type,travel }: { type: Boolean ,travel : (travel: Travel)=> void }) => {
     const [isDriver, setIsDriver] = useState<Boolean>(type)
     // const {showToast} = useContext(msjContext)
 
+    
     const form = useForm<FormValues>({
         defaultValues: {
             name: '',
@@ -30,14 +32,23 @@ export const HomeForm = ({ type }: { type: Boolean }) => {
     const { register, handleSubmit, formState, control } = form
     const { errors } = formState
 
-
     const onsubmit = () => {
-        
         console.log(form.getValues())
+        const viaje = new Travel(
+            form.getValues().name,
+            form.getValues().name,
+            form.getValues().origin,
+            form.getValues().destination,
+            form.getValues().passengers,
+            new Date(form.getValues().date),
+            50,
+            5000
+        )
+        travel(viaje)
         // showToast({status:200, data:'Success'})
     };
 
-
+    
 
     return (
         <>
@@ -113,7 +124,7 @@ export const HomeForm = ({ type }: { type: Boolean }) => {
                             })}
                             error={!!errors.date}
                             helperText={errors.date?.message}
-
+                            
                         />
                     )}
                     <TextField

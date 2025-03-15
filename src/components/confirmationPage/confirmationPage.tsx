@@ -1,5 +1,7 @@
 import { Divider, styled, Typography } from "@mui/material"
-import { Driver, Travel } from "../../domain/driver"
+import { Driver} from "../../domain/driver"
+import { Travel } from "../../domain/travel"
+
 import { Recommendation } from "../recommendation/recommendation"
 
 const Title = styled(Typography)(({ theme }) => ({
@@ -56,7 +58,6 @@ export const ConfirmationPage = ({ travel,driver }: { travel: Travel ,driver:Dri
             <Text>Patent <Span>{driver.patent}</Span></Text>
             <Text>Rating <Span>5</Span></Text>
 
-            <Recommendation></Recommendation>
         </>
     )
 }
