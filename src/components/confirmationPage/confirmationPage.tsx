@@ -1,4 +1,4 @@
-import { Divider, styled, Typography } from "@mui/material"
+import { Box, Divider, styled, Typography } from "@mui/material"
 import { Driver} from "../../domain/driver"
 import { Travel } from "../../domain/travel"
 
@@ -72,7 +72,12 @@ export const ConfirmationPage = ({ travel,driver }: { travel: Travel ,driver:Dri
             <Text>Car <Span>{driver.model}</Span></Text>
             <Text>Patent <Span>{driver.patent}</Span></Text>
             <Text>Rating <Span>5</Span></Text>
-            <Recommendation recom={recommendationMock} handle={recommended}></Recommendation>
+            <Box margin={2}>
+                <Recommendation  recom={recommendationMock} handle={recommended}></Recommendation>
+
+            </Box>
+
+            
         </>
     )
 }
