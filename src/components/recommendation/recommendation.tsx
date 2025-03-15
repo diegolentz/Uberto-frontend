@@ -12,6 +12,7 @@ export interface recommProps {
     editMode: boolean
 }
 
+
 export const Recommendation = ({recom, handle} : {recom:recommProps, handle: (recom: recommProps) => void}) => {
 
     const recomOrigin = useRef<recommProps>({...recom, editMode: false});

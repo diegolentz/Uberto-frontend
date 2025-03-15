@@ -4,8 +4,9 @@ export class Driver {
         public brand: string,
         public model: string,
         public patent: string,
-        public price: number
+        public price: number,
+        public rating: number
     ){}
 }
 
-export const driverMock = new Driver("Pedro Geraghty" , "Volkswagen" , "Transporter 2005" , "AC 505 FT" ,500)
+export const driverMock = new Driver("Pedro Geraghty" , "Volkswagen" , "Transporter 2005" , "AC 505 FT" ,500,5)

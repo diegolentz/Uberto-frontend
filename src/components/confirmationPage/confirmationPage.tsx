@@ -2,7 +2,8 @@ import { Divider, styled, Typography } from "@mui/material"
 import { Driver} from "../../domain/driver"
 import { Travel } from "../../domain/travel"
 
-import { Recommendation } from "../recommendation/recommendation"
+import { Recommendation, recommProps } from "../recommendation/recommendation"
+import { useState } from "react"
 
 const Title = styled(Typography)(({ theme }) => ({
     fontSize: 30,
@@ -29,8 +30,22 @@ const Span = styled(Typography)(({ theme }) => ({
     textAlign: 'end',
 }))
 
+const recommendationMock = {
+    name: 'Jose Luis',
+    date:  Date(),
+    rating: 5,
+    comment:" Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel facere quae, quas deserunt voluptate neque magni amet asperiores assumenda, suscipit sint nam nisi totam et ab maiores. Soluta, numquam commodi.",
+    avatarUrl: "Foto",
+    isEdit: false,
+    editMode:false
+}
 
 export const ConfirmationPage = ({ travel,driver }: { travel: Travel ,driver:Driver }) => {
+    const [recommendation,setRecommendation] = useState<recommProps>()
+
+    const recommended = (recommendation:recommProps) =>{
+        setRecommendation(recommendation)
+    }
     return (
         <>
             <Title >Confirm travel</Title>  
@@ -57,7 +72,7 @@ export const ConfirmationPage = ({ travel,driver }: { travel: Travel ,driver:Dri
             <Text>Car <Span>{driver.model}</Span></Text>
             <Text>Patent <Span>{driver.patent}</Span></Text>
             <Text>Rating <Span>5</Span></Text>
-
+            <Recommendation recom={recommendationMock} handle={recommended}></Recommendation>
         </>
     )
 }
