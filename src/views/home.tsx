@@ -14,7 +14,9 @@ export const Home = () => {
     const { showToast } = useContext(msjContext)
     const [isDriver, setIsDriver] = useState<Boolean>(false)
     const [data,setData]= useState<Driver | Travel | null>(null)
+    
     const [isHome,setIsHome] = useState<boolean>(true)
+    
     const [travel, setTravel] = useState<Travel>(travelMock)
     const [driver, setDriver] = useState<Driver>(driverMock)
 

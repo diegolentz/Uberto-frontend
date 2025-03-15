@@ -1,34 +1,10 @@
 import { Box, Divider, styled, Typography } from "@mui/material"
 import { Driver} from "../../domain/driver"
 import { Travel } from "../../domain/travel"
-
 import { Recommendation, recommProps } from "../recommendation/recommendation"
 import { useState } from "react"
-
-const Title = styled(Typography)(({ theme }) => ({
-    fontSize: 30,
-    margin: 10,
-    fontFamily: 'sans-serif',
-    fontWeight: 'bold',
-    color:'#430c8c'
-}))
-
-const Text = styled(Typography)(({ theme }) => ({
-    fontSize: 18,
-    margin: 5,
-    fontFamily: 'sans-serif',
-    display: 'flex', 
-    justifyContent: 'space-between',
-    alignItems: 'center', 
-    fontWeight: 'bold'
-}))
-
-const Span = styled(Typography)(({ theme }) => ({
-    fontSize: 18,
-    margin: 5,
-    fontFamily: 'sans-serif',
-    textAlign: 'end',
-}))
+import { ButtonConfirmation } from "./buttonConfirmation"
+import * as styles from './confirmationStyles';
 
 const recommendationMock = {
     name: 'Jose Luis',
@@ -48,35 +24,30 @@ export const ConfirmationPage = ({ travel,driver }: { travel: Travel ,driver:Dri
     }
     return (
         <>
-            <Title >Confirm travel</Title>  
-            <Text>Origin<Span>{travel.origin}</Span></Text> {/* Aquí puedes poner el valor correspondiente */}
-            <Text>Destiny<Span>{travel.destination}</Span></Text>
-            <Text>Date
-            <Span>
+            <Typography sx={styles.title} >Confirm travel</Typography>  
+            <Typography sx={styles.text} >Origin<Typography sx={styles.span}>{travel.origin}</Typography></Typography> {/* Aquí puedes poner el valor correspondiente */}
+            <Typography sx={styles.text}>Destiny<Typography sx={styles.span}>{travel.destination}</Typography></Typography>
+            <Typography sx={styles.text}>Date
+            <Typography sx={styles.span}>
                     {new Date(travel.date).toLocaleDateString('es-AR', {
                         year: 'numeric',
                         month: 'long',
                         day: 'numeric',
                     })}
-                </Span>
-            </Text>
-            <Text>Duration
-                <Span>
-                    60
-                </Span>
-                </Text>
-            <Text>Number of passengers<Span>{travel.pasaenger}</Span></Text>
+                </Typography>
+            </Typography>
+            <Typography sx={styles.text}>Duration<Typography sx={styles.span}>60</Typography></Typography>
+            <Typography sx={styles.text}>Number of passengers<Typography sx={styles.span}>{travel.pasaenger}</Typography></Typography>
             <Divider></Divider>
-            <Title>Driver Premium</Title>
-            <Text>Name <Span>{driver.name}</Span></Text>    
-            <Text>Car <Span>{driver.model}</Span></Text>
-            <Text>Patent <Span>{driver.patent}</Span></Text>
-            <Text>Rating <Span>5</Span></Text>
+            <Typography sx={styles.title}>Driver Premium</Typography>
+            <Typography sx={styles.text}>Name <Typography sx={styles.span}>{driver.name}</Typography ></Typography>    
+            <Typography sx={styles.text}>Car <Typography sx={styles.span}>{driver.model}</Typography ></Typography>
+            <Typography sx={styles.text}>Patent <Typography sx={styles.span}>{driver.patent}</Typography ></Typography>
+            <Typography sx={styles.text}>Rating <Typography sx={styles.span}>5</Typography ></Typography>
             <Box margin={2}>
                 <Recommendation  recom={recommendationMock} handle={recommended}></Recommendation>
-
             </Box>
-
+            <ButtonConfirmation></ButtonConfirmation> 
             
         </>
     )
