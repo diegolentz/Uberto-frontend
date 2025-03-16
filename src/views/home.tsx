@@ -3,18 +3,30 @@ import { useContext, useState } from "react"
 import { CardDriver } from "../components/card-viajes/cardDriver"
 import { HomeForm } from "../components/homeForm/homeForm"
 import { msjContext } from "../components/viewLayout/viewLayout"
-import { Driver, driverMock, Travel, travelMock } from "../domain/driver"
-
-
+import { Driver, driverMock} from "../domain/driver"
+import { Travel, travelMock } from "../domain/travel"
+import { ConfirmationPage } from "../components/confirmationPage/confirmationPage"
+import { set } from "react-hook-form"
 
 export const Home = () => {
     const { showToast } = useContext(msjContext)
     const [isDriver, setIsDriver] = useState<Boolean>(false)
     const [data,setData]= useState<Driver | Travel | null>(null)
     
-    // eliminar cuando se armen los endpoints
-    const driver = driverMock
-    const travel = travelMock
+    const [isHome,setIsHome] = useState<boolean>(true)
+    
+    const [travel, setTravel] = useState<Travel>(travelMock)
+    const [driver, setDriver] = useState<Driver>(driverMock)
+
+
+
+    const asignTravel = (travel:Travel) => {
+        setTravel(travel)
+    }
+
+    const changePage = () =>{
+        setIsHome(!isHome)
+    }
 
 
     const cod200 = async () => {
@@ -39,16 +51,20 @@ export const Home = () => {
    
     return (
         <>
-            <HomeForm  type={isDriver}></HomeForm>{/* faltaria el id de quiern se registra */}
-            <CardDriver type={isDriver} value={driver}></CardDriver>
-            <CardDriver type={true} value={travel}></CardDriver>
-            <CardDriver type={isDriver} value={driver}></CardDriver>
-            <CardDriver type={true} value={travel}></CardDriver>
-            <CardDriver type={isDriver} value={driver}></CardDriver>
-            <CardDriver type={true} value={travel}></CardDriver>
-            
-
+            {isHome ? (
+                <>
+                    <HomeForm type={isDriver} travel= {asignTravel}/> {/* faltaría el id de quien se registra */}
+                    <CardDriver type={isDriver} value={driverMock} onClik={changePage} />
+                    <CardDriver type={true} value={travelMock} onClik={changePage}/>
+                    <CardDriver type={isDriver} value={driverMock} onClik={changePage}/>
+                    <CardDriver type={true} value={travelMock} onClik={changePage}/>
+                    <CardDriver type={isDriver} value={driverMock} onClik={changePage}/>
+                    <CardDriver type={true} value={travelMock} onClik={changePage}/>
+                </>
+            ) : (
+                <ConfirmationPage driver={driver} travel={travel} />
+            )}
         </>
-
     )
+    
 }

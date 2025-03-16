@@ -1,17 +1,20 @@
 import GroupIcon from '@mui/icons-material/Group';
 import StarIcon from '@mui/icons-material/Star';
 import { Avatar, Box, Card, CardContent, CardHeader, CardMedia, Typography } from '@mui/material';
-import { Driver, Travel } from '../../domain/driver';
+import { Driver } from '../../domain/driver';
+import { Travel } from '../../domain/travel';
+
 import * as styles from './cardDriverStyle';
 
 
 interface CardDriverProps {
   value: Driver | Travel
   type: Boolean
+  onClik: ()=> void
 }
 
 
-export const CardDriver = ({ type, value }: CardDriverProps) => {
+export const CardDriver = ({ type, value,onClik }: CardDriverProps) => {
   // const [driver] = useState<Driver>(driverMock);
   const isDriver = type
   const data = value
@@ -20,7 +23,7 @@ export const CardDriver = ({ type, value }: CardDriverProps) => {
   return (
     <>
 
-      <Card sx={styles.cardBodyStyle}>
+      <Card sx={styles.cardBodyStyle} onClick= {onClik} >
         <CardHeader
           sx={styles.cardHeaderStyle}
           title={
