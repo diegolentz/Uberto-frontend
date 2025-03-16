@@ -8,8 +8,6 @@ import { Travel, travelMock } from "../domain/travel"
 import { ConfirmationPage } from "../components/confirmationPage/confirmationPage"
 import { set } from "react-hook-form"
 
-
-
 export const Home = () => {
     const { showToast } = useContext(msjContext)
     const [isDriver, setIsDriver] = useState<Boolean>(false)

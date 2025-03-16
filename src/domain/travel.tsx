@@ -7,7 +7,6 @@ export class Travel {
         public destination: string,
         public pasaenger: number,
         public date: Date,
-        // public hour: Date,
         public duration: number,
         public price: number,
     ){

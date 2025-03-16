@@ -1,6 +1,6 @@
 import { Box, Button } from "@mui/material"
 import * as styles from './confirmationStyles';
-export const ButtonConfirmation = () => {
+export const ButtonConfirmation = ({goTo} : {goTo : ()=>void}) => {
     return(<>
         <Box 
             sx = {styles.boxButtons}
@@ -8,6 +8,7 @@ export const ButtonConfirmation = () => {
             <Button 
                 variant="outlined"
                 color="secondary"
+                onClick={goTo}
             >
                 decline
             </Button>

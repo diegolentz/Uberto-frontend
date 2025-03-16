@@ -1,10 +1,11 @@
-import { Box, Divider, styled, Typography } from "@mui/material"
+import { Box, Divider, Typography } from "@mui/material"
 import { Driver} from "../../domain/driver"
 import { Travel } from "../../domain/travel"
 import { Recommendation, recommProps } from "../recommendation/recommendation"
 import { useState } from "react"
 import { ButtonConfirmation } from "./buttonConfirmation"
 import * as styles from './confirmationStyles';
+import { useNavigate } from "react-router-dom"
 
 const recommendationMock = {
     name: 'Jose Luis',
@@ -22,6 +23,7 @@ export const ConfirmationPage = ({ travel,driver }: { travel: Travel ,driver:Dri
     const recommended = (recommendation:recommProps) =>{
         setRecommendation(recommendation)
     }
+
     return (
         <>
             <Typography sx={styles.title} >Confirm travel</Typography>  
@@ -44,10 +46,10 @@ export const ConfirmationPage = ({ travel,driver }: { travel: Travel ,driver:Dri
             <Typography sx={styles.text}>Car <Typography sx={styles.span}>{driver.model}</Typography ></Typography>
             <Typography sx={styles.text}>Patent <Typography sx={styles.span}>{driver.patent}</Typography ></Typography>
             <Typography sx={styles.text}>Rating <Typography sx={styles.span}>5</Typography ></Typography>
-            <Box margin={2}>
+            <Box margin={2} marginBottom={10}>
                 <Recommendation  recom={recommendationMock} handle={recommended}></Recommendation>
             </Box>
-            <ButtonConfirmation></ButtonConfirmation> 
+            <ButtonConfirmation ></ButtonConfirmation> 
             
         </>
     )
