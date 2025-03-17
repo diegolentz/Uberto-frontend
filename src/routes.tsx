@@ -2,6 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { Login } from "./views/login";
 import { ViewLayoutComponent } from "./components/viewLayout/viewLayout";
 import { Home } from "./views/home";
+import { ConfirmationPage } from "./components/confirmationPage/confirmationPage";
 
 export const AppRouter = () => {
     return <>
@@ -10,7 +11,7 @@ export const AppRouter = () => {
                 <Route element={<Login />} path='login'></Route>
                 <Route element={<ViewLayoutComponent></ViewLayoutComponent>}>
                     <Route element={<Home/>} path="Home"></Route> 
-                    <Route></Route> {/*  */}
+                    {/* <Route element = {<ConfirmationPage/>} path="confirmation-page"></Route>  */}
                     <Route></Route> {/*  */}
                     <Route></Route> {/*  */}
                 </Route>

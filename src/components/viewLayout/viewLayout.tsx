@@ -1,8 +1,7 @@
+import { AxiosResponse } from "axios"
+import { createContext, useState } from "react"
 import { Outlet } from "react-router-dom"
 import { HeaderComponent } from "../header/header"
-import { CssBaseline } from "@mui/material"
-import { createContext, useState } from "react"
-import { AxiosResponse } from "axios"
 import Toast from "../toast/toast"
 import { NavBar } from "../navBar/navBar"
 
@@ -19,14 +18,11 @@ export const ViewLayoutComponent = () => {
     }
 
     return <>
-    <CssBaseline></CssBaseline>
         <HeaderComponent></HeaderComponent>
-        <div className="content">
             <Toast res={toast}/>
             <msjContext.Provider value={{showToast}}>
                 <Outlet />
             </msjContext.Provider>
-        </div>
         <NavBar></NavBar>
     </>
 }

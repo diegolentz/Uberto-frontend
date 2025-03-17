@@ -1,61 +1,117 @@
-import { Card, CardHeader, IconButton, Box, Divider, CardContent, Typography, CardMedia } from '@mui/material';
+import GroupIcon from '@mui/icons-material/Group';
 import StarIcon from '@mui/icons-material/Star';
-import { Driver, driverMock } from '../../domain/driver';
-import { useState } from 'react';
+import { Avatar, Box, Card, CardContent, CardHeader, CardMedia, Typography } from '@mui/material';
+import { Driver } from '../../domain/driver';
+import { Travel } from '../../domain/travel';
 
-export const CardDriver = () => {
-  const [driver, setDriver] = useState<Driver>(driverMock);
+import * as styles from './cardDriverStyle';
+
+
+interface CardDriverProps {
+  value: Driver | Travel
+  type: Boolean
+  onClik: ()=> void
+}
+
+
+export const CardDriver = ({ type, value,onClik }: CardDriverProps) => {
+  // const [driver] = useState<Driver>(driverMock);
+  const isDriver = type
+  const data = value
+
 
   return (
     <>
-      <Card>
+
+      <Card sx={styles.cardBodyStyle} onClick= {onClik} >
         <CardHeader
-          sx={{
-            backgroundColor: '#430c8c',
-            padding: '16px',
-            color: '#ffffff',
-          }}
-          action={
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <IconButton sx={{ fontSize: '2rem', display: 'flex', alignItems: 'center' }}>
-                <StarIcon sx={{ color:'white', fontSize: 'inherit' }} />
-              </IconButton>
-              <Typography sx={{ color: 'white', fontSize: '1.2rem', marginLeft: '8px', fontWeight: 'bold' }}>
-                {3} 
-              </Typography>
-            </Box>
-          }
+          sx={styles.cardHeaderStyle}
           title={
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <h1
-                style={{
-                  fontSize: '2rem',
-                  margin: 0,
-                }}
-              >
-                {driver.patent}
-              </h1>
+            !isDriver ? (
+              <Typography sx={styles.patentStyle}>
+                {'patent' in data ? data.patent : ''}
+              </Typography>
+            ) : (
+              <Box>
+                <Typography sx={styles.userNameLastnameStyle}>
+                  {data.name} {'lastName' in data ? data.lastName : ''}
+                </Typography>
+                <Box sx={styles.iconUserStyle}>
+                  <GroupIcon sx={{ fontSize: '1.2rem' }} />
+                  <Typography sx={styles.rateStyle}>
+                    {'pasaenger' in data ? data.pasaenger : ''}
+                  </Typography>
+                </Box>
+              </Box>
+            )
+          }
+          action={
+            <Box sx={styles.actionStyle}>
+              {!isDriver ? (
+                <Box sx={styles.passangerCountStyle}>
+                  <StarIcon />
+                  <Typography sx={styles.rateStyle}>
+                    {3}
+                  </Typography>
+                </Box>
+              ) : (
+                <Avatar sx={styles.imgUserStyle} alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                /* falta atributo imagen en el back */
+              )}
             </Box>
           }
         />
-        <Divider />
-        <CardContent>
-          <Typography variant="h5">{driver.name}</Typography>
-          <Typography>
-            {driver.brand} {driver.model}
-          </Typography>
-          <CardMedia
-            component="img"
-            image="/camionetaUberto.jpeg"
-            alt="Camioneta Uberto"
-            height={100}
-            sx={{
-              objectFit: 'contain',
-            }}
-          />
-          <Typography fontWeight = 'bold' fontSize={20} textAlign={'center'} marginTop={0}>
-            Price ${driver.price}
-          </Typography>
+        <CardContent sx={styles.boxInfoStyle}>
+          {!isDriver ? (
+            <>
+              <Box sx={styles.boxDataStyle}>
+                <Typography sx={styles.nameStyle}>{data.name}</Typography>
+                <Typography sx={styles.brandModelStyle}>
+                  {'model' in data ? `${data.brand}  ${data.model}` : ''}
+                </Typography>
+                <Typography sx={styles.priceStyle}>
+                  Price ${data.price}
+                </Typography>
+              </Box>
+              <CardMedia
+                component="img"
+                image="/camionetaUberto.jpeg"
+                alt="Camioneta Uberto"
+                sx={styles.imgStyle}
+              />
+            </>
+          ) : (
+            <Box sx={styles.boxInfoTravelStyle}>
+              <Box>
+                <Typography sx={styles.dataTravelStyle}>
+                  {'Origin'}
+                </Typography>
+                <Typography sx={styles.dataTravelStyle}>
+                  {'Destination'}
+                </Typography>
+                <Typography sx={styles.dataTravelStyle}>
+                  {'Date'}
+                </Typography>
+                <Typography sx={styles.priceTravelStyle}>
+                  {'Price'}
+                </Typography>
+              </Box>
+              <Box sx={styles.infoTravelStyle}>
+                <Typography sx={styles.infoTravelStyle}>
+                  {'origin' in data ? data.origin : ''}
+                </Typography>
+                <Typography sx={styles.infoTravelStyle}>
+                  {'destination' in data ? data.destination : ''}
+                </Typography>
+                <Typography sx={styles.infoTravelStyle}>
+                  {'date' in data ? `${data.date.getDay()}/${data.date.getMonth()}/${data.date.getFullYear()} | ${data.date.getHours()}:${data.date.getMinutes()}` : ''}
+                </Typography>
+                <Typography sx={styles.priceTravelStyle}>
+                  {'price' in data ? `$ ${data.price}` : ''}
+                </Typography>
+              </Box>
+            </Box>
+          )}
         </CardContent>
       </Card>
     </>
