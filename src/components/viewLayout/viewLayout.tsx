@@ -3,6 +3,7 @@ import { createContext, useState } from "react"
 import { Outlet } from "react-router-dom"
 import { HeaderComponent } from "../header/header"
 import Toast from "../toast/toast"
+import { NavBar } from "../navBar/navBar"
 
 export const msjContext = createContext({} as {showToast: (data: AxiosResponse)=>void})
 
@@ -22,5 +23,6 @@ export const ViewLayoutComponent = () => {
             <msjContext.Provider value={{showToast}}>
                 <Outlet />
             </msjContext.Provider>
+        <NavBar></NavBar>
     </>
 }
