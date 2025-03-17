@@ -3,6 +3,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { tryLogin } from "../services/login.service";
 import { useEffect } from "react";
 import { InputTextField } from "../components/inputs/textInput";
+import { useNavigate } from "react-router-dom";
 
 const LoginFormContainerBox = styled(Box)(({ theme }) => ({
     backgroundColor: theme.palette.common.white,
@@ -26,9 +27,13 @@ type Inputs = {
 
 export const Login = () => {
     const { register, handleSubmit, formState: { errors, touchedFields }, setError } = useForm<Inputs>({ criteriaMode: 'all' });
+    const navigate = useNavigate()
     const onSubmit: SubmitHandler<Inputs> = data => {
         tryLogin(data)
     };
+    function goHome(){
+        navigate("/Home")
+    }
     const types = {
         required: "This is required",
         minLength: "MIN length of ",
@@ -60,6 +65,7 @@ export const Login = () => {
                 />
 
                 <StyledButton type="submit" variant="contained">Log in</StyledButton>
+                <StyledButton type="button" variant="contained" onClick={goHome}>MOCK HOME</StyledButton>
             </form>
         </LoginFormContainerBox>
     </>

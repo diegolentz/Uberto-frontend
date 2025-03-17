@@ -26,7 +26,7 @@ export const NavBar = () => {
             />
             <BottomNavigationAction
                 component={NavLink}
-                to="/profile"
+                to="/profile/data"
                 icon={<AccountCircle style={sxIcons} />}
             />
             <BottomNavigationAction
