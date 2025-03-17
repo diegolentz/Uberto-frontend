@@ -4,6 +4,7 @@ import { CssBaseline } from "@mui/material"
 import { createContext, useState } from "react"
 import { AxiosResponse } from "axios"
 import Toast from "../toast/toast"
+import { NavBar } from "../navBar/navBar"
 
 export const msjContext = createContext({} as {showToast: (data: AxiosResponse)=>void})
 
@@ -26,5 +27,6 @@ export const ViewLayoutComponent = () => {
                 <Outlet />
             </msjContext.Provider>
         </div>
+        <NavBar></NavBar>
     </>
 }
