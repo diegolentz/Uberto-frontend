@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";  // Importamos react-hook-form
 import { estilosInput } from "../homeForm/homeFormStyles";
 
 export const Data = () => {
-    const [isDriver, setIsDriver] = useState<Boolean>(true);
+    const [isDriver, setIsDriver] = useState<Boolean>(false);
     const [profile, setProfile] = useState<DriverProfile | UserProfile>(
         isDriver ? driverProfileMock : userProfileMock
     );
