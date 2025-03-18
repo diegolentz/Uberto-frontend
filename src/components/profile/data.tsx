@@ -1,13 +1,15 @@
 import { Box, Button, Divider, Stack, TextField } from "@mui/material"
 import { useState } from "react"
-import { DriverProfile, profileGenericMock, ProfileGenericMock, UserProfile } from "../../domain/profile"
+import { DriverProfile, driverProfileMock, UserProfile, userProfileMock } from "../../domain/profile"
 import { estilosInput } from "../homeForm/homeFormStyles"
 
 export const Data = () => {
     const [isDriver, setIsDriver] = useState<Boolean>(true)
     //hago un mock para que llene los campos, hay qe usar el hook de arriba
 
-    const [mock, setMock] = useState<ProfileGenericMock>(profileGenericMock)
+    const [profile, setProfile] = useState<DriverProfile | UserProfile>(
+        isDriver ? driverProfileMock : userProfileMock
+    );
     const [addMoney, setAddMoney] = useState<number>(0.0)
 
 
@@ -22,16 +24,16 @@ export const Data = () => {
                             label="Name"
                             type="text"
                             sx={estilosInput}
-                            value={mock.name}
-                            onChange={(e) => setMock({ ...mock, name: e.target.value })}
+                            value={profile.name}
+                            onChange={(e) => setProfile({ ...profile, name: e.target.value })}
                         />
                         <TextField
                             size="small"
                             label="Last Name"
                             type="text"
                             sx={estilosInput}
-                            value={mock.lastname}
-                            onChange={(e) => setMock({ ...mock, lastname: e.target.value })}
+                            value={profile.lastname}
+                            onChange={(e) => setProfile({ ...profile, lastname: e.target.value })}
                         />
                         {isDriver ? (
                             <>
@@ -40,8 +42,8 @@ export const Data = () => {
                                     label="Base price"
                                     type="number"
                                     sx={estilosInput}
-                                    value={isDriver && 'price' in mock ? mock.price : ''}
-                                    onChange={(e) => setMock({ ...mock, price: Number(e.target.value) })}
+                                    value={isDriver && 'price' in profile ? profile.price : ''}
+                                    onChange={(e) => setProfile({ ...profile, price: Number(e.target.value) })}
                                 />
 
                                 <Divider aria-hidden="true" sx={{ borderColor: '#a737fc' }} />
@@ -51,24 +53,24 @@ export const Data = () => {
                                     label="Domain"
                                     type="text"
                                     sx={estilosInput}
-                                    value={isDriver && 'price' in mock ? mock.patent : ''}
-                                    onChange={(e) => setMock({ ...mock, patent: e.target.value })}
+                                    value={isDriver && 'price' in profile ? profile.domain : ''}
+                                    onChange={(e) => setProfile({ ...profile, domain: e.target.value })}
                                 />
                                 <TextField
                                     size="small"
                                     label="Brand"
                                     type="text"
                                     sx={estilosInput}
-                                    value={isDriver && 'price' in mock ? mock.brand : ''}
-                                    onChange={(e) => setMock({ ...mock, brand: e.target.value })}
+                                    value={isDriver && 'price' in profile ? profile.brand : ''}
+                                    onChange={(e) => setProfile({ ...profile, brand: e.target.value })}
                                 />
                                 <TextField
                                     size="small"
                                     label="Model"
                                     type="number"
                                     sx={estilosInput}
-                                    value={isDriver && 'price' in mock ? mock.model : ''}
-                                    onChange={(e) => setMock({ ...mock, model: Number(e.target.value) })}
+                                    value={isDriver && 'price' in profile ? profile.model : ''}
+                                    onChange={(e) => setProfile({ ...profile, model: Number(e.target.value) })}
                                 />
                             </>
 
@@ -79,8 +81,8 @@ export const Data = () => {
                                     label="Phone"
                                     type="number"
                                     sx={estilosInput}
-                                    value={'phone' in mock ? mock.phone : ''}
-                                    onChange={(e) => setMock({ ...mock, phone: Number(e.target.value) })}
+                                    value={'phone' in profile ? profile.phone : ''}
+                                    onChange={(e) => setProfile({ ...profile, phone: Number(e.target.value) })}
                                 />
 
                             </>
@@ -99,7 +101,7 @@ export const Data = () => {
                         <Stack direction="column" spacing={1} alignItems="center" margin="1rem">
                             <Box sx={{ fontWeight: 'bold' }}>
                                 <p>Cash $
-                                    {mock.money} </p>
+                                    {profile.money} </p>
                             </Box>
 
                             <form noValidate style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', height: 'auto', margin: '1rem', gap: '1rem' }} onSubmit={(e) => e.preventDefault()}>
