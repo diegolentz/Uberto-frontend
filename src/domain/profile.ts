@@ -10,7 +10,7 @@ export class DriverProfile {
     ){}
 }
 
-export const driverProfileMock = new DriverProfile("Pedro", "Geraghty", 160.2, "AB 586 CD", "Toyota", 2022)
+export const driverProfileMock = new DriverProfile("Pedro", "Geraghty", 160.2, "AB586CD", "Toyota", 2022)
 
 export class UserProfile {
     constructor(
