@@ -137,7 +137,7 @@ export const HomeForm = ({ type,travel }: { type: Boolean ,travel : (travel: Tra
                         error={!!errors.passengers}
                         helperText={errors.passengers?.message}
                     />
-                        <Button type="submit" variant="contained" color="primary">Filter</Button>
+                        <Button type="submit" variant="contained" sx={{background: '#a737fc'}}>Filter</Button>
                 </Stack>
             </form>
             <DevTool control={control} />

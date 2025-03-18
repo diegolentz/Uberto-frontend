@@ -7,8 +7,8 @@ export const NavBar = () => {
 
     const sxNavBar = {
         position: 'fixed',
-        bottom: 1,
-        left: 1,
+        bottom: 0,
+        left: 0,
         right: 0,
         backgroundColor: "#430c8c",
         borderTop: 3,
