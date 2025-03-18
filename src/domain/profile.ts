@@ -2,15 +2,14 @@ export class DriverProfile {
     constructor(
         public name: string,
         public lastname: string,
-        public price: number,
+        public price: number, // Updated to support decimals
         public domain: string,
         public brand: string,
         public model: number,
-
     ){}
 }
 
-export const driverProfileMock = new DriverProfile("Pedro", "Geraghty", 160.2, "AB586CD", "Toyota", 2022)
+export const driverProfileMock = new DriverProfile("Pedro", "Geraghty", 160.0, "AB586CD", "Toyota", 2022)
 
 export class UserProfile {
     constructor(
