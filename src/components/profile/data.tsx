@@ -6,7 +6,7 @@ import { MoneyForm } from "../profileForm/moneyForm";
 import { ProfileForm } from "../profileForm/profileForm";
 
 export const Data = () => {
-    const [isDriver] = useState<boolean>(true);
+    const [isDriver] = useState<boolean>(false);
     const [profile, setProfile] = useState<DriverProfile | UserProfile>(isDriver ? driverProfileMock : userProfileMock);
 
     const setChanges = (data: any) => {
