@@ -29,7 +29,8 @@ export const Login = () => {
     const { register, handleSubmit, formState: { errors, touchedFields }, setError } = useForm<Inputs>({ criteriaMode: 'all' });
     const navigate = useNavigate()
     const onSubmit: SubmitHandler<Inputs> = data => {
-        tryLogin(data)
+        // tryLogin(data)
+        navigate("/Home")
     };
     function goHome(){
         navigate("/Home")
@@ -65,7 +66,6 @@ export const Login = () => {
                 />
 
                 <StyledButton type="submit" variant="contained">Log in</StyledButton>
-                <StyledButton type="button" variant="contained" onClick={goHome}>MOCK HOME</StyledButton>
             </form>
         </LoginFormContainerBox>
     </>
