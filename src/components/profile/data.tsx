@@ -4,6 +4,7 @@ import { DriverProfile, driverProfileMock, UserProfile, userProfileMock } from "
 // Removed unused import of useForm
 import { MoneyForm } from "../profileForm/moneyForm";
 import { ProfileForm } from "../profileForm/profileForm";
+import { FriendsComponent } from "../friends/friends";
 
 export const Data = () => {
     const [isDriver] = useState<boolean>(false);
@@ -19,11 +20,15 @@ export const Data = () => {
 
     return (
         <>
-            <Box sx={{ padding: '2rem 1rem 3rem 1rem' }}>
+            <Box sx={{ padding: '2rem 1rem 3rem 1rem'}}>
                 <ProfileForm entity={profile} rol={isDriver} func={setChanges} />
                 <Divider aria-hidden="true" sx={{ borderColor: '#a737fc' }} />
-                {!isDriver && 'money' in (profile as UserProfile) && (
+                {!isDriver && (
+                    <>
                     <MoneyForm money={(profile as UserProfile).money} func={setChanges} />
+                    <Divider aria-hidden="true" sx={{ borderColor: '#a737fc' }} />
+                    <FriendsComponent/>
+                    </>
                 )}
             </Box>
         </>
