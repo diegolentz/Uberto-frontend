@@ -10,10 +10,7 @@ export const Data = () => {
     const [profile, setProfile] = useState<DriverProfile | UserProfile>(isDriver ? driverProfileMock : userProfileMock);
 
     const setChanges = (data: any) => {
-        
-        // console.log("mis datos nuevos", data);
-        setProfile(data);
-
+        setProfile({ ...profile, ...data });
     }
 
     useEffect(() => {
@@ -25,8 +22,8 @@ export const Data = () => {
             <Box sx={{ padding: '2rem 1rem 3rem 1rem' }}>
                 <ProfileForm entity={profile} rol={isDriver} func={setChanges} />
                 <Divider aria-hidden="true" sx={{ borderColor: '#a737fc' }} />
-                {!isDriver && 'money' in profile && (
-                    <MoneyForm money={profile.money} func={setChanges} />
+                {!isDriver && 'money' in (profile as UserProfile) && (
+                    <MoneyForm money={(profile as UserProfile).money} func={setChanges} />
                 )}
             </Box>
         </>

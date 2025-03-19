@@ -1,7 +1,7 @@
 import { Box, Button, Stack, TextField } from "@mui/material";
 import { estilosInput } from "../homeForm/homeFormStyles";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface MoneyFormProps {
     money: number;
@@ -9,15 +9,9 @@ interface MoneyFormProps {
 }
 
 export const MoneyForm = ({ money, func }: MoneyFormProps) => {
-    const [myMoney, setMyMoney] = useState<number>(money);
 
-    const setChanges = (data: number) => {
-        const newMoney = myMoney + data;
-        setMyMoney(newMoney);
-        func(newMoney);
-    }
-
-    const {register, handleSubmit, formState: { errors, isValid }} = useForm({
+    
+    const { register, handleSubmit, formState: { errors, isValid }, reset } = useForm({
         mode: "onChange",
         defaultValues: {
             money: 0
@@ -27,24 +21,25 @@ export const MoneyForm = ({ money, func }: MoneyFormProps) => {
     const onSubmit = (data: { money: number }) => {
         if (!isValid) {
             console.log("Formulario con errores:", errors);
+        } else {
+            const add = Number(data.money);
+            const updatedMoney = money + add; 
+            func({ money: updatedMoney }); // Llama a func con el nuevo valor atributo : valor
+            reset({ money: 0 }); // Resetea el formulario
         }
-        setChanges(data.money);
-    };
+    }
 
-
-
-
-
+    useEffect(() => {
+        console.log("MoneyForm: Money has been updated:", money);
+    }, [money]);
 
     return (
-
         <>
-
             <Stack direction="column" spacing={1} alignItems="center" margin="1rem">
                 <Box sx={{ fontWeight: 'bold' }}>
                     <p>Cash $ {money}</p>
                 </Box>
-                <form onSubmit={handleSubmit(onSubmit)} noValidate style={{display: 'flex',flexDirection: 'column',justifyContent: 'center',height: 'auto',margin: '1rem',gap: '1rem'}}>
+                <form onSubmit={handleSubmit(onSubmit)} noValidate style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', height: 'auto', margin: '1rem', gap: '1rem' }}>
                     <TextField
                         size="small"
                         label="Add money"
@@ -73,14 +68,6 @@ export const MoneyForm = ({ money, func }: MoneyFormProps) => {
                     </Button>
                 </form>
             </Stack>
-
-
-
-
         </>
-
-
     )
-
-
 }
