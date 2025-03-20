@@ -8,10 +8,9 @@ import { ProfileImg } from "../components/profileImg/profileImg"
 
 export const Profile = () => {
     
-    
     return (
         <>
-            <ProfileImg></ProfileImg>
+            <ProfileImg ></ProfileImg>
             <ProfileNav></ProfileNav>
             <Outlet></Outlet>
             <NavBar></NavBar>

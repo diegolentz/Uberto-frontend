@@ -13,12 +13,17 @@ type FormValues = {
     passengers: number;
 }
 
+interface HomeFormProps {
+    type: Boolean;
+    travel: (travel: Travel) => void;
+}
 
-export const HomeForm = ({ type, travel }: { type: Boolean, travel: (travel: Travel) => void }) => {
-    const [isDriver, setIsDriver] = useState<Boolean>(type)
+
+export const HomeForm = ({ type, travel }: HomeFormProps) => {
+    const isDriver = type
     // const {showToast} = useContext(msjContext)
-
-
+    
+    
     const form = useForm<FormValues>({
         defaultValues: {
             name: '',

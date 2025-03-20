@@ -1,11 +1,20 @@
 import axios from "axios";
 import { REST_SERVER_URL } from "./urls";
 
+import { Login } from "../domain/login";
 
-export async function tryLogin(loginRequest:{username:string, password:string}):Promise<{jwt:number}>{
-    const response = await axios.post(`${REST_SERVER_URL}/login`, loginRequest);
-    // localStorage.setItem("IdUser",this.loggedUserId.toString()) // Guarda el ID si es necesario
-    console.log(response.data)
-    return response.data
+
+
+export async function tryLogin(requestBody: { username: string; password: string }): Promise<boolean> {
+    try {
+        // const data = await axios.get<Login>(REST_SERVER_URL).data
+        sessionStorage.setItem("idUser", Login.idUser.toString()); 
+        sessionStorage.setItem("idDriver", Login.idDriver.toString()); 
+        sessionStorage.setItem("img", Login.img); 
+
+        return true; 
+    } catch (error) {
+        console.error("Login failed:", error);
+        return false;
+    }
 }
-
