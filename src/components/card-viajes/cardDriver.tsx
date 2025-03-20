@@ -1,6 +1,6 @@
 import GroupIcon from '@mui/icons-material/Group';
 import StarIcon from '@mui/icons-material/Star';
-import { Avatar, Box, Card, CardContent, CardHeader, CardMedia, Typography } from '@mui/material';
+import { Avatar, Box, Button, Card, CardContent, CardHeader, CardMedia, Typography } from '@mui/material';
 import { Driver } from '../../domain/driver';
 import { Travel } from '../../domain/travel';
 
@@ -109,6 +109,9 @@ export const CardDriver = ({ type, value,onClik }: CardDriverProps) => {
                 <Typography sx={styles.priceTravelStyle}>
                   {'price' in data ? `$ ${data.price}` : ''}
                 </Typography>
+              {/* {'date' in data && data.date.getHours() > new Date().getHours() ? (
+                <Button>Confirmar</Button>
+              ) : null} */}
               </Box>
             </Box>
           )}

@@ -28,10 +28,13 @@ type Inputs = {
 export const Login = () => {
     const { register, handleSubmit, formState: { errors, touchedFields }, setError } = useForm<Inputs>({ criteriaMode: 'all' });
     const navigate = useNavigate()
-    const onSubmit: SubmitHandler<Inputs> = data => {
-        // tryLogin(data)
-        navigate("/Home")
+
+
+    const onSubmit: SubmitHandler<Inputs> = async data => {
+        await tryLogin(data) ? goHome() : console
     };
+
+    
     function goHome(){
         navigate("/Home")
     }

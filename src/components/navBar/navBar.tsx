@@ -17,6 +17,9 @@ export const NavBar = () => {
     };
 
     const sxIcons = { color: "white" };
+    const clearStorage = () => {
+        sessionStorage.clear();
+    }
 
     return (
         <BottomNavigation sx={sxNavBar} >
@@ -33,6 +36,7 @@ export const NavBar = () => {
             <BottomNavigationAction
                 component={NavLink}
                 to="/login"
+                onClick={clearStorage}
                 icon={<Logout style={sxIcons} />}
             />
         </BottomNavigation>
