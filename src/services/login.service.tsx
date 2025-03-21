@@ -8,7 +8,9 @@ class LoginService {
         try {
             // const data = await axios.get<Login>(REST_SERVER_URL).data
             const login = 1; /* cuando devuelva el id del back lo setea en el session momentaneamente con valor fijo */
+            const isDriver = false
             sessionStorage.setItem("idUser", login.toString());
+            sessionStorage.setItem("isDriver", isDriver.toString());
 
             return true;
         } catch (error) {

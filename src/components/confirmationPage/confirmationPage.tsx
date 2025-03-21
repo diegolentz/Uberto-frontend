@@ -1,11 +1,10 @@
 import { Box, Divider, Typography } from "@mui/material"
-import { Driver} from "../../domain/driver"
-import { Travel } from "../../domain/travel"
+import { useEffect, useState } from "react"
+import { DriverCard, FormDriver } from "../../domain/driver"
+import { TravelCard } from "../../domain/travel"
 import { Recommendation, recommProps } from "../recommendation/recommendation"
-import { useState } from "react"
+import * as styles from './confirmationStyles'
 import { ButtonConfirmation } from "./buttonConfirmation"
-import * as styles from './confirmationStyles';
-import { useNavigate } from "react-router-dom"
 
 const recommendationMock = {
     name: 'Jose Luis',
@@ -17,12 +16,18 @@ const recommendationMock = {
     editMode:false
 }
 
-export const ConfirmationPage = ({ travel,driver }: { travel: Travel ,driver:Driver }) => {
+export const ConfirmationPage = ({ driver, travel }: { travel: FormDriver ,driver:DriverCard }) => {
     const [recommendation,setRecommendation] = useState<recommProps>()
 
     const recommended = (recommendation:recommProps) =>{
         setRecommendation(recommendation)
     }
+    useEffect(() => {
+        console.log(travel.passengers)
+
+    }, [])
+
+
 
     return (
         <>
@@ -39,7 +44,7 @@ export const ConfirmationPage = ({ travel,driver }: { travel: Travel ,driver:Dri
                 </Typography>
             </Typography>
             <Typography sx={styles.text}>Duration<Typography sx={styles.span}>60</Typography></Typography>
-            <Typography sx={styles.text}>Number of passengers<Typography sx={styles.span}>{travel.pasaenger}</Typography></Typography>
+            <Typography sx={styles.text}>Number of passengers<Typography sx={styles.span}>{travel.passengers}</Typography></Typography>
             <Divider></Divider>
             <Typography sx={styles.title}>Driver Premium</Typography>
             <Typography sx={styles.text}>Name <Typography sx={styles.span}>{driver.name}</Typography ></Typography>    
@@ -49,7 +54,9 @@ export const ConfirmationPage = ({ travel,driver }: { travel: Travel ,driver:Dri
             <Box margin={2} marginBottom={10}>
                 <Recommendation  recom={recommendationMock} handle={recommended}></Recommendation>
             </Box>
-            <ButtonConfirmation ></ButtonConfirmation> 
+            <ButtonConfirmation goTo={function (): void {
+                throw new Error("Function not implemented.")
+            } } ></ButtonConfirmation> 
             
         </>
     )
