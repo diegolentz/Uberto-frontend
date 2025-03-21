@@ -7,41 +7,18 @@ import { passengerService } from "../../services/passenger.service"
 
 export interface recommProps {
     recom: Recommendation
-    handle: (recom: recommProps) => void
+    handle: (recom: number) => void
 }
 
 
 export const RecommendationCard = ({recom, handle} : recommProps) => {
     const id = parseInt(sessionStorage.getItem('idUser')!)
     const isDriver = sessionStorage.getItem('isDriver') === 'true'
-    const [recomOrigin] = useState<Recommendation>(recom)
 
-    const getRecommendation = async () => {
-        //traigo la recomendacion del back
-            const res = isDriver ? driverService.profileRatings(id) : passengerService.profileRatings(id)
-            setRatings(res)
+    const deleteRating = (id: number) => {
+        handle(id)
     }
-
-    useEffect(() => {
-        isDriver ? recom.editMode = false : recom.editMode = true
-        getRecommendation()
-
-    }, []); 
-
-    const saveChange = async() => {
-        //pego al back los cambios
-        alert('guardo cambios en el back')
-        recom.editMode = false
-        setRatings({
-            ...recom, editMode: false,
-        })
-    }
-
-    const handleCloseEdit = () => {
-        console.log('recom original ', recomOrigin)
-        console.log('recom ', recom)
-        setRatings(recomOrigin)
-    }
+     
 
     return (
         <>
@@ -56,7 +33,6 @@ export const RecommendationCard = ({recom, handle} : recommProps) => {
                         {
                             recom.editMode ? 
                             <Rating value={recom.rating} 
-                            onChange={(_, newValue) => handle({...recom, rating:newValue || recom.rating})} 
                             precision={0.5} size="large"/> : 
                             recom.rating
                         }
@@ -71,7 +47,6 @@ export const RecommendationCard = ({recom, handle} : recommProps) => {
                     {
                         recom.editMode ? 
                         <TextField fullWidth multiline rows={3} label="Comentario" value={recom.comment} 
-                        onChange={(e) => handle({...recom, comment:e.target.value})} 
                         sx={{ mt: 2 }}/> : 
                         recom.comment
                     }
@@ -79,8 +54,7 @@ export const RecommendationCard = ({recom, handle} : recommProps) => {
                 {
                         recom.editMode ? 
                         <Box component="section" sx={{display:"flex" ,justifyContent:"end" }}>
-                            <Button onClick={handleCloseEdit}>Cancelar</Button>
-                            <Button onClick={saveChange}>Guardar</Button>
+                            <Button onClick={() => deleteRating(recom.id)}>Guardar</Button>
                         </Box> : <></>
                     }
                 </Card> 

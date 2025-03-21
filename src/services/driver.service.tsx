@@ -3,8 +3,9 @@ import { Recommendation, recommendation1, recommendation2 } from "../domain/reco
 import { pastTravel, pendingTravel, TravelCard } from "../domain/travel";
 
 class DriverService {
-    profileRatings(id: number) {
-        throw new Error("Method not implemented.");
+    profileRatings(id: number) : Promise<Recommendation[]> {
+        // implementar endpoint para obtener recomendaciones
+        return Promise.resolve([recommendation1,recommendation2]);
     }
 
     getFinishtrips(id: number) : Promise<TravelCard[]> {

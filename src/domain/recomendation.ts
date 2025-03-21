@@ -1,4 +1,5 @@
 export class Recommendation {
+    id : number;
     name: string;
     date: Date;
     rating: number;
@@ -8,6 +9,7 @@ export class Recommendation {
     editMode: boolean;
 
     constructor(
+        id : number,
         name: string,
         date: Date,
         rating: number,
@@ -16,6 +18,7 @@ export class Recommendation {
         isEdit: boolean,
         editMode: boolean
     ) {
+        this.id = id;
         this.name = name;
         this.date = date;
         this.rating = rating;
@@ -27,6 +30,7 @@ export class Recommendation {
 }
 
 export const recommendation1 = new Recommendation(
+    3,
     'Jose Luis',
     new Date(),
     5,
@@ -36,6 +40,7 @@ export const recommendation1 = new Recommendation(
     false
 );
 export const recommendation2 = new Recommendation(
+    4,
     'Jose Luis',
     new Date(),
     5,

@@ -1,8 +1,12 @@
 import { driverCard, DriverCard, FormEntity } from "../domain/driver";
 import { friends, Friends, passengerProfile, PassengerProfile } from "../domain/passenger";
-import { Recommendation, recommendation2 } from "../domain/recomendation";
+import { Recommendation, recommendation1, recommendation2 } from "../domain/recomendation";
 
 class PassengerService {
+    profileRatings(id: number) : Promise<Recommendation[]> {
+        // implementar endpoint para obtener recomendaciones
+        return Promise.resolve([recommendation2,recommendation1]);
+    }
     getRatings(idUser: number) : Promise<Recommendation[]> {
         // implementar endpoint para obtener las calificaciones de un pasajero
         return Promise.resolve([recommendation2]);
