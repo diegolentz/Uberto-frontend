@@ -4,8 +4,9 @@ import { CardFriends } from './cardFriends';
 import { useState } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import { Friends } from '../../domain/passenger';
 
-export const FriendsComponent = () => {
+export const FriendsComponent = ({ friends }: { friends: Friends[] }) => {
 
     const [visibility, setVisibility] = useState<boolean>(false)
 
@@ -71,9 +72,9 @@ export const FriendsComponent = () => {
                         </Box>
 
                         <h5>Results</h5>
-                        <CardFriends isFriend={false}></CardFriends>
-                        <CardFriends isFriend={false}></CardFriends>
-                        <CardFriends isFriend={false}></CardFriends>
+                        {friends.map((friend, index) => (
+                            <CardFriends key={index} isFriend={false}></CardFriends>
+                        ))}
 
                         <Divider aria-hidden="true" sx={{ borderColor: '#a737fc', width: '100%' }} />
 
@@ -85,9 +86,9 @@ export const FriendsComponent = () => {
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', justifyContent: 'center', alignItems: 'center' }}>
 
                     <h5>My friends</h5>
-                    <CardFriends isFriend={true}></CardFriends>
-                    <CardFriends isFriend={true}></CardFriends>
-                    <CardFriends isFriend={true}></CardFriends>
+                    {friends.map((friend, index) => (
+                        <CardFriends key={index} isFriend={true}></CardFriends>
+                    ))}
                 </Box>
             </Box>
 

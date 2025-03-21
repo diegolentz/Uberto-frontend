@@ -14,16 +14,16 @@ export class TravelCard {
     }
 }
 
-export class SearchTravels{
-    public duration: number = 0;
-    constructor(
-        public orign: string,
-        public destination: string,
-        public init: Date,
-        public passengers: number,
+// export class SearchTravels{
+//     public duration: number = 0;
+//     constructor(
+//         public orign: string,
+//         public destination: string,
+//         public init: Date,
+//         public passengers: number,
 
-    ) {}
-}
+//     ) {}
+// }
 
 
 
@@ -49,9 +49,9 @@ export const pastTravel = new TravelCard(
     300
 );
 
-export const futureTravel = new SearchTravels(
-    "Av Siempre Viva 742", // Example origin
-    "Plaza Principal", // Example destination
-    new Date(Date.now() + 2 * 24 * 60 * 60 * 1000), // 2 days after today
-    4 // Example number of passengers
-);
+// export const futureTravel = new SearchTravels(
+//     "Av Siempre Viva 742", // Example origin
+//     "Plaza Principal", // Example destination
+//     new Date(Date.now() + 2 * 24 * 60 * 60 * 1000), // 2 days after today
+//     4 // Example number of passengers
+// );

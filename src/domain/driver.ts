@@ -12,14 +12,14 @@ export class DriverCard {
     ) {}
 }
 
-export class SearchDrivers{
-    constructor(
-        public name: string,
-        public origin: string,
-        public destination: string,
-        public passengers: number,
-    ) {}
-}
+// export class SearchDrivers{
+//     constructor(
+//         public name: string,
+//         public origin: string,
+//         public destination: string,
+//         public passengers: number,
+//     ) {}
+// }
 
 export class FormDriver {
     public date: Date;
@@ -46,7 +46,19 @@ export class FormEntity {
     }
 }
 
+export class DriverProfile {
+    constructor(
+        public name: string,
+        public lastname: string,
+        public price: number, // Updated to support decimals
+        public domain: string,
+        public brand: string,
+        public model: number,
+    ){}
+}
+
 export const driverCard = new DriverCard(1, "Pedro Geraghty", "Volkswagen", "Transporter 2005", "AC 505 FT", 500, 5);
-export const searchDriver = new SearchDrivers("Usuario disponible", "Unsam", "Parque san martin", 4);
+// export const searchDriver = new SearchDrivers("Usuario disponible", "Unsam", "Parque san martin", 4);
 const formDriver = new FormDriver("Usuario disponible", "Unsam", "Parque San Martin", 4, new Date(Date.now() + 2 * 24 * 60 * 60 * 1000));
 export const formEntity = new FormEntity(formDriver);
+export const driverProfile = new DriverProfile("Pedro", "Geraghty", 160.0, "AB586CD", "Toyota", 2022);
