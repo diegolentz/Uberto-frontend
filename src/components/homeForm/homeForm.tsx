@@ -1,7 +1,6 @@
 import { Stack, TextField, Button } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { FormDriver, SearchDrivers } from "../../domain/driver";
-import { SearchTravels } from "../../domain/travel";
+import { FormDriver,  } from "../../domain/driver";
 import { estilosInput } from "./homeFormStyles";
 import { FormPassenger } from "../../domain/passenger";
 

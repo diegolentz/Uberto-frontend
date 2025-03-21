@@ -76,6 +76,7 @@ export const Home = () => {
                             key={index}
                             value={item}
                             onClick={() => changePage(item)}
+                            isDriver={isDriver}
                         />
                     ))}
                 </>

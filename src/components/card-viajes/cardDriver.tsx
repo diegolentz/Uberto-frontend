@@ -5,19 +5,20 @@ import { DriverCard } from '../../domain/driver';
 import { TravelCard } from '../../domain/travel';
 
 import * as styles from './cardDriverStyle';
+import { useState } from 'react';
 
 
 interface CardDriverProps {
   value: DriverCard | TravelCard;
+  isDriver: boolean; // Corrige el typo en `isDriver`
   onClick: (data: DriverCard | TravelCard) => void; // Corrige el typo en `onClick`
 }
 
 
-export const CardDriver = ({ value, onClick }: CardDriverProps) => {
-  const isDriver = sessionStorage.getItem("isDriver") === "true";
-  const data = value
-
-
+export const CardDriver = ({ value, onClick, isDriver}: CardDriverProps) => {
+  const [data, setData] = useState<DriverCard | TravelCard>(value);
+  
+  
   const clickCard = () => {
     if (!isDriver) {
       onClick(value); // Llama correctamente la función con `value`

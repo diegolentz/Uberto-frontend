@@ -1,12 +1,13 @@
 import { driverProfile, DriverProfile, FormEntity } from "../domain/driver";
-import { pendingTravel, TravelCard } from "../domain/travel";
+import { pastTravel, pendingTravel, TravelCard } from "../domain/travel";
 
 class DriverService {
-
-    getPendingTravels(data: FormEntity) : Promise<TravelCard[]> {
-        // implementar endpoint para obtener viajes pendientes
-        return Promise.resolve([pendingTravel]);
+    getFinishtrips(id: number) : Promise<TravelCard[]> {
+        // implementar endpoint para obtener viajes finalizados
+        return Promise.resolve([pastTravel]);
     }
+
+  
     
     
     getImg(id: number, isDriver: boolean):Promise<string> {
@@ -16,6 +17,17 @@ class DriverService {
 
     getProfile(id: number): Promise<DriverProfile> {
         return Promise.resolve(driverProfile);
+    }
+
+    getPendingTravels(info : FormEntity) : Promise<TravelCard[]> {
+        // implementar endpoint para obtener viajes pendientes
+        // este metodo se usa para llevarle al back destino y origen, fecha y que busque quiernes estan disponibles
+        return Promise.resolve([pastTravel]);
+    }
+
+    getProfilePendingTravels(id: number) : Promise<TravelCard[]> {
+        // implementar endpoint para obtener viajes pendientes
+        return Promise.resolve([pendingTravel]);
     }
 }
 
