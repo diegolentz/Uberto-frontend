@@ -2,24 +2,17 @@ import { Box, Divider, Typography } from "@mui/material"
 import { useEffect, useState } from "react"
 import { DriverCard, FormDriver } from "../../domain/driver"
 import { TravelCard } from "../../domain/travel"
-import { Recommendation, recommProps } from "../recommendation/recommendation"
 import * as styles from './confirmationStyles'
 import { ButtonConfirmation } from "./buttonConfirmation"
+import { Recommendation, recommendation1 } from "../../domain/recomendation"
+import { RecommendationCard } from "../recommendation/recommendation"
 
-const recommendationMock = {
-    name: 'Jose Luis',
-    date:  Date(),
-    rating: 5,
-    comment:" Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel facere quae, quas deserunt voluptate neque magni amet asperiores assumenda, suscipit sint nam nisi totam et ab maiores. Soluta, numquam commodi.",
-    avatarUrl: "Foto",
-    isEdit: false,
-    editMode:false
-}
+
 
 export const ConfirmationPage = ({ driver, travel }: { travel: FormDriver ,driver:DriverCard }) => {
-    const [recommendation,setRecommendation] = useState<recommProps>()
+    const [recommendation,setRecommendation] = useState<Recommendation>()
 
-    const recommended = (recommendation:recommProps) =>{
+    const recommended = (recommendation:Recommendation) =>{
         setRecommendation(recommendation)
     }
     useEffect(() => {
@@ -52,7 +45,7 @@ export const ConfirmationPage = ({ driver, travel }: { travel: FormDriver ,drive
             <Typography sx={styles.text}>Patent <Typography sx={styles.span}>{driver.patent}</Typography ></Typography>
             <Typography sx={styles.text}>Rating <Typography sx={styles.span}>5</Typography ></Typography>
             <Box margin={2} marginBottom={10}>
-                <Recommendation  recom={recommendationMock} handle={recommended}></Recommendation>
+                <RecommendationCard recom={recommendation1} handle={recommended}></RecommendationCard>
             </Box>
             <ButtonConfirmation goTo={function (): void {
                 throw new Error("Function not implemented.")

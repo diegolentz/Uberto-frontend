@@ -1,40 +1,46 @@
 import { Card, CardHeader, CardContent, Typography, Avatar, Box, TextField, Rating, Button } from "@mui/material"
 import StarIcon from "@mui/icons-material/Star"
-import { useEffect, useRef } from "react"
+import { useEffect, useState } from "react"
+import { Recommendation } from "../../domain/recomendation"
+import { driverService } from "../../services/driver.service"
+import { passengerService } from "../../services/passenger.service"
 
 export interface recommProps {
-    name: string
-    date: string
-    rating: number
-    comment: string
-    avatarUrl: string
-    isEdit: boolean
-    editMode: boolean
+    recom: Recommendation
+    handle: (recom: recommProps) => void
 }
 
 
-export const Recommendation = ({recom, handle} : {recom:recommProps, handle: (recom: recommProps) => void}) => {
+export const RecommendationCard = ({recom, handle} : recommProps) => {
+    const id = parseInt(sessionStorage.getItem('idUser')!)
+    const isDriver = sessionStorage.getItem('isDriver') === 'true'
+    const [recomOrigin] = useState<Recommendation>(recom)
 
-    const recomOrigin = useRef<recommProps>({...recom, editMode: false});
+    const getRecommendation = async () => {
+        //traigo la recomendacion del back
+            const res = isDriver ? driverService.profileRatings(id) : passengerService.profileRatings(id)
+            setRatings(res)
+    }
 
     useEffect(() => {
-        // Solo establecer recomOrigin la primera vez
-        if (!recomOrigin.current) {
-            recomOrigin.current = {...recom, editMode: false};
-        }
+        isDriver ? recom.editMode = false : recom.editMode = true
+        getRecommendation()
+
     }, []); 
 
     const saveChange = async() => {
         //pego al back los cambios
         alert('guardo cambios en el back')
         recom.editMode = false
-        handle({...recom, editMode:false})
+        setRatings({
+            ...recom, editMode: false,
+        })
     }
 
     const handleCloseEdit = () => {
         console.log('recom original ', recomOrigin)
         console.log('recom ', recom)
-        handle(recomOrigin.current)
+        setRatings(recomOrigin)
     }
 
     return (
@@ -60,7 +66,7 @@ export const Recommendation = ({recom, handle} : {recom:recommProps, handle: (re
                 />
                 <CardContent>
                 <Typography variant="body2" color="textSecondary">
-                    {recom.date}
+                    {recom.date.toString()}
                 </Typography>
                     {
                         recom.editMode ? 

@@ -1,7 +1,12 @@
 import { driverProfile, DriverProfile, FormEntity } from "../domain/driver";
+import { Recommendation, recommendation1, recommendation2 } from "../domain/recomendation";
 import { pastTravel, pendingTravel, TravelCard } from "../domain/travel";
 
 class DriverService {
+    profileRatings(id: number) {
+        throw new Error("Method not implemented.");
+    }
+
     getFinishtrips(id: number) : Promise<TravelCard[]> {
         // implementar endpoint para obtener viajes finalizados
         return Promise.resolve([pastTravel]);
@@ -28,6 +33,11 @@ class DriverService {
     getProfilePendingTravels(id: number) : Promise<TravelCard[]> {
         // implementar endpoint para obtener viajes pendientes
         return Promise.resolve([pendingTravel]);
+    }
+
+    getRatings(idUser: number) : Promise<Recommendation[]> {
+        const recom = [recommendation1,recommendation2]
+        return  Promise.resolve(recom);
     }
 }
 

@@ -1,7 +1,12 @@
 import { driverCard, DriverCard, FormEntity } from "../domain/driver";
 import { friends, Friends, passengerProfile, PassengerProfile } from "../domain/passenger";
+import { Recommendation, recommendation2 } from "../domain/recomendation";
 
 class PassengerService {
+    getRatings(idUser: number) : Promise<Recommendation[]> {
+        // implementar endpoint para obtener las calificaciones de un pasajero
+        return Promise.resolve([recommendation2]);
+    }
     
     
     getImg(id: number, isDriver: boolean):Promise<string> {
