@@ -1,9 +1,9 @@
 import { Box, Button, styled } from "@mui/material";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { tryLogin } from "../services/login.service";
 import { useEffect } from "react";
-import { InputTextField } from "../components/inputs/textInput";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { InputTextField } from "../components/inputs/textInput";
+import { loginService } from "../services/login.service";
 
 const LoginFormContainerBox = styled(Box)(({ theme }) => ({
     backgroundColor: theme.palette.common.white,
@@ -29,9 +29,9 @@ export const Login = () => {
     const { register, handleSubmit, formState: { errors, touchedFields }, setError } = useForm<Inputs>({ criteriaMode: 'all' });
     const navigate = useNavigate()
 
-
+    // implementar, momentaneamente seteado un valor fijo
     const onSubmit: SubmitHandler<Inputs> = async data => {
-        await tryLogin(data) ? goHome() : console
+        await loginService.tryLogin(data) ? goHome() : console
     };
 
     
