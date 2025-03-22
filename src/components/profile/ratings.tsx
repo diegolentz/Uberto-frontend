@@ -23,17 +23,23 @@ export const Ratings = () => {
             setRatings(res)
         }
     }
+    const DeleteRating = async (idreco : number) => {
+        const reco = ratings.filter((reco) => reco.id == idreco)
+        setRatings(reco)
+
+        await passengerService.deleteRecom(idreco,idUser)
+    }
 
    useEffect(() => {
     getRatings()
 
-   }, [])
+   }, [ratings])
 
 
     return (
         <>
         {ratings.map((rating, index) => (
-      <RecommendationCard recom={rating} handle={function (recom: recommProps): void {} }></RecommendationCard>
+      <RecommendationCard recom={rating} handle={DeleteRating}></RecommendationCard>
         ))}
 
         </>

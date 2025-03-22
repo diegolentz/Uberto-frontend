@@ -3,6 +3,9 @@ import { friends, Friends, passengerProfile, PassengerProfile } from "../domain/
 import { Recommendation, recommendation1, recommendation2 } from "../domain/recomendation";
 
 class PassengerService {
+    deleteRecom(idreco: number, idUser: number) {
+        // eliminar la recom de usuario, solo se eliminan las que crea el usuario
+    }
     profileRatings(id: number) : Promise<Recommendation[]> {
         // implementar endpoint para obtener recomendaciones
         return Promise.resolve([recommendation2,recommendation1]);

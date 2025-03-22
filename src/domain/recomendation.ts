@@ -36,8 +36,8 @@ export const recommendation1 = new Recommendation(
     5,
     "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel facere quae, quas deserunt voluptate neque magni amet asperiores assumenda, suscipit sint nam nisi totam et ab maiores. Soluta, numquam commodi.",
     "Foto",
-    false,
-    false
+    true,
+    true
 );
 export const recommendation2 = new Recommendation(
     4,
@@ -46,6 +46,6 @@ export const recommendation2 = new Recommendation(
     5,
     "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel facere quae, quas deserunt voluptate neque magni amet asperiores assumenda, suscipit sint nam nisi totam et ab maiores. Soluta, numquam commodi.",
     "Foto",
-    false,
-    false
+    true,
+    true
 );
