@@ -1,20 +1,27 @@
 import axios from "axios";
 import { REST_SERVER_URL } from "./urls";
 
-import { Login } from "../domain/login";
 
 
+class LoginService {
+    async tryLogin(requestBody: { username: string; password: string }): Promise<boolean> {
+        try {
+            // const data = await axios.get<Login>(REST_SERVER_URL).data
+            const login = 1; /* cuando devuelva el id del back lo setea en el session momentaneamente con valor fijo */
+            const isDriver = false
+            sessionStorage.setItem("idUser", login.toString());
+            sessionStorage.setItem("isDriver", isDriver.toString());
 
-export async function tryLogin(requestBody: { username: string; password: string }): Promise<boolean> {
-    try {
-        // const data = await axios.get<Login>(REST_SERVER_URL).data
-        sessionStorage.setItem("idUser", Login.idUser.toString()); 
-        sessionStorage.setItem("idDriver", Login.idDriver.toString()); 
-        sessionStorage.setItem("img", Login.img); 
-
-        return true; 
-    } catch (error) {
-        console.error("Login failed:", error);
-        return false;
+            return true;
+        } catch (error) {
+            console.error("Login failed:", error);
+            return false;
+        }
     }
+
+
+
+    
 }
+
+export const loginService = new LoginService();

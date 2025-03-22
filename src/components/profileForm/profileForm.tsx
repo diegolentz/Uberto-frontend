@@ -1,19 +1,19 @@
 import { Box, Button, Divider, Stack, TextField } from "@mui/material";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { DriverProfile, UserProfile } from "../../domain/profile";
 import { estilosInput } from "../homeForm/homeFormStyles";
+import { DriverProfile } from "../../domain/driver";
+import { PassengerProfile } from "../../domain/passenger";
 
 interface ProfileFormProps {
-    entity: DriverProfile | UserProfile;
-    rol: boolean;
+    entity: DriverProfile | PassengerProfile;
     func: (data: any) => void;
 }
 
 
-export const ProfileForm = ({ entity, rol, func }: ProfileFormProps) => {
-    const [isDriver, setIsDriver] = useState<Boolean>(rol);
-    const [profile, setProfile] = useState<DriverProfile | UserProfile>(entity);
+export const ProfileForm = ({ entity,  func }: ProfileFormProps) => {
+    const isDriver = sessionStorage.getItem('isDriver') === 'true';
+    const [profile, setProfile] = useState<DriverProfile | PassengerProfile>(entity);
 
     const setChanges = (data: any) => {
         func(data);
@@ -29,9 +29,9 @@ export const ProfileForm = ({ entity, rol, func }: ProfileFormProps) => {
             brand: (profile as DriverProfile).brand,
             model: (profile as DriverProfile).model,
         } : {
-            name: (profile as UserProfile).name,
-            lastname: (profile as UserProfile).lastname,
-            phone: (profile as UserProfile).phone,
+            name: (profile as PassengerProfile).name,
+            lastname: (profile as PassengerProfile).lastname,
+            phone: (profile as PassengerProfile).phone,
         }
     });
 

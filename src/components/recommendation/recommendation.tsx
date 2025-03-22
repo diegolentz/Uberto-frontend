@@ -1,41 +1,24 @@
 import { Card, CardHeader, CardContent, Typography, Avatar, Box, TextField, Rating, Button } from "@mui/material"
 import StarIcon from "@mui/icons-material/Star"
-import { useEffect, useRef } from "react"
+import { useEffect, useState } from "react"
+import { Recommendation } from "../../domain/recomendation"
+import { driverService } from "../../services/driver.service"
+import { passengerService } from "../../services/passenger.service"
 
 export interface recommProps {
-    name: string
-    date: string
-    rating: number
-    comment: string
-    avatarUrl: string
-    isEdit: boolean
-    editMode: boolean
+    recom: Recommendation
+    handle: (recom: number) => void
 }
 
 
-export const Recommendation = ({recom, handle} : {recom:recommProps, handle: (recom: recommProps) => void}) => {
+export const RecommendationCard = ({recom, handle} : recommProps) => {
+    const id = parseInt(sessionStorage.getItem('idUser')!)
+    const isDriver = sessionStorage.getItem('isDriver') === 'true'
 
-    const recomOrigin = useRef<recommProps>({...recom, editMode: false});
-
-    useEffect(() => {
-        // Solo establecer recomOrigin la primera vez
-        if (!recomOrigin.current) {
-            recomOrigin.current = {...recom, editMode: false};
-        }
-    }, []); 
-
-    const saveChange = async() => {
-        //pego al back los cambios
-        alert('guardo cambios en el back')
-        recom.editMode = false
-        handle({...recom, editMode:false})
+    const deleteRating = (id: number) => {
+        handle(id)
     }
-
-    const handleCloseEdit = () => {
-        console.log('recom original ', recomOrigin)
-        console.log('recom ', recom)
-        handle(recomOrigin.current)
-    }
+     
 
     return (
         <>
@@ -50,7 +33,6 @@ export const Recommendation = ({recom, handle} : {recom:recommProps, handle: (re
                         {
                             recom.editMode ? 
                             <Rating value={recom.rating} 
-                            onChange={(_, newValue) => handle({...recom, rating:newValue || recom.rating})} 
                             precision={0.5} size="large"/> : 
                             recom.rating
                         }
@@ -60,12 +42,11 @@ export const Recommendation = ({recom, handle} : {recom:recommProps, handle: (re
                 />
                 <CardContent>
                 <Typography variant="body2" color="textSecondary">
-                    {recom.date}
+                    {recom.date.toString()}
                 </Typography>
                     {
                         recom.editMode ? 
                         <TextField fullWidth multiline rows={3} label="Comentario" value={recom.comment} 
-                        onChange={(e) => handle({...recom, comment:e.target.value})} 
                         sx={{ mt: 2 }}/> : 
                         recom.comment
                     }
@@ -73,8 +54,7 @@ export const Recommendation = ({recom, handle} : {recom:recommProps, handle: (re
                 {
                         recom.editMode ? 
                         <Box component="section" sx={{display:"flex" ,justifyContent:"end" }}>
-                            <Button onClick={handleCloseEdit}>Cancelar</Button>
-                            <Button onClick={saveChange}>Guardar</Button>
+                            <Button onClick={() => deleteRating(recom.id)}>Guardar</Button>
                         </Box> : <></>
                     }
                 </Card> 
