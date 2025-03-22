@@ -81,7 +81,10 @@ export const Home = () => {
                     ))}
                 </>
             ) : (
-                <ConfirmationPage driver={driveSelected as DriverCard} travel={formInfo as FormDriver} />
+                <ConfirmationPage 
+                    driver={driveSelected as DriverCard} 
+                    travel={formInfo as FormDriver} 
+                />
             )}
         </>
     )

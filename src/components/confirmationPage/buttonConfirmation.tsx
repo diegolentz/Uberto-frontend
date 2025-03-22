@@ -1,6 +1,13 @@
 import { Box, Button } from "@mui/material"
 import * as styles from './confirmationStyles';
-export const ButtonConfirmation = ({goTo} : {goTo : ()=>void}) => {
+import { useNavigate } from "react-router-dom";
+export const ButtonConfirmation = () => {
+
+    const navigate = useNavigate()
+
+    const goTo = () =>{
+        navigate("/home")
+    }
     return(<>
         <Box 
             sx = {styles.boxButtons}

@@ -113,7 +113,7 @@ export const HomeForm = ({ setInfo }: HomeFormProps) => {
                     <TextField
                         size="small"
                         label="Date"
-                        type="date"
+                        type="datetime-local"
                         sx={estilosInput}
                         slotProps={{ inputLabel: { shrink: true } }}
                         {...register("date", {

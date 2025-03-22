@@ -65,9 +65,11 @@ export const ConfirmationPage = ({ driver, travel }: { travel: FormDriver, drive
                 )}
 
             </Box>
-            <ButtonConfirmation goTo={function (): void {
-                throw new Error("Function not implemented.")
-            }} ></ButtonConfirmation>
+            <ButtonConfirmation 
+                //goTo={function (): void {throw new Error("Function not implemented.")}} 
+            >
+
+            </ButtonConfirmation>
 
         </>
     )

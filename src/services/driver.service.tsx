@@ -12,8 +12,6 @@ class DriverService {
         // implementar endpoint para obtener viajes finalizados
         return Promise.resolve([pastTravel]);
     }
-
-  
     
     
     getImg(id: number, isDriver: boolean):Promise<string> {

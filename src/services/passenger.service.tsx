@@ -1,6 +1,8 @@
+import axios from "axios";
 import { driverCard, DriverCard, FormEntity } from "../domain/driver";
 import { friends, Friends, passengerProfile, PassengerProfile } from "../domain/passenger";
 import { Recommendation, recommendation1, recommendation2 } from "../domain/recomendation";
+import { REST_SERVER_URL } from "./urls";
 
 class PassengerService {
     deleteRecom(idreco: number, idUser: number) {
@@ -22,11 +24,11 @@ class PassengerService {
     }
     
     
-    getAvailableDrivers(data: FormEntity) : Promise<DriverCard[]> {
+    async getAvailableDrivers(data: FormEntity) : Promise<DriverCard[]> {
         // implementar endpoint para obtener conductores disponibles
-        return Promise.resolve([driverCard]);
+        //const response = await axios.post(`${REST_SERVER_URL}/available`,data)
         
-        
+        return Promise.resolve([driverCard]);    
     }
     
     
