@@ -9,6 +9,7 @@ import { driverService } from "../services/driver.service"
 import { DriverCard, FormDriver, FormEntity } from "../domain/driver"
 import { TravelCard } from "../domain/travel"
 import { FormPassenger } from "../domain/passenger"
+import { data } from "react-router-dom"
 
 // se obtiene el id y rol del sessionStorage rednderizo formulario correspondiente, 
 // el formulario se llena en formInfo ya sea de tipo FormDriver o FormPassenger
@@ -83,7 +84,8 @@ export const Home = () => {
             ) : (
                 <ConfirmationPage 
                     driver={driveSelected as DriverCard} 
-                    travel={formInfo as FormDriver} 
+                    travel={formInfo as FormDriver}
+                    changePage={changePage} 
                 />
             )}
         </>
