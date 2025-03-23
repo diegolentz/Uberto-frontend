@@ -18,16 +18,15 @@ export const Data = () => {
         setProfile({ ...profile, ...data });
     }
 
+    //TODO: getProfile tiene harcodeado el id 1, esto hay que cambiarlo una vez funcione el login
+
     const fetchForm = async () => {
         if (isDriver) {
-            const response = await driverService.getProfile(id)
+            const response = await driverService.getProfile(1)
             setProfile(response);
-            console.log("Updated profile:", profile);
-            
         } else {
-            const response = await passengerService.getProfile(id);
+            const response = await passengerService.getProfile(1);
             setProfile(response);
-            console.log("Updated profile:", profile);
         };
         // Profile will be logged in the useEffect below
     }
@@ -36,11 +35,6 @@ export const Data = () => {
         fetchForm();
     }, []);
 
-    // desp borrar este useeffect
-    useEffect(() => {
-        console.log("Updated profile:", profile);
-    }, [profile]);
-    
 
     return (
         <>
@@ -51,7 +45,7 @@ export const Data = () => {
                     <>
                         <MoneyForm money={(profile as PassengerProfile).money} func={setChanges} />
                         <Divider aria-hidden="true" sx={{ borderColor: '#a737fc' }} />
-                        <FriendsComponent friends={(profile as PassengerProfile).friends}/>
+                        <FriendsComponent friends={(profile as PassengerProfile).friends} />
                     </>
                 )}
             </Box>

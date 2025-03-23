@@ -58,7 +58,7 @@ export class FormEntity {
 
 export class DriverProfile {
     constructor(
-        public name: string,
+        public firstname: string,
         public lastname: string,
         public price: number, // Updated to support decimals
         public domain: string,
