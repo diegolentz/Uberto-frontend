@@ -94,18 +94,24 @@ export const CardDriver = ({ value, onClick, isDriver }: CardDriverProps) => {
               </Typography>
             </Box>
             <Box sx={styles.infoTravelStyle}>
-              <Typography sx={styles.infoTravelStyle}>
-                  {  `${(value as TravelCard).date}`  }
-              </Typography>
+
               <Typography sx={styles.infoTravelStyle}>
                 {'origin' in value ? value.origin : ''}
               </Typography>
+
               <Typography sx={styles.infoTravelStyle}>
                 {'destination' in value ? value.destination : ''}
               </Typography>
+
+              <Typography sx={styles.infoTravelStyle}>
+                
+                {  `${(value as TravelCard).date}`  }
+              </Typography>
+
               <Typography sx={styles.priceTravelStyle}>
                 {'price' in value ? `$ ${value.price}` : ''}
               </Typography>
+
             </Box>
           </Box>
         )}
