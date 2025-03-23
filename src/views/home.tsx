@@ -1,4 +1,4 @@
-import axios from "axios"
+import axios, { AxiosError } from "axios"
 import { useContext, useEffect, useState } from "react"
 import { CardDriver } from "../components/card-viajes/cardDriver"
 import { ConfirmationPage } from "../components/confirmationPage/confirmationPage"
@@ -23,7 +23,7 @@ export const Home = () => {
     const [card, setCard] = useState<DriverCard[] | TravelCard[] | null>(null)
     const [isHome, setIsHome] = useState<boolean>(true)
     const [formInfo, setFormInfo] = useState<FormDriver | FormPassenger>()
-    useContext(msjContext)
+    const {showToast} = useContext(msjContext)
     const [driveSelected, setDriveSelected] = useState<DriverCard | TravelCard>()
 
     const infoForm = (formValues: FormDriver | FormPassenger) => {
@@ -39,28 +39,25 @@ export const Home = () => {
     const fetchData = async (formInfo: FormDriver | FormPassenger) => {
         const data = new FormEntity(formInfo)
 
-        const getPendingsTravels = async (data: FormEntity) => {
-            const res = await driverService.getPendingTravels(data);
-            return res;
-        }
-
-        const getAvailableDrivers = async (data: FormEntity) => {
-            const res = await passengerService.getAvailableDrivers(data);
-            return res;
-        }
-
         if (isDriver) {
-            const res = await getPendingsTravels(data)
-            setCard(res)
+            try{
+                const res = await driverService.getPendingTravels(data);
+                setCard(res as unknown as TravelCard[])
+            } catch(e : unknown){
+                showToast((e as AxiosError<unknown>).response!)
+            }
         } else {
-            const res = await getAvailableDrivers(data)
-            setCard(res)
+            try{
+                const res = await passengerService.getAvailableDrivers(data);
+                setCard(res)
+            } catch(e : unknown){
+                showToast((e as AxiosError<unknown>).response!)
+            }
         }
     };
     // atrapo los datos del chofer clickeado y cambio de pantalla
     const changePage = (data: DriverCard | TravelCard) => {
         setDriveSelected(data)
-
         setIsHome(!isHome)
     }
 
