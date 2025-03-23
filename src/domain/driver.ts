@@ -29,7 +29,7 @@ export class FormDriver {
 export class FormEntity {
     public origin: string;
     public destination: string;
-    public date: Date; // Mantener la fecha como string
+    public date: Date; 
     public numberPassengers: number; 
 
     constructor(data: FormDriver | FormPassenger) {

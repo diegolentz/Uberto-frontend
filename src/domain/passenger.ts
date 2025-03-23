@@ -1,5 +1,5 @@
 export class FormPassenger {
-    public duration: number = 30;
+    // public duration: number ,
     constructor(
         public origin: string,
         public destination: string,
