@@ -95,15 +95,13 @@ export const CardDriver = ({ value, onClick, isDriver }: CardDriverProps) => {
             </Box>
             <Box sx={styles.infoTravelStyle}>
               <Typography sx={styles.infoTravelStyle}>
+                  {  `${(value as TravelCard).date}`  }
+              </Typography>
+              <Typography sx={styles.infoTravelStyle}>
                 {'origin' in value ? value.origin : ''}
               </Typography>
               <Typography sx={styles.infoTravelStyle}>
                 {'destination' in value ? value.destination : ''}
-              </Typography>
-              <Typography sx={styles.infoTravelStyle}>
-                {'date' in value
-                  ? `${value.date.getDay()}/${value.date.getMonth()}/${value.date.getFullYear()} | ${value.date.getHours()}:${value.date.getMinutes()}`
-                  : ''}
               </Typography>
               <Typography sx={styles.priceTravelStyle}>
                 {'price' in value ? `$ ${value.price}` : ''}
