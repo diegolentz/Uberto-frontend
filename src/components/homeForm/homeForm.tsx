@@ -4,12 +4,12 @@ import { FormDriver,  } from "../../domain/driver";
 import { estilosInput } from "./homeFormStyles";
 import { FormPassenger } from "../../domain/passenger";
 
-// Define the HomeFormProps type
+
 type HomeFormProps = {
-    setInfo: (info: FormDriver | FormPassenger) => void; // Replace 'any' with the specific type if known
+    setInfo: (info: FormDriver | FormPassenger) => void; 
     fetchData: (info: FormDriver | FormPassenger) => void;
 };
-// Define the FormValues type
+
 export type FormValues = {
     name: string;
     origin: string;
@@ -57,7 +57,7 @@ export const HomeForm = ({ setInfo,fetchData }: HomeFormProps) => {
             fetchData(data)
 
         }
-    }; // ← Aquí cerramos correctamente la función
+    }; 
 
     return (
         <form onSubmit={handleSubmit(onsubmit)} noValidate>
@@ -166,4 +166,4 @@ export const HomeForm = ({ setInfo,fetchData }: HomeFormProps) => {
             </Stack>
         </form>
     );
-}; // ← Eliminamos la llave extra
+}
