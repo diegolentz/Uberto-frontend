@@ -27,7 +27,6 @@ export const Home = () => {
 
     const infoForm = (formValues: FormDriver | FormPassenger) => {
         setFormInfo(formValues)
-        // fetchData(formValues)
     }
 
     // creo un entity con la info qe necesita el back para traer los datos

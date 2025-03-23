@@ -37,7 +37,9 @@ export const ConfirmationPage = (
 
     }, [])
 
-
+    const handleDecline = () => {
+        changePage(driver)
+    }
 
     return (
         <>
@@ -77,7 +79,7 @@ export const ConfirmationPage = (
                 <Button 
                     variant="outlined"
                     color="secondary"
-                    onClick={changePage()}
+                    onClick={handleDecline}
                 >
                     decline
                 </Button>
