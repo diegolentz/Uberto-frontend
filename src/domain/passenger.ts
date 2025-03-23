@@ -5,6 +5,7 @@ export class FormPassenger {
         public destination: string,
         public date: Date,
         public passengers: number,
+        
     ) {}
 }
 

@@ -9,6 +9,7 @@ import { driverService } from "../services/driver.service"
 import { DriverCard, FormDriver, FormEntity } from "../domain/driver"
 import { TravelCard } from "../domain/travel"
 import { FormPassenger } from "../domain/passenger"
+import { data } from "react-router-dom"
 
 // se obtiene el id y rol del sessionStorage rednderizo formulario correspondiente, 
 // el formulario se llena en formInfo ya sea de tipo FormDriver o FormPassenger
@@ -26,7 +27,7 @@ export const Home = () => {
     const [driveSelected, setDriveSelected] = useState<DriverCard | TravelCard>()
 
     const infoForm = (formValues: FormDriver | FormPassenger) => {
-        console.log(formValues)
+        // console.log(formValues)
         setFormInfo(formValues)
         fetchData(formValues)
     }
@@ -59,6 +60,7 @@ export const Home = () => {
     // atrapo los datos del chofer clickeado y cambio de pantalla
     const changePage = (data: DriverCard | TravelCard) => {
         setDriveSelected(data)
+
         setIsHome(!isHome)
     }
 
@@ -69,7 +71,7 @@ export const Home = () => {
         <>
             {isHome ? (
                 <>
-                    <HomeForm setInfo={infoForm} />
+                    <HomeForm setInfo={infoForm}  fetchData={fetchData}/>
 
                     {card?.map((item, index) => (
                         <CardDriver
@@ -81,7 +83,11 @@ export const Home = () => {
                     ))}
                 </>
             ) : (
-                <ConfirmationPage driver={driveSelected as DriverCard} travel={formInfo as FormDriver} />
+                <ConfirmationPage 
+                    driver={driveSelected as DriverCard} 
+                    travel={formInfo as FormDriver}
+                    changePage={changePage} 
+                />
             )}
         </>
     )

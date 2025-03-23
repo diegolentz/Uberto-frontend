@@ -1,4 +1,4 @@
-import { Box, Divider, Typography } from "@mui/material"
+import { Box, Button, Divider, Typography } from "@mui/material"
 import { useEffect, useState } from "react"
 import { DriverCard, FormDriver } from "../../domain/driver"
 import { TravelCard } from "../../domain/travel"
@@ -11,7 +11,12 @@ import { passengerService } from "../../services/passenger.service"
 
 
 
-export const ConfirmationPage = ({ driver, travel }: { travel: FormDriver, driver: DriverCard }) => {
+export const ConfirmationPage = (
+    { driver,travel,changePage }:
+    { travel: FormDriver, 
+    driver: DriverCard,
+    changePage : (data: DriverCard | TravelCard)=> void }) => {
+
     const [recommendation, setRecommendation] = useState<Recommendation[]>()
     const id = parseInt(sessionStorage.getItem('idDriver')!)
     const isDriver = sessionStorage.getItem('isDriver') == "isDriver"
@@ -65,9 +70,24 @@ export const ConfirmationPage = ({ driver, travel }: { travel: FormDriver, drive
                 )}
 
             </Box>
-            <ButtonConfirmation goTo={function (): void {
-                throw new Error("Function not implemented.")
-            }} ></ButtonConfirmation>
+
+            <Box 
+                sx = {styles.boxButtons}
+            >
+                <Button 
+                    variant="outlined"
+                    color="secondary"
+                    onClick={changePage}
+                >
+                    decline
+                </Button>
+                <Button 
+                    variant="contained"
+                    color="secondary"
+                >
+                    Confirm
+                </Button>
+            </Box>
 
         </>
     )

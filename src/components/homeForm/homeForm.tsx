@@ -6,7 +6,8 @@ import { FormPassenger } from "../../domain/passenger";
 
 // Define the HomeFormProps type
 type HomeFormProps = {
-    setInfo: (info: any) => void; // Replace 'any' with the specific type if known
+    setInfo: (info: FormDriver | FormPassenger) => void; // Replace 'any' with the specific type if known
+    fetchData: (info: FormDriver | FormPassenger) => void;
 };
 // Define the FormValues type
 export type FormValues = {
@@ -17,7 +18,7 @@ export type FormValues = {
     passengers: number;
 };
 
-export const HomeForm = ({ setInfo }: HomeFormProps) => {
+export const HomeForm = ({ setInfo,fetchData }: HomeFormProps) => {
     const isDriver = sessionStorage.getItem("isDriver") === "true";
     
         const form = useForm<FormValues>({
@@ -43,6 +44,7 @@ export const HomeForm = ({ setInfo }: HomeFormProps) => {
                 form.getValues().passengers
             );
             setInfo(data);
+            fetchData(data)
         } else {
             const data = new FormPassenger(
                 form.getValues().origin,
@@ -51,6 +53,9 @@ export const HomeForm = ({ setInfo }: HomeFormProps) => {
                 form.getValues().passengers
             );
             setInfo(data);
+            console.log(data)
+            fetchData(data)
+
         }
     }; // ← Aquí cerramos correctamente la función
 
@@ -113,7 +118,7 @@ export const HomeForm = ({ setInfo }: HomeFormProps) => {
                     <TextField
                         size="small"
                         label="Date"
-                        type="date"
+                        type="datetime-local"
                         sx={estilosInput}
                         slotProps={{ inputLabel: { shrink: true } }}
                         {...register("date", {
@@ -154,6 +159,7 @@ export const HomeForm = ({ setInfo }: HomeFormProps) => {
                     type="submit"
                     variant="contained"
                     sx={{ background: "#a737fc" }}
+                    
                 >
                     Filter
                 </Button>
