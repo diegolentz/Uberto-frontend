@@ -98,7 +98,7 @@ export const ConfirmationPage = (
             <Typography sx={styles.text} component="div">
                 Patent
                 <Typography sx={styles.span} component="span">
-                    {driver.patent}
+                    {driver.serial}
                 </Typography>
             </Typography>
             <Typography sx={styles.text} component="div">

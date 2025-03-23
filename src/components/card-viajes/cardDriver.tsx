@@ -27,7 +27,7 @@ export const CardDriver = ({ value, onClick, isDriver }: CardDriverProps) => {
         title={
           !isDriver ? (
             <Typography sx={styles.patentStyle}>
-              {'patent' in value ? value.patent : ''}
+              {isDriver && 'serial' in value ? value.serial : ''}
             </Typography>
           ) : (
             <Box>

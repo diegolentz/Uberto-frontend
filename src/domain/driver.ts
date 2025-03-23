@@ -6,7 +6,7 @@ export class DriverCard {
         public name: string,
         public brand: string,
         public model: string,
-        public patent: string,
+        public serial: string,
         public price: number,
         public rating: number,
         public img: string
