@@ -104,7 +104,7 @@ export const ConfirmationPage = (
             <Typography sx={styles.text} component="div">
                 Rating
                 <Typography sx={styles.span} component="span">
-                    5
+                    {driver.rating}
                 </Typography>
             </Typography>
             <Box margin={2} marginBottom={10}>

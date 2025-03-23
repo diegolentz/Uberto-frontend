@@ -1,6 +1,8 @@
+import axios from "axios";
 import { driverProfile, DriverProfile, FormEntity } from "../domain/driver";
 import { Recommendation, recommendation1, recommendation2 } from "../domain/recomendation";
 import { pastTravel, pendingTravel, TravelCard } from "../domain/travel";
+import { REST_SERVER_URL } from "./urls";
 
 class DriverService {
     profileRatings(id: number) : Promise<Recommendation[]> {
@@ -23,10 +25,15 @@ class DriverService {
         return Promise.resolve(driverProfile);
     }
 
-    getPendingTravels(info : FormEntity) {
-        // implementar endpoint para obtener viajes pendientes
-        // este metodo se usa para llevarle al back destino y origen, fecha y que busque quiernes estan disponibles
-        return Promise.resolve([pastTravel]);
+    async getPendingTravels(id: number, rol: string) { 
+        const response = await axios.get(`${REST_SERVER_URL}/trip/pending`, {
+            params: {
+                id: id,
+                rol: rol
+            }
+        });
+        console.log(response)
+        return response.data;
     }
 
     getProfilePendingTravels(id: number) : Promise<TravelCard[]> {

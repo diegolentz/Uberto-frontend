@@ -32,7 +32,7 @@ export const CardDriver = ({ value, onClick, isDriver }: CardDriverProps) => {
           ) : (
             <Box>
               <Typography sx={styles.userNameLastnameStyle}>
-                {value.name} {'lastName' in value ? value.lastName : ''}
+                {(value as TravelCard).passengerName} 
               </Typography>
               <Box sx={styles.iconUserStyle}>
                 <GroupIcon sx={{ fontSize: '1.2rem' }} />
@@ -62,7 +62,7 @@ export const CardDriver = ({ value, onClick, isDriver }: CardDriverProps) => {
         {!isDriver ? (
           <>
             <Box sx={styles.boxDataStyle}>
-              <Typography sx={styles.nameStyle}>{value.name}</Typography>
+              <Typography sx={styles.nameStyle}>{(value as DriverCard).name}</Typography>
               <Typography sx={styles.brandModelStyle}>
                 {'model' in value ? `${value.brand}  ${value.model}` : ''}
               </Typography>
@@ -94,20 +94,24 @@ export const CardDriver = ({ value, onClick, isDriver }: CardDriverProps) => {
               </Typography>
             </Box>
             <Box sx={styles.infoTravelStyle}>
+
               <Typography sx={styles.infoTravelStyle}>
                 {'origin' in value ? value.origin : ''}
               </Typography>
+
               <Typography sx={styles.infoTravelStyle}>
                 {'destination' in value ? value.destination : ''}
               </Typography>
+
               <Typography sx={styles.infoTravelStyle}>
-                {'date' in value
-                  ? `${value.date.getDay()}/${value.date.getMonth()}/${value.date.getFullYear()} | ${value.date.getHours()}:${value.date.getMinutes()}`
-                  : ''}
+                
+                {  `${(value as TravelCard).date}`  }
               </Typography>
+
               <Typography sx={styles.priceTravelStyle}>
                 {'price' in value ? `$ ${value.price}` : ''}
               </Typography>
+
             </Box>
           </Box>
         )}

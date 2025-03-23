@@ -41,7 +41,8 @@ export const HomeForm = ({ setInfo,fetchData }: HomeFormProps) => {
                 form.getValues().name,
                 form.getValues().origin,
                 form.getValues().destination,
-                form.getValues().passengers
+                form.getValues().passengers,
+                
             );
             setInfo(data);
             fetchData(data)

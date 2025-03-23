@@ -17,7 +17,8 @@ import { FormPassenger } from "../domain/passenger"
 // se renderiza el formulario o la pagina de confirmacion
 
 export const Home = () => {
-    parseInt(sessionStorage.getItem("idUser")!)
+    const idUser = parseInt(sessionStorage.getItem("userId")!)
+    const roleUser = sessionStorage.getItem("role")
     const isDriver = sessionStorage.getItem("role") === "driver"
     const [card, setCard] = useState<DriverCard[] | TravelCard[] | null>(null)
     const [isHome, setIsHome] = useState<boolean>(true)
@@ -37,7 +38,7 @@ const fetchData = async (formInfo: FormDriver | FormPassenger) => {
     const data = new FormEntity(formInfo)
     if (isDriver) {
         try {
-            const res = await driverService.getPendingTravels(data);
+            const res = await driverService.getPendingTravels(idUser , roleUser!);// segui
             setCard(res as unknown as TravelCard[])
         } catch (e: unknown) {
             showToast((e as AxiosError<unknown>).response!)
@@ -45,7 +46,7 @@ const fetchData = async (formInfo: FormDriver | FormPassenger) => {
     } else {
         try {
             const res = await passengerService.getAvailableDrivers(data);
-            setCard(res)
+            setCard(res.cardDrivers as DriverCard[])
         } catch (e: unknown) {
             showToast((e as AxiosError<unknown>).response!)
         }
