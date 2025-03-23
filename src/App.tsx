@@ -1,11 +1,14 @@
 import './App.css'
+import { ToastProvider } from './hooks/toast/toast.context'
 import { AppRouter } from './routes'
 
 function App() {
 
   return (
     <>
-     <AppRouter/>
+      <ToastProvider key={1}>
+        <AppRouter/>
+      </ToastProvider>
     </>
   )
 }
