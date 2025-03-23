@@ -8,7 +8,8 @@ export class DriverCard {
         public model: string,
         public patent: string,
         public price: number,
-        public rating: number
+        public rating: number,
+        public img: string
     ) {}
 }
 
@@ -37,14 +38,23 @@ export class FormDriver {
 export class FormEntity {
     public origin: string;
     public destination: string;
-    public date: Date;
-    constructor( data : FormDriver | FormPassenger
-    ) {
+    public date: string; // Mantener la fecha como string
+    public passengers: number; // Cambiar el tipo a number
+
+    constructor(data: FormDriver | FormPassenger) {
         this.origin = data.origin;
         this.destination = data.destination;
-        this.date = data.date;
+
+        // Convertir la fecha a formato 'YYYY-MM-DDTHH:mm' (sin la zona horaria)
+        const dateObj = new Date(data.date); // Suponiendo que 'data.date' es un objeto Date
+        this.date = dateObj.toISOString().split('T')[0] + 'T' + dateObj.toISOString().split('T')[1].slice(0, 5);
+
+        // Convertir 'passengers' a número, en caso de que venga como string
+        this.passengers = Number(data.passengers); // O parseInt(data.passengers)
+
     }
 }
+
 
 export class DriverProfile {
     constructor(

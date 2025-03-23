@@ -27,7 +27,7 @@ export const Home = () => {
     const [driveSelected, setDriveSelected] = useState<DriverCard | TravelCard>()
 
     const infoForm = (formValues: FormDriver | FormPassenger) => {
-        console.log(formValues)
+        // console.log(formValues)
         setFormInfo(formValues)
         fetchData(formValues)
     }
@@ -60,6 +60,7 @@ export const Home = () => {
     // atrapo los datos del chofer clickeado y cambio de pantalla
     const changePage = (data: DriverCard | TravelCard) => {
         setDriveSelected(data)
+
         setIsHome(!isHome)
     }
 
@@ -70,7 +71,7 @@ export const Home = () => {
         <>
             {isHome ? (
                 <>
-                    <HomeForm setInfo={infoForm} />
+                    <HomeForm setInfo={infoForm}  fetchData={fetchData}/>
 
                     {card?.map((item, index) => (
                         <CardDriver

@@ -26,9 +26,10 @@ class PassengerService {
     
     async getAvailableDrivers(data: FormEntity) : Promise<DriverCard[]> {
         // implementar endpoint para obtener conductores disponibles
-        //const response = await axios.post(`${REST_SERVER_URL}/available`,data)
-        
-        return Promise.resolve([driverCard]);    
+      
+        const response = await axios.post(`${REST_SERVER_URL}/driver/available`,data)
+        return response.data
+        // return Promise.resolve([driverCard]);    
     }
     
     
