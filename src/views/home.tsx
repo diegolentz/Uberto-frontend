@@ -18,7 +18,7 @@ import { FormPassenger } from "../domain/passenger"
 
 export const Home = () => {
     parseInt(sessionStorage.getItem("idUser")!)
-    const isDriver = sessionStorage.getItem("isDriver") === "true"
+    const isDriver = sessionStorage.getItem("role") === "driver"
     const [card, setCard] = useState<DriverCard[] | TravelCard[] | null>(null)
     const [isHome, setIsHome] = useState<boolean>(true)
     const [formInfo, setFormInfo] = useState<FormDriver | FormPassenger>()
