@@ -6,7 +6,7 @@ import { FormPassenger } from "../../domain/passenger";
 
 // Define the HomeFormProps type
 type HomeFormProps = {
-    setInfo: (info: FormDriver | FormPassenger) => void; // Replace 'any' with the specific type if known
+    setInfo: (info: FormDriver | FormPassenger) => void; 
     fetchData: (info: FormDriver | FormPassenger) => void;
 };
 // Define the FormValues type

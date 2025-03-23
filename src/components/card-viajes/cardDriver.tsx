@@ -37,7 +37,7 @@ export const CardDriver = ({ value, onClick, isDriver }: CardDriverProps) => {
               <Box sx={styles.iconUserStyle}>
                 <GroupIcon sx={{ fontSize: '1.2rem' }} />
                 <Typography sx={styles.rateStyle}>
-                  {'passenger' in value ? value.passenger : ''}
+                  {'pasaenger' in value ? value.pasaenger : ''}
                 </Typography>
               </Box>
             </Box>

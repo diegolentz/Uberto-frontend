@@ -39,7 +39,6 @@ const fetchData = async (formInfo: FormDriver | FormPassenger) => {
     if (isDriver) {
         try {
             const res = await driverService.getPendingTravels(data);
-            console.log('Response from getPendingTravels:', res); // Agregar consola para depurar
             setCard(res as unknown as TravelCard[])
         } catch (e: unknown) {
             showToast((e as AxiosError<unknown>).response!)
@@ -47,7 +46,6 @@ const fetchData = async (formInfo: FormDriver | FormPassenger) => {
     } else {
         try {
             const res = await passengerService.getAvailableDrivers(data);
-            console.log('Response from getAvailableDrivers:', res); // Agregar consola para depurar
             setCard(res)
         } catch (e: unknown) {
             showToast((e as AxiosError<unknown>).response!)
@@ -65,7 +63,7 @@ const fetchData = async (formInfo: FormDriver | FormPassenger) => {
         if (formInfo) {
             fetchData(formInfo);
         }
-    }, [formInfo]); // Cambiar la dependencia a formInfo, no a card
+    }, [formInfo]); 
     
 
     return (
