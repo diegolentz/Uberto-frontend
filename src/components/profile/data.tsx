@@ -10,7 +10,8 @@ import { driverService } from "../../services/driver.service";
 import { passengerService } from "../../services/passenger.service";
 
 export const Data = () => {
-    const id = parseInt(sessionStorage.getItem('idUser')!);
+    // const id = parseInt(sessionStorage.getItem('idUser')!);
+    const id = 1;
     const isDriver = sessionStorage.getItem('isDriver') === 'true';
     const [profile, setProfile] = useState<DriverProfile | PassengerProfile>(isDriver ? driverProfile : passengerProfile);
 
@@ -18,14 +19,13 @@ export const Data = () => {
         setProfile({ ...profile, ...data });
     }
 
-    //TODO: getProfile tiene harcodeado el id 1, esto hay que cambiarlo una vez funcione el login
 
     const fetchForm = async () => {
         if (isDriver) {
-            const response = await driverService.getProfile(1)
+            const response = await driverService.getProfile(id)
             setProfile(response);
         } else {
-            const response = await passengerService.getProfile(1);
+            const response = await passengerService.getProfile(id);
             setProfile(response);
         };
         // Profile will be logged in the useEffect below
@@ -43,7 +43,7 @@ export const Data = () => {
                 <Divider aria-hidden="true" sx={{ borderColor: '#a737fc' }} />
                 {!isDriver && (
                     <>
-                        <MoneyForm money={(profile as PassengerProfile).money} func={setChanges} />
+                        <MoneyForm money={(profile as PassengerProfile).money} id={id} func={setChanges} />
                         <Divider aria-hidden="true" sx={{ borderColor: '#a737fc' }} />
                         <FriendsComponent friends={(profile as PassengerProfile).friends} />
                     </>

@@ -45,7 +45,7 @@ class PassengerService {
 
 
     async addBalance(id: number, money: number) {
-        const response = await axios.put(`${REST_SERVER_URL}/passenger/addBalance`, { params: { id: id, balance: money } })
+        const response = await axios.put(`${REST_SERVER_URL}/passenger/addBalance`, null, { params: { id: id, balance: money } })
         return response.data
     }
 
