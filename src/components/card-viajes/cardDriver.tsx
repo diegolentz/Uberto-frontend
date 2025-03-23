@@ -32,7 +32,7 @@ export const CardDriver = ({ value, onClick, isDriver }: CardDriverProps) => {
           ) : (
             <Box>
               <Typography sx={styles.userNameLastnameStyle}>
-                {value.name} {'lastName' in value ? value.lastName : ''}
+                {(value as TravelCard).passengerName} 
               </Typography>
               <Box sx={styles.iconUserStyle}>
                 <GroupIcon sx={{ fontSize: '1.2rem' }} />
@@ -62,7 +62,7 @@ export const CardDriver = ({ value, onClick, isDriver }: CardDriverProps) => {
         {!isDriver ? (
           <>
             <Box sx={styles.boxDataStyle}>
-              <Typography sx={styles.nameStyle}>{value.name}</Typography>
+              <Typography sx={styles.nameStyle}>{(value as DriverCard).name}</Typography>
               <Typography sx={styles.brandModelStyle}>
                 {'model' in value ? `${value.brand}  ${value.model}` : ''}
               </Typography>

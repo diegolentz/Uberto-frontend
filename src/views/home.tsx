@@ -46,7 +46,6 @@ const fetchData = async (formInfo: FormDriver | FormPassenger) => {
     } else {
         try {
             const res = await passengerService.getAvailableDrivers(data);
-
             setCard(res.cardDrivers as DriverCard[])
         } catch (e: unknown) {
             showToast((e as AxiosError<unknown>).response!)
