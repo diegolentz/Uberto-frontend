@@ -13,15 +13,6 @@ export class DriverCard {
     ) {}
 }
 
-// export class SearchDrivers{
-//     constructor(
-//         public name: string,
-//         public origin: string,
-//         public destination: string,
-//         public passengers: number,
-//     ) {}
-// }
-
 export class FormDriver {
     public date: Date;
     constructor(
@@ -38,19 +29,14 @@ export class FormDriver {
 export class FormEntity {
     public origin: string;
     public destination: string;
-    public date: string; // Mantener la fecha como string
-    public numberPassengers: number; // Cambiar el tipo a number
+    public date: Date; 
+    public numberPassengers: number; 
 
     constructor(data: FormDriver | FormPassenger) {
         this.origin = data.origin;
         this.destination = data.destination;
-
-        // Convertir la fecha a formato 'YYYY-MM-DDTHH:mm' (sin la zona horaria)
-        const dateObj = new Date(data.date); // Suponiendo que 'data.date' es un objeto Date
-        this.date = dateObj.toISOString().split('T')[0] + 'T' + dateObj.toISOString().split('T')[1].slice(0, 5);
-
-        // Convertir 'passengers' a número, en caso de que venga como string
-        this.numberPassengers = Number(data.passengers); // O parseInt(data.passengers)
+        this.date = data.date
+        this.numberPassengers = data.passengers
 
     }
 }
