@@ -1,4 +1,4 @@
-import axios, { AxiosError } from "axios"
+import { AxiosError } from "axios"
 import { useContext, useEffect, useState } from "react"
 import { CardDriver } from "../components/card-viajes/cardDriver"
 import { ConfirmationPage } from "../components/confirmationPage/confirmationPage"
@@ -9,7 +9,6 @@ import { driverService } from "../services/driver.service"
 import { DriverCard, FormDriver, FormEntity } from "../domain/driver"
 import { TravelCard } from "../domain/travel"
 import { FormPassenger } from "../domain/passenger"
-import { data } from "react-router-dom"
 
 // se obtiene el id y rol del sessionStorage rednderizo formulario correspondiente, 
 // el formulario se llena en formInfo ya sea de tipo FormDriver o FormPassenger
@@ -27,34 +26,35 @@ export const Home = () => {
     const [driveSelected, setDriveSelected] = useState<DriverCard | TravelCard>()
 
     const infoForm = (formValues: FormDriver | FormPassenger) => {
-        // console.log(formValues)
         setFormInfo(formValues)
-        fetchData(formValues)
+        // fetchData(formValues)
     }
 
     // creo un entity con la info qe necesita el back para traer los datos
     //  y casteo el tipo de formulario que tengo guardado en formInfo para poder pasarlo lo que necesito
     // dpendiendo del rol se llama a una funcion u otra
 
-    const fetchData = async (formInfo: FormDriver | FormPassenger) => {
-        const data = new FormEntity(formInfo)
-
-        if (isDriver) {
-            try{
-                const res = await driverService.getPendingTravels(data);
-                setCard(res as unknown as TravelCard[])
-            } catch(e : unknown){
-                showToast((e as AxiosError<unknown>).response!)
-            }
-        } else {
-            try{
-                const res = await passengerService.getAvailableDrivers(data);
-                setCard(res)
-            } catch(e : unknown){
-                showToast((e as AxiosError<unknown>).response!)
-            }
+const fetchData = async (formInfo: FormDriver | FormPassenger) => {
+    const data = new FormEntity(formInfo)
+    if (isDriver) {
+        try {
+            const res = await driverService.getPendingTravels(data);
+            console.log('Response from getPendingTravels:', res); // Agregar consola para depurar
+            setCard(res as unknown as TravelCard[])
+        } catch (e: unknown) {
+            showToast((e as AxiosError<unknown>).response!)
         }
-    };
+    } else {
+        try {
+            const res = await passengerService.getAvailableDrivers(data);
+            console.log('Response from getAvailableDrivers:', res); // Agregar consola para depurar
+            setCard(res)
+        } catch (e: unknown) {
+            showToast((e as AxiosError<unknown>).response!)
+        }
+    }
+};
+
     // atrapo los datos del chofer clickeado y cambio de pantalla
     const changePage = (data: DriverCard | TravelCard) => {
         setDriveSelected(data)
@@ -62,7 +62,11 @@ export const Home = () => {
     }
 
     useEffect(() => {
-    }, []);
+        if (formInfo) {
+            fetchData(formInfo);
+        }
+    }, [formInfo]); // Cambiar la dependencia a formInfo, no a card
+    
 
     return (
         <>
