@@ -39,7 +39,7 @@ export class FormEntity {
     public origin: string;
     public destination: string;
     public date: string; // Mantener la fecha como string
-    public passengers: number; // Cambiar el tipo a number
+    public numberPassengers: number; // Cambiar el tipo a number
 
     constructor(data: FormDriver | FormPassenger) {
         this.origin = data.origin;
@@ -50,7 +50,7 @@ export class FormEntity {
         this.date = dateObj.toISOString().split('T')[0] + 'T' + dateObj.toISOString().split('T')[1].slice(0, 5);
 
         // Convertir 'passengers' a número, en caso de que venga como string
-        this.passengers = Number(data.passengers); // O parseInt(data.passengers)
+        this.numberPassengers = Number(data.passengers); // O parseInt(data.passengers)
 
     }
 }
