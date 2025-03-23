@@ -23,7 +23,7 @@ class DriverService {
         return Promise.resolve(driverProfile);
     }
 
-    getPendingTravels(info : FormEntity) : Promise<TravelCard[]> {
+    getPendingTravels(info : FormEntity) {
         // implementar endpoint para obtener viajes pendientes
         // este metodo se usa para llevarle al back destino y origen, fecha y que busque quiernes estan disponibles
         return Promise.resolve([pastTravel]);

@@ -7,6 +7,7 @@ import { NavBar } from "../navBar/navBar"
 
 export const msjContext = createContext({} as {showToast: (data: AxiosResponse)=>void})
 
+
 export const ViewLayoutComponent = () => {
     const [toast, setToast] = useState<AxiosResponse>({status:0, data:''} as AxiosResponse)
 
