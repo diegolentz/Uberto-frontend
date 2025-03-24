@@ -46,12 +46,12 @@ class PassengerService {
 
     async removeFriend(id: number, friendId: number) {
         const response = await axios.delete(`${REST_SERVER_URL}/passenger/friends`, { params: { passengerId: id, friendId: friendId } })
-        return response.data
+        return response
     }
 
     async addFriend(id: number, friendId: number) {
         const response = await axios.post(`${REST_SERVER_URL}/passenger/friends`, { params: { passengerId: id, friendId: friendId } })
-        return response.data
+        return response
     }
 
     async addBalance(id: number, money: number) {
