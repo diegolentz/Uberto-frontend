@@ -1,5 +1,5 @@
 import { Box, Button, Divider, Typography } from "@mui/material"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { DriverCard, FormDriver } from "../../domain/driver"
 import { TravelCard, TravelDTO } from "../../domain/travel"
 import * as styles from './confirmationStyles'
@@ -8,6 +8,8 @@ import { RecommendationCard } from "../recommendation/recommendation"
 import { driverService } from "../../services/driver.service"
 import { passengerService } from "../../services/passenger.service"
 import { travelService } from "../../services/travel.service"
+import { AxiosError } from "axios"
+import { msjContext } from "../viewLayout/viewLayout"
 
 type HomeConfirmationProps = {
     driver: DriverCard
@@ -22,7 +24,8 @@ export const ConfirmationPage = (
     const [travelDTO,setTravelDTO] = useState<TravelDTO>()    
     const [recommendation, setRecommendation] = useState<Recommendation[]>()
     const idUser = parseInt(sessionStorage.getItem("userId")!)
-
+    const {showToast} = useContext(msjContext)
+    
     const recommended = async () => {
         if (isDriver) {
             const res = await driverService.profileRatings(idUser)
@@ -37,9 +40,14 @@ export const ConfirmationPage = (
         changePage(driver)
     }
 
-    const confirmTravel = () => {
+    const confirmTravel = async() => {
         armarDTO()
-        travelService.createTravel(travelDTO!)
+        try {
+            const res = await travelService.createTravel(travelDTO!)
+            showToast(res)
+        } catch (e: unknown) {
+            showToast((e as AxiosError<unknown>).response!)
+        }
     }
 
     const armarDTO = () =>{
