@@ -1,7 +1,7 @@
 import axios from "axios";
 import {DriverCard, FormEntity } from "../domain/driver";
 import { friends, Friends, passengerProfile, PassengerProfile } from "../domain/passenger";
-import { Recommendation, recommendation1, recommendation2 } from "../domain/recomendation";
+import { Recommendation, recommendation1 } from "../domain/recomendation";
 import { REST_SERVER_URL } from "./urls";
 
 class PassengerService {
@@ -16,10 +16,7 @@ class PassengerService {
 
         return res.data;
     }
-    getRatings(idUser: number) : Promise<Recommendation[]> {
-        // implementar endpoint para obtener las calificaciones de un pasajero
-        return Promise.resolve([recommendation2]);
-    }
+
     
     
     getImg(id: number, isDriver: boolean):Promise<string> {

@@ -1,13 +1,18 @@
 import { Box, Button, Divider, Typography } from "@mui/material"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { DriverCard, FormDriver } from "../../domain/driver"
-import { TravelCard } from "../../domain/travel"
+import { TravelCard, TravelDTO } from "../../domain/travel"
 import * as styles from './confirmationStyles'
 import { Recommendation } from "../../domain/recomendation"
 import { RecommendationCard } from "../recommendation/recommendation"
 import { driverService } from "../../services/driver.service"
 import { passengerService } from "../../services/passenger.service"
+import { travelService } from "../../services/travel.service"
 import { AxiosError } from "axios"
+import { msjContext } from "../viewLayout/viewLayout"
+
+
+
 
 type HomeConfirmationProps = {
     driver: DriverCard
@@ -18,28 +23,70 @@ type HomeConfirmationProps = {
 export const ConfirmationPage = (
     { driver, travel, changePage }: HomeConfirmationProps) => {
 
-    const [recommendation, setRecommendation] = useState<Recommendation[]>([])
+
+    const [travelDTO,setTravelDTO] = useState<TravelDTO>()    
+    const [recommendation, setRecommendation] = useState<Recommendation[]>()
+    const idUser = parseInt(sessionStorage.getItem("userId")!)
+    const {showToast} = useContext(msjContext)
+
     const id = parseInt(sessionStorage.getItem('idDriver')!)
-    const isDriver = sessionStorage.getItem('isDriver') == 'true'
+
     
 
     const recommended = async () => {
+
         try{
             const res = await passengerService.profileRatings(driver.id)
             console.log(res)
             setRecommendation(res)
         }catch (e: unknown) {
-            // show
+            showToast((e as AxiosError<unknown>).response!);
         }
     }
+
 
     useEffect(() => {
         recommended()
         // console.log(travel.passengers)
     }, [])
 
+
     const handleDecline = () => {
         changePage(driver)
+    }
+    const confirmTravel = async () => {
+        // Llamar a armarDTO solo si travelDTO aún no está establecido
+        if (!travelDTO) {
+            armarDTO();
+        }
+    
+        // Esperar a que travelDTO esté listo
+        if (travelDTO) {
+            try {
+                const res = await travelService.createTravel(travelDTO);
+                showToast(res);
+                handleDecline()
+            } catch (e: unknown) {
+                showToast((e as AxiosError<unknown>).response!);
+            }
+        } 
+    };
+
+    const armarDTO = () =>{
+        const newTravel = new TravelDTO(
+            idUser,
+            driver.id,
+            travel.duration,
+            travel.passengers,
+            travel.date,
+            travel.origin,
+            travel.destination,
+            driver.price,
+            driver.name,
+            ""
+        )
+        console.log(newTravel)
+        setTravelDTO(newTravel)
     }
 
     return (
@@ -126,6 +173,7 @@ export const ConfirmationPage = (
                 <Button
                     variant="contained"
                     color="secondary"
+                    onClick={confirmTravel}
                 >
                     Confirm
                 </Button>

@@ -1,14 +1,14 @@
 import axios from "axios";
 import {  DriverProfile, FormEntity } from "../domain/driver";
-import { Recommendation, recommendation1, recommendation2 } from "../domain/recomendation";
+import { Recommendation, } from "../domain/recomendation";
 import { TravelCard } from "../domain/travel";
 import { REST_SERVER_URL } from "./urls";
 
 class DriverService {
-    profileRatings(id: number) : Promise<Recommendation[]> {
-        // implementar endpoint para obtener recomendaciones
-        return Promise.resolve([recommendation1,recommendation2]);
-    }
+    // profileRatings(id: number) : Promise<Recommendation[]> {
+    //     // implementar endpoint para obtener recomendaciones
+    //     return Promise.resolve([recommendation1,recommendation2]);
+    // }
 
     
     getImg(id: number, isDriver: boolean):Promise<string> {
@@ -23,10 +23,10 @@ class DriverService {
     }
 
 
-    getRatings(idUser: number) : Promise<Recommendation[]> {
-        const recom = [recommendation1,recommendation2]
-        return  Promise.resolve(recom);
-    }
+    // getRatings(idUser: number) : Promise<Recommendation[]> {
+    //     const recom = [recommendation1,recommendation2]
+    //     return  Promise.resolve(recom);
+    // }
 }
 
 export const driverService = new DriverService();
