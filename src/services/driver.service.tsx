@@ -1,5 +1,5 @@
 import axios from "axios";
-import { driverProfile, DriverProfile, FormEntity } from "../domain/driver";
+import {  DriverProfile, FormEntity } from "../domain/driver";
 import { Recommendation, recommendation1, recommendation2 } from "../domain/recomendation";
 import { TravelCard } from "../domain/travel";
 import { REST_SERVER_URL } from "./urls";

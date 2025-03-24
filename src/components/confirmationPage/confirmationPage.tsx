@@ -92,7 +92,7 @@ export const ConfirmationPage = (
             <Typography sx={styles.text} component="div">
                 Car
                 <Typography sx={styles.span} component="span">
-                    {driver.model}
+                    {driver.brand}
                 </Typography>
             </Typography>
             <Typography sx={styles.text} component="div">
