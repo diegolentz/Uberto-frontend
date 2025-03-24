@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import { Box, Button, Divider, TextField } from "@mui/material";
 import { CardFriends } from './cardFriends';
@@ -6,11 +6,15 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import { Friends } from '../../domain/passenger';
 import { passengerService } from '../../services/passenger.service';
+import { msjContext } from '../viewLayout/viewLayout';
+import { AxiosError } from 'axios';
 
-export const FriendsComponent = ({ friends }: { friends: Friends[] }) => {
+export const FriendsComponent = ({ id }: { id: number }) => {
     const [visibility, setVisibility] = useState<boolean>(false);
     const [searchText, setSearchText] = useState<string>(""); // Estado para almacenar el texto del input
     const [notFriends, setNotFriends] = useState<Friends[]>(); // Estado para almacenar el texto del input
+    const [friends, setFriends] = useState<Friends[]>([]);
+    const { showToast } = useContext(msjContext)
 
     const changeVisibility = () => {
         setVisibility(!visibility);
@@ -21,9 +25,23 @@ export const FriendsComponent = ({ friends }: { friends: Friends[] }) => {
     };
 
     const fetchFriend = async () => {
-        const nFriends = await passengerService.getFriends(searchText);
+        const nFriends = await passengerService.getFriends(id);
         setNotFriends(nFriends);
     };
+
+    const fetchFriends = async () => {
+        const nFriends = await passengerService.getFriends(id);
+        setFriends(nFriends);
+    }
+
+    useEffect(() => {
+        try {
+            fetchFriends();
+        }
+        catch (e: unknown) {
+            showToast((e as AxiosError<unknown>).response!)
+        }
+    }, []);
 
 
 
@@ -76,7 +94,7 @@ export const FriendsComponent = ({ friends }: { friends: Friends[] }) => {
 
                     <h5>Results</h5>
                     {notFriends?.map((friend, index) => (
-                        <CardFriends key={index} isFriend={false} />
+                        <CardFriends key={index} isFriend={false} friendData={friend} id={id} func={fetchFriends} />
                     ))}
 
                     <Divider sx={{ borderColor: '#a737fc', width: '100%' }} />
@@ -85,7 +103,7 @@ export const FriendsComponent = ({ friends }: { friends: Friends[] }) => {
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}>
                 <h5>My friends</h5>
                 {friends.map((friend, index) => (
-                    <CardFriends key={index} isFriend={true} />
+                    <CardFriends key={index} isFriend={true} friendData={friend} id={id} func={fetchFriends} />
                 ))}
             </Box>
         </Box>

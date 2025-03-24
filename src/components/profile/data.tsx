@@ -1,5 +1,5 @@
 import { Box, Divider } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 // Removed unused import of useForm
 import { MoneyForm } from "../profileForm/moneyForm";
 import { ProfileForm } from "../profileForm/profileForm";
@@ -8,50 +8,53 @@ import { driverProfile, DriverProfile } from "../../domain/driver";
 import { passengerProfile, PassengerProfile } from "../../domain/passenger";
 import { driverService } from "../../services/driver.service";
 import { passengerService } from "../../services/passenger.service";
+import { AxiosError } from "axios";
+import { msjContext } from "../viewLayout/viewLayout";
 
 export const Data = () => {
-    const id = parseInt(sessionStorage.getItem('idUser')!);
+    // const id = parseInt(sessionStorage.getItem('idUser')!);
+    const id = 1;
     const isDriver = sessionStorage.getItem('isDriver') === 'true';
     const [profile, setProfile] = useState<DriverProfile | PassengerProfile>(isDriver ? driverProfile : passengerProfile);
+    const { showToast } = useContext(msjContext)
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const setChanges = (data: any) => {
         setProfile({ ...profile, ...data });
     }
+
 
     const fetchForm = async () => {
         if (isDriver) {
             const response = await driverService.getProfile(id)
             setProfile(response);
-            console.log("Updated profile:", profile);
-            
         } else {
             const response = await passengerService.getProfile(id);
             setProfile(response);
-            console.log("Updated profile:", profile);
         };
         // Profile will be logged in the useEffect below
     }
 
     useEffect(() => {
-        fetchForm();
+        try {
+            fetchForm();
+        }
+        catch (e: unknown) {
+            showToast((e as AxiosError<unknown>).response!)
+        };
     }, []);
 
-    // desp borrar este useeffect
-    useEffect(() => {
-        console.log("Updated profile:", profile);
-    }, [profile]);
-    
 
     return (
         <>
             <Box sx={{ padding: '2rem 1rem 3rem 1rem' }}>
-                <ProfileForm entity={profile} func={setChanges} />
+                <ProfileForm entity={profile} func={setChanges} id={id} />
                 <Divider aria-hidden="true" sx={{ borderColor: '#a737fc' }} />
                 {!isDriver && (
                     <>
-                        <MoneyForm money={(profile as PassengerProfile).money} func={setChanges} />
+                        <MoneyForm money={(profile as PassengerProfile).money} id={id} func={setChanges} />
                         <Divider aria-hidden="true" sx={{ borderColor: '#a737fc' }} />
-                        <FriendsComponent friends={(profile as PassengerProfile).friends}/>
+                        <FriendsComponent  id={id} />
                     </>
                 )}
             </Box>
