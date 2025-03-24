@@ -24,7 +24,7 @@ export const Home = () => {
     const [card, setCard] = useState<DriverCard[] | TravelCard[] | null>(null)
     const [isHome, setIsHome] = useState<boolean>(true)
     const [formInfo, setFormInfo] = useState<FormDriver | FormPassenger>()
-    const {showToast} = useContext(msjContext)
+    const { showToast } = useContext(msjContext)
     const [driveSelected, setDriveSelected] = useState<DriverCard | TravelCard>()
 
     const infoForm = (formValues: FormDriver | FormPassenger) => {
@@ -35,27 +35,27 @@ export const Home = () => {
     //  y casteo el tipo de formulario que tengo guardado en formInfo para poder pasarlo lo que necesito
     // dpendiendo del rol se llama a una funcion u otra
 
-const fetchData = async (formInfo: FormDriver | FormPassenger) => {
-    const data = new FormEntity(formInfo)
-    data.userId = idUser
-    if (isDriver) {
-        try {
-            const res = await driverService.getPendingTravels(data);// segui
-            setCard(res as unknown as TravelCard[])
-        } catch (e: unknown) {
-            showToast((e as AxiosError<unknown>).response!)
+    const fetchData = async (formInfo: FormDriver | FormPassenger) => {
+        const data = new FormEntity(formInfo)
+        data.userId = idUser
+        if (isDriver) {
+            try {
+                const res = await driverService.getPendingTravels(data);// segui
+                setCard(res as unknown as TravelCard[])
+            } catch (e: unknown) {
+                showToast((e as AxiosError<unknown>).response!)
+            }
+        } else {
+            try {
+                const res = await passengerService.getAvailableDrivers(data);
+                setCard(res.cardDrivers as DriverCard[])
+                formInfo.duration = res.time
+                infoForm(formInfo)
+            } catch (e: unknown) {
+                showToast((e as AxiosError<unknown>).response!)
+            }
         }
-    } else {
-        try {
-            const res = await passengerService.getAvailableDrivers(data);
-            setCard(res.cardDrivers as DriverCard[])
-            formInfo.duration = res.time
-            infoForm(formInfo)
-        } catch (e: unknown) {
-            showToast((e as AxiosError<unknown>).response!)
-        }
-    }
-};
+    };
 
     // atrapo los datos del chofer clickeado y cambio de pantalla
     const changePage = (data: DriverCard | TravelCard) => {
@@ -67,14 +67,14 @@ const fetchData = async (formInfo: FormDriver | FormPassenger) => {
         if (formInfo) {
             fetchData(formInfo);
         }
-    }, [formInfo]); 
-    
+    }, [formInfo]);
+
 
     return (
         <>
             {isHome ? (
                 <>
-                    <HomeForm  fetchData={fetchData}/>
+                    <HomeForm fetchData={fetchData} />
 
                     {card?.map((item, index) => (
                         <CardDriver
@@ -86,10 +86,10 @@ const fetchData = async (formInfo: FormDriver | FormPassenger) => {
                     ))}
                 </>
             ) : (
-                <ConfirmationPage 
-                    driver={driveSelected as DriverCard} 
+                <ConfirmationPage
+                    driver={driveSelected as DriverCard}
                     travel={formInfo as FormDriver}
-                    changePage={changePage} 
+                    changePage={changePage}
                 />
             )}
         </>
