@@ -7,42 +7,25 @@ import { get } from "react-hook-form";
 import { driverService } from "../../services/driver.service";
 import { passengerService } from "../../services/passenger.service";
 import { RecommendationCard, recommProps } from "../recommendation/recommendation";
+import { usetOutletProps } from "../../views/profile";
 
 
 export const Ratings = () => {
-    const idUser = parseInt(sessionStorage.getItem('idUser')!);
-    const isDriver = sessionStorage.getItem('isDriver') === 'true';
+    const { outletProps } = usetOutletProps()
     const [ratings, setRatings] = useState<Recommendation[]>([]);
 
-    const getRatings = async () => {
-        if (isDriver){
-            const res = await driverService.getRatings(idUser)
-            setRatings(res)
-        }else{
-            const res = await passengerService.getRatings(idUser)
-            setRatings(res)
-        }
-    }
-    const DeleteRating = async (idreco : number) => {
-        const reco = ratings.filter((reco) => reco.id == idreco)
-        setRatings(reco)
-
-        await passengerService.deleteRecom(idreco,idUser)
-    }
-
-   useEffect(() => {
-    getRatings()
-
-   }, [ratings])
-
-
     return (
-        <>
-        {ratings.map((rating, index) => (
-      <RecommendationCard recom={rating} handle={DeleteRating}></RecommendationCard>
-        ))}
+        <>  
+            {outletProps?.isDriver ?
+                <p>Scores Recibidos</p> :
+                <p>Scores Realizados</p>
+            }
+
+            {/* {ratings.map((rating, index) => (
+                <RecommendationCard recom={rating} handle={DeleteRating}></RecommendationCard>
+            ))} */}
 
         </>
     )
-    
+
 }
