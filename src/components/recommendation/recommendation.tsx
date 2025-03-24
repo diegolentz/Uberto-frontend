@@ -1,9 +1,7 @@
 import { Card, CardHeader, CardContent, Typography, Avatar, Box, TextField, Rating, Button } from "@mui/material"
 import StarIcon from "@mui/icons-material/Star"
-import { useEffect, useState } from "react"
 import { Recommendation } from "../../domain/recomendation"
-import { driverService } from "../../services/driver.service"
-import { passengerService } from "../../services/passenger.service"
+
 
 export interface recommProps {
     recom: Recommendation
