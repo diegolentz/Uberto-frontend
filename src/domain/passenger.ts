@@ -13,7 +13,8 @@ export class Friends {
     constructor(
         public firstname: string = '',
         public lastname: string = '',
-        public img: string = ''
+        public img: string = '',
+        public id: number = 0
     ) { }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -23,6 +24,7 @@ export class Friends {
             this.firstname = friend.firstname
             this.lastname = friend.lastname
             this.img = friend.img
+            this.id = friend.id
 
             return Object.assign(new Friends(), this);
         })

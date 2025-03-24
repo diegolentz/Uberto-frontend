@@ -38,11 +38,20 @@ class PassengerService {
     }
 
 
-    async getFriends(id: number): Promise<Friends> {
+    async getFriends(id: number): Promise<Friends[]> {
         const response = await axios.get(`${REST_SERVER_URL}/passenger/friends`, { params: { id: id } })
         return friendsJSON.fromJson(response.data)
     }
 
+    async removeFriend(id: number, friendId: number) {
+        const response = await axios.delete(`${REST_SERVER_URL}/passenger/friends`, { params: { passengerId: id, friendId: friendId } })
+        return response.data
+    }
+
+    async addFriend(id: number, friendId: number) {
+        const response = await axios.post(`${REST_SERVER_URL}/passenger/friends`, { params: { passengerId: id, friendId: friendId } })
+        return response.data
+    }
 
     async addBalance(id: number, money: number) {
         const response = await axios.put(`${REST_SERVER_URL}/passenger/addBalance`, null, { params: { id: id, balance: money } })

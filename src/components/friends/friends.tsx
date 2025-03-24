@@ -7,7 +7,7 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import { Friends } from '../../domain/passenger';
 import { passengerService } from '../../services/passenger.service';
 
-export const FriendsComponent = ({ friends }: { friends: Friends[] }) => {
+export const FriendsComponent = ({ friends, id }: { friends: Friends[] , id: number}) => {
     const [visibility, setVisibility] = useState<boolean>(false);
     const [searchText, setSearchText] = useState<string>(""); // Estado para almacenar el texto del input
     const [notFriends, setNotFriends] = useState<Friends[]>(); // Estado para almacenar el texto del input
@@ -21,7 +21,7 @@ export const FriendsComponent = ({ friends }: { friends: Friends[] }) => {
     };
 
     const fetchFriend = async () => {
-        const nFriends = await passengerService.getFriends(searchText);
+        const nFriends = await passengerService.getFriends(id);
         setNotFriends(nFriends);
     };
 
@@ -85,7 +85,7 @@ export const FriendsComponent = ({ friends }: { friends: Friends[] }) => {
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}>
                 <h5>My friends</h5>
                 {friends.map((friend, index) => (
-                    <CardFriends key={index} isFriend={true} />
+                    <CardFriends key={index} isFriend={true} friendData={friend} id={id} />
                 ))}
             </Box>
         </Box>

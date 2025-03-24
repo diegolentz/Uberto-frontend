@@ -15,6 +15,7 @@ export const Data = () => {
     const isDriver = sessionStorage.getItem('isDriver') === 'true';
     const [profile, setProfile] = useState<DriverProfile | PassengerProfile>(isDriver ? driverProfile : passengerProfile);
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const setChanges = (data: any) => {
         setProfile({ ...profile, ...data });
     }
@@ -45,7 +46,7 @@ export const Data = () => {
                     <>
                         <MoneyForm money={(profile as PassengerProfile).money} id={id} func={setChanges} />
                         <Divider aria-hidden="true" sx={{ borderColor: '#a737fc' }} />
-                        <FriendsComponent friends={(profile as PassengerProfile).friends} />
+                        <FriendsComponent friends={(profile as PassengerProfile).friends} id={id} />
                     </>
                 )}
             </Box>
