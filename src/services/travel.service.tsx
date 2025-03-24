@@ -5,7 +5,7 @@ import {  TravelDTO } from "../domain/travel";
 class TravelService {
 
     async createTravel(data:TravelDTO) {
-        console.log(data)
+        // console.log(data)
         return await axios.post(`${REST_SERVER_URL}/trip/create`,data) 
     } 
 

@@ -39,16 +39,23 @@ export const ConfirmationPage = (
     const handleDecline = () => {
         changePage(driver)
     }
-
-    const confirmTravel = async() => {
-        armarDTO()
-        try {
-            const res = await travelService.createTravel(travelDTO!)
-            showToast(res)
-        } catch (e: unknown) {
-            showToast((e as AxiosError<unknown>).response!)
+    const confirmTravel = async () => {
+        // Llamar a armarDTO solo si travelDTO aún no está establecido
+        if (!travelDTO) {
+            armarDTO();
         }
-    }
+    
+        // Esperar a que travelDTO esté listo
+        if (travelDTO) {
+            try {
+                const res = await travelService.createTravel(travelDTO);
+                showToast(res);
+                handleDecline()
+            } catch (e: unknown) {
+                showToast((e as AxiosError<unknown>).response!);
+            }
+        } 
+    };
 
     const armarDTO = () =>{
         const newTravel = new TravelDTO(
@@ -63,6 +70,7 @@ export const ConfirmationPage = (
             driver.name,
             ""
         )
+        console.log(newTravel)
         setTravelDTO(newTravel)
     }
 
