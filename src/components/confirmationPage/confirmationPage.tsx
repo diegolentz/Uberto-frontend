@@ -80,8 +80,8 @@ export const ConfirmationPage = (
                 </Typography>
             </Typography>
             <Divider />
-            <Typography sx={styles.title} component="div">
-                Driver Premium
+            <Typography sx={styles.title} component="h1">
+                {driver.type}
             </Typography>
             <Typography sx={styles.text} component="div">
                 Name

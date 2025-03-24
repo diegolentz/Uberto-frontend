@@ -48,6 +48,7 @@ const fetchData = async (formInfo: FormDriver | FormPassenger) => {
     } else {
         try {
             const res = await passengerService.getAvailableDrivers(data);
+            console.log(res)
             setCard(res.cardDrivers as DriverCard[])
             formInfo.duration = res.time
             infoForm(formInfo)
