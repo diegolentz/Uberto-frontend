@@ -10,7 +10,8 @@ export class DriverCard {
         public price: number,
         public rating: number,
         public img: string,
-        public type: string
+        public type: string,
+        public recom : number
     ) {}
 }
 

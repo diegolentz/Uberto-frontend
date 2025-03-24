@@ -1,5 +1,5 @@
 import axios from "axios";
-import { driverCard, DriverCard, FormEntity } from "../domain/driver";
+import {DriverCard, FormEntity } from "../domain/driver";
 import { friends, Friends, passengerProfile, PassengerProfile } from "../domain/passenger";
 import { Recommendation, recommendation1, recommendation2 } from "../domain/recomendation";
 import { REST_SERVER_URL } from "./urls";
@@ -8,9 +8,13 @@ class PassengerService {
     deleteRecom(idreco: number, idUser: number) {
         // eliminar la recom de usuario, solo se eliminan las que crea el usuario
     }
-    profileRatings(id: number) : Promise<Recommendation[]> {
-        // implementar endpoint para obtener recomendaciones
-        return Promise.resolve([recommendation2,recommendation1]);
+    async profileRatings(userId: number): Promise<Recommendation[]> {
+        const res = await axios.get(`${REST_SERVER_URL}/TripScore`, {
+            params: { userId: userId }
+        });
+        console.log(res);
+
+        return res.data;
     }
     getRatings(idUser: number) : Promise<Recommendation[]> {
         // implementar endpoint para obtener las calificaciones de un pasajero

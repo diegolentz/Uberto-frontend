@@ -7,33 +7,35 @@ import { Recommendation } from "../../domain/recomendation"
 import { RecommendationCard } from "../recommendation/recommendation"
 import { driverService } from "../../services/driver.service"
 import { passengerService } from "../../services/passenger.service"
+import { AxiosError } from "axios"
 
 type HomeConfirmationProps = {
     driver: DriverCard
     travel: FormDriver
-    isDriver: boolean
-    changePage: (data: DriverCard | TravelCard ) => void
+    changePage: (data: DriverCard | TravelCard) => void
 };
 
 export const ConfirmationPage = (
-    { driver , travel , isDriver , changePage }: HomeConfirmationProps) => {
+    { driver, travel, changePage }: HomeConfirmationProps) => {
 
-    const [recommendation, setRecommendation] = useState<Recommendation[]>()
+    const [recommendation, setRecommendation] = useState<Recommendation[]>([])
     const id = parseInt(sessionStorage.getItem('idDriver')!)
+    const isDriver = sessionStorage.getItem('isDriver') == 'true'
     
+
     const recommended = async () => {
-        if (isDriver) {
-            const res = await driverService.profileRatings(id)
+        try{
+            const res = await passengerService.profileRatings(driver.id)
+            console.log(res)
             setRecommendation(res)
-        } else {
-            const res = await passengerService.profileRatings(id)
-            setRecommendation(res)
+        }catch (e: unknown) {
+            // show
         }
     }
 
     useEffect(() => {
         recommended()
-        console.log(travel.passengers)
+        // console.log(travel.passengers)
     }, [])
 
     const handleDecline = () => {
@@ -114,14 +116,14 @@ export const ConfirmationPage = (
             </Box>
 
             <Box sx={styles.boxButtons}>
-                <Button 
+                <Button
                     variant="outlined"
                     color="secondary"
                     onClick={handleDecline}
                 >
                     Decline
                 </Button>
-                <Button 
+                <Button
                     variant="contained"
                     color="secondary"
                 >
