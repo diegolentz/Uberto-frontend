@@ -37,7 +37,7 @@ export const CardDriver = ({ value, onClick, isDriver }: CardDriverProps) => {
               <Box sx={styles.iconUserStyle}>
                 <GroupIcon sx={{ fontSize: '1.2rem' }} />
                 <Typography sx={styles.rateStyle}>
-                  {'pasaenger' in value ? value.pasaenger : ''}
+                  {'numberPassengers' in value && typeof value.numberPassengers === 'number'  ? value.numberPassengers : 0}
                 </Typography>
               </Box>
             </Box>
