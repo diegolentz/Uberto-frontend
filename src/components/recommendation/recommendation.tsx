@@ -24,7 +24,7 @@ export const RecommendationCard = ({recom, handle} : recommProps) => {
         <>
                 <Card sx={{ maxWidth: 400, p: 2, borderRadius: 3, boxShadow: 3 }}>
                 <CardHeader
-                avatar={<Avatar src={recom.avatarUrl} alt={recom.name} />}
+                avatar={<Avatar src={recom.avatarUrlPassenger} alt={recom.name} />}
                 title={<Typography fontWeight="bold">{recom.name}</Typography>}
                 action={
                     <Box display="flex" alignItems="center">
@@ -32,9 +32,9 @@ export const RecommendationCard = ({recom, handle} : recommProps) => {
                     <Typography fontWeight="bold" ml={0.5}>
                         {
                             recom.editMode ? 
-                            <Rating value={recom.rating} 
+                            <Rating value={recom.scorePoints} 
                             precision={0.5} size="large"/> : 
-                            recom.rating
+                            recom.scorePoints
                         }
                     </Typography>
                     </Box>
@@ -46,9 +46,9 @@ export const RecommendationCard = ({recom, handle} : recommProps) => {
                 </Typography>
                     {
                         recom.editMode ? 
-                        <TextField fullWidth multiline rows={3} label="Comentario" value={recom.comment} 
+                        <TextField fullWidth multiline rows={3} label="Comentario" value={recom.message} 
                         sx={{ mt: 2 }}/> : 
-                        recom.comment
+                        recom.message
                     }
                 </CardContent>
                 {
