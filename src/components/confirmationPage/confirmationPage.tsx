@@ -1,12 +1,13 @@
 import { Box, Button, Divider, Typography } from "@mui/material"
 import { useEffect, useState } from "react"
 import { DriverCard, FormDriver } from "../../domain/driver"
-import { TravelCard } from "../../domain/travel"
+import { TravelCard, TravelDTO } from "../../domain/travel"
 import * as styles from './confirmationStyles'
 import { Recommendation } from "../../domain/recomendation"
 import { RecommendationCard } from "../recommendation/recommendation"
 import { driverService } from "../../services/driver.service"
 import { passengerService } from "../../services/passenger.service"
+import { travelService } from "../../services/travel.service"
 
 type HomeConfirmationProps = {
     driver: DriverCard
@@ -18,26 +19,43 @@ type HomeConfirmationProps = {
 export const ConfirmationPage = (
     { driver , travel , isDriver , changePage }: HomeConfirmationProps) => {
 
+    const [travelDTO,setTravelDTO] = useState<TravelDTO>()    
     const [recommendation, setRecommendation] = useState<Recommendation[]>()
-    const id = parseInt(sessionStorage.getItem('idDriver')!)
-    
+    const idUser = parseInt(sessionStorage.getItem("userId")!)
+
     const recommended = async () => {
         if (isDriver) {
-            const res = await driverService.profileRatings(id)
+            const res = await driverService.profileRatings(idUser)
             setRecommendation(res)
         } else {
-            const res = await passengerService.profileRatings(id)
+            const res = await passengerService.profileRatings(idUser)
             setRecommendation(res)
         }
     }
 
-    useEffect(() => {
-        recommended()
-        console.log(travel.passengers)
-    }, [])
-
     const handleDecline = () => {
         changePage(driver)
+    }
+
+    const confirmTravel = () => {
+        armarDTO()
+        travelService.createTravel(travelDTO!)
+    }
+
+    const armarDTO = () =>{
+        const newTravel = new TravelDTO(
+            idUser,
+            driver.id,
+            travel.duration,
+            travel.passengers,
+            travel.date,
+            travel.origin,
+            travel.destination,
+            driver.price,
+            driver.name,
+            "travel.name"
+        )
+        setTravelDTO(newTravel)
     }
 
     return (
@@ -124,6 +142,7 @@ export const ConfirmationPage = (
                 <Button 
                     variant="contained"
                     color="secondary"
+                    onClick={confirmTravel}
                 >
                     Confirm
                 </Button>
