@@ -22,19 +22,12 @@ type HomeConfirmationProps = {
 
 export const ConfirmationPage = (
     { driver, travel, changePage }: HomeConfirmationProps) => {
-
-
-    const [travelDTO,setTravelDTO] = useState<TravelDTO>()    
+   
     const [recommendation, setRecommendation] = useState<Recommendation[]>()
     const idUser = parseInt(sessionStorage.getItem("userId")!)
     const {showToast} = useContext(msjContext)
 
-    const id = parseInt(sessionStorage.getItem('idDriver')!)
-
-    
-
     const recommended = async () => {
-
         try{
             const res = await passengerService.profileRatings(driver.id)
             console.log(res)
@@ -44,35 +37,16 @@ export const ConfirmationPage = (
         }
     }
 
-
     useEffect(() => {
         recommended()
-        // console.log(travel.passengers)
     }, [])
-
 
     const handleDecline = () => {
         changePage(driver)
     }
-    const confirmTravel = async () => {
-        // Llamar a armarDTO solo si travelDTO aún no está establecido
-        if (!travelDTO) {
-            armarDTO();
-        }
-    
-        // Esperar a que travelDTO esté listo
-        if (travelDTO) {
-            try {
-                const res = await travelService.createTravel(travelDTO);
-                showToast(res);
-                handleDecline()
-            } catch (e: unknown) {
-                showToast((e as AxiosError<unknown>).response!);
-            }
-        } 
-    };
 
-    const armarDTO = () =>{
+    const handleConfirm = async () => {  
+        
         const newTravel = new TravelDTO(
             idUser,
             driver.id,
@@ -85,9 +59,16 @@ export const ConfirmationPage = (
             driver.name,
             ""
         )
-        console.log(newTravel)
-        setTravelDTO(newTravel)
-    }
+
+          try {
+            const res = await travelService.createTravel(newTravel);
+            showToast(res); 
+            handleDecline(); 
+          } catch (e: unknown) {
+            showToast((e as AxiosError<unknown>).response!); 
+          }
+        
+      };
 
     return (
         <>
@@ -173,7 +154,7 @@ export const ConfirmationPage = (
                 <Button
                     variant="contained"
                     color="secondary"
-                    onClick={confirmTravel}
+                    onClick={handleConfirm}
                 >
                     Confirm
                 </Button>
