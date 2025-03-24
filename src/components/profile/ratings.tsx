@@ -27,10 +27,7 @@ export const Ratings = () => {
 
     return (
         <>
-            <p>mock</p>
-            <div>
-                
-            </div>
+
             {scores.map((score:Recommendation, index:number)=>(
                 <>
                     <RecommendationCard key={index} recom={score} handle={fetchData}/>
