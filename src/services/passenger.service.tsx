@@ -3,6 +3,7 @@ import { DriverCard, FormEntity } from "../domain/driver";
 import { friends, Friends, friendsJSON, passengerProfile, PassengerProfile } from "../domain/passenger";
 import { Recommendation, recommendation1, recommendation2 } from "../domain/recomendation";
 import { REST_SERVER_URL } from "./urls";
+import Toast from "../components/toast/toast";
 
 class PassengerService {
     deleteRecom(idreco: number, idUser: number) {
@@ -55,9 +56,13 @@ class PassengerService {
 
     async addBalance(id: number, money: number) {
         const response = await axios.put(`${REST_SERVER_URL}/passenger/addBalance`, null, { params: { id: id, balance: money } })
-        return response.data
+        return response
     }
 
+    async updateProfile(id: number, data: any) {
+        const response = await axios.put(`${REST_SERVER_URL}/passenger`, data, { params: { id: id } })
+        return response
+    }
 
 }
 

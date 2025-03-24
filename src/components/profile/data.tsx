@@ -40,7 +40,7 @@ export const Data = () => {
     return (
         <>
             <Box sx={{ padding: '2rem 1rem 3rem 1rem' }}>
-                <ProfileForm entity={profile} func={setChanges} />
+                <ProfileForm entity={profile} func={setChanges} id={id}/>
                 <Divider aria-hidden="true" sx={{ borderColor: '#a737fc' }} />
                 {!isDriver && (
                     <>

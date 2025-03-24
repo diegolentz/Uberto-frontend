@@ -1,48 +1,59 @@
 import { Box, Button, Divider, Stack, TextField } from "@mui/material";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { estilosInput } from "../homeForm/homeFormStyles";
 import { DriverProfile } from "../../domain/driver";
-import { PassengerProfile } from "../../domain/passenger";
+import { passengerProfile, PassengerProfile } from "../../domain/passenger";
+import { passengerService } from "../../services/passenger.service";
+import Toast from "../toast/toast";
+import { msjContext } from "../viewLayout/viewLayout";
+import { AxiosError } from "axios";
 
 interface ProfileFormProps {
+    id: number;
     entity: DriverProfile | PassengerProfile;
     func: (data: any) => void;
 }
 
 
-export const ProfileForm = ({ entity, func }: ProfileFormProps) => {
+export const ProfileForm = ({ entity, func, id }: ProfileFormProps) => {
     const isDriver = sessionStorage.getItem('isDriver') === 'true';
     const [profile, setProfile] = useState<DriverProfile | PassengerProfile>(entity);
-
+    const { showToast } = useContext(msjContext)
     const setChanges = (data: any) => {
         func(data);
+
     }
 
     const { register, handleSubmit, formState: { errors, isValid } } = useForm({
         mode: "onChange", // Para validar en cada cambio
         defaultValues: isDriver ? {
-            name: (profile as DriverProfile).firstname,
+            firstname: (profile as DriverProfile).firstname,
             lastname: (profile as DriverProfile).lastname,
             price: (profile as DriverProfile).price,
             domain: (profile as DriverProfile).domain,
             brand: (profile as DriverProfile).brand,
             model: (profile as DriverProfile).model,
         } : {
-            name: (profile as PassengerProfile).firstname,
+            firstname: (profile as PassengerProfile).firstname,
             lastname: (profile as PassengerProfile).lastname,
-            phone: (profile as PassengerProfile).phone,
+            cellphone: (profile as PassengerProfile).phone,
         }
     });
 
-
-    const onSubmit = (data: any) => {
+    const onSubmit = async (data: any) => {
         if (!isValid) {
             console.log("Formulario con errores:", errors);
         }
         // setProfile(data);
-        setChanges(data);
-    };
+        try {
+            const response = await passengerService.updateProfile(id, data)
+            showToast(response)
+            setChanges(data);
+        } catch (e: unknown) {
+            showToast((e as AxiosError<unknown>).response!)
+        };
+    }
 
 
     return (
@@ -54,7 +65,7 @@ export const ProfileForm = ({ entity, func }: ProfileFormProps) => {
                         size="small"
                         label="Name"
                         type="text"
-                        {...register("name", {
+                        {...register("firstname", {
                             required: "Este campo es obligatorio.",
                             pattern: {
                                 value: /^[A-Za-z\s]+$/,
@@ -64,9 +75,8 @@ export const ProfileForm = ({ entity, func }: ProfileFormProps) => {
                             maxLength: { value: 15, message: "Debe tener como máximo 15 caracteres." }
                         })}
                         sx={estilosInput}
-                        error={!!errors.name}
-                        helperText={typeof errors.name?.message === "string" ? errors.name.message : ""}
-                        value={profile.firstname}
+                        error={!!errors.firstname}
+                        helperText={typeof errors.firstname?.message === "string" ? errors.firstname.message : ""}
                     />
                     <TextField
                         size="small"
@@ -84,7 +94,6 @@ export const ProfileForm = ({ entity, func }: ProfileFormProps) => {
                         sx={estilosInput}
                         error={!!errors.lastname}
                         helperText={typeof errors.lastname?.message === "string" ? errors.lastname.message : ""}
-                        value={profile.lastname}
                     />
                     {isDriver ? (
                         <>
@@ -160,7 +169,7 @@ export const ProfileForm = ({ entity, func }: ProfileFormProps) => {
                                 size="small"
                                 label="Phone"
                                 type="number"
-                                {...register("phone", {
+                                {...register("cellphone", {
                                     required: "Este campo es obligatorio.",
                                     pattern: {
                                         value: /^\d{10}$/,
@@ -168,9 +177,8 @@ export const ProfileForm = ({ entity, func }: ProfileFormProps) => {
                                     }
                                 })}
                                 sx={estilosInput}
-                                error={!!errors.phone}
-                                helperText={typeof errors.phone?.message === "string" ? errors.phone.message : undefined}
-                                value={profile.phone}
+                                error={!!errors.cellphone}
+                                helperText={typeof errors.cellphone?.message === "string" ? errors.cellphone.message : undefined}
                             />
                         </>
                     )}

@@ -1,8 +1,10 @@
 import { Box, Button, Stack, TextField } from "@mui/material";
 import { estilosInput } from "../homeForm/homeFormStyles";
 import { useForm } from "react-hook-form";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { passengerService } from "../../services/passenger.service";
+import { AxiosError } from "axios";
+import { msjContext } from "../viewLayout/viewLayout";
 
 interface MoneyFormProps {
     money: number;
@@ -11,9 +13,10 @@ interface MoneyFormProps {
     func: (data: any) => void;
 }
 
-export const MoneyForm = ({ money, func , id}: MoneyFormProps) => {
+export const MoneyForm = ({ money, func, id }: MoneyFormProps) => {
 
-    
+
+    const { showToast } = useContext(msjContext)
     const { register, handleSubmit, formState: { errors, isValid }, reset } = useForm({
         mode: "onChange",
         defaultValues: {
@@ -21,13 +24,18 @@ export const MoneyForm = ({ money, func , id}: MoneyFormProps) => {
         }
     });
 
-    const onSubmit = async (data: { money: number}) => {
+    const onSubmit = async (data: { money: number }) => {
         if (!isValid) {
             console.log("Formulario con errores:", errors);
         } else {
-            const newBalance = await passengerService.addBalance(id, (data.money));
-            func({ money: newBalance.currentBalance }); // Llama a func con el nuevo valor atributo : valor
-            reset({ money: 0 }); // Resetea el formulario
+            try {
+                const response = await passengerService.addBalance(id, (data.money));
+                func({ money: money + Number(data.money) }); // Llama a func con el nuevo valor atributo : valor
+                reset({ money: 0 }); // Resetea el formulario
+                showToast(response);
+            } catch (e: unknown) {
+                showToast((e as AxiosError<unknown>).response!)
+            };
         }
     }
 
@@ -73,3 +81,4 @@ export const MoneyForm = ({ money, func , id}: MoneyFormProps) => {
         </>
     )
 }
+
