@@ -1,15 +1,11 @@
 import axios from "axios";
 import { REST_SERVER_URL } from "./urls";
-import {  TravelDTO } from "../domain/travel";
+import { Recommendation } from "../domain/recomendation";
 
-export async function get(id: number, role:string):Promise<TravelCard[]> {
-    const promise = axios.get<TravelDTO[]>(REST_SERVER_URL + '/trip', {
-        params:{
-            userId:id,
-            userRole:role
-        }
-    })
-    const response = await promise
-    const travels = response.data.map((item:TravelDTO)=> TravelCard.prototype.fromDTO(item))
-    return travels;
-} 
+export async function get(userId: number): Promise<Recommendation[]> {
+    const response = await axios.get(`${REST_SERVER_URL}/TripScore`, {
+        params: { userId: userId }
+    });
+    console.log(response.data)
+    return response.data;
+}

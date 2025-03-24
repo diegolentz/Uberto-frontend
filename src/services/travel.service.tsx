@@ -1,6 +1,7 @@
 import axios from "axios";
 import { REST_SERVER_URL } from "./urls";
 import { TravelDTO, TravelCard } from "../domain/travel";
+import { DriverCard } from "../domain/driver";
 
 class TravelService {
 
@@ -23,4 +24,16 @@ export async function get(id: number, role:string):Promise<TravelCard[]> {
     const response = await promise
     const travels = response.data.map((item:TravelDTO)=> TravelCard.prototype.fromDTO(item))
     return travels;
-} 
+}
+
+// export async function getDriver(id: number, role:string):Promise<DriverCard[]> {
+//     const promise = axios.get<TravelDTO[]>(REST_SERVER_URL + '/trip', {
+//         params:{
+//             userId:id,
+//             userRole:role
+//         }
+//     })
+//     const response = await promise
+//     const travels = response.data.map((item:TravelDTO)=> TravelCard.prototype.fromDTO(item))
+//     return travels;
+// } 
