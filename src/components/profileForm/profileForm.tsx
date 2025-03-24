@@ -1,18 +1,17 @@
-import { Box, Button, Divider, Stack, TextField } from "@mui/material";
-import { useContext, useEffect, useState } from "react";
+import { Button, Divider, Stack, TextField } from "@mui/material";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { estilosInput } from "../homeForm/homeFormStyles";
 import { DriverProfile } from "../../domain/driver";
-import { passengerProfile, PassengerProfile } from "../../domain/passenger";
+import { PassengerProfile } from "../../domain/passenger";
 import { passengerService } from "../../services/passenger.service";
-import Toast from "../toast/toast";
 import { msjContext } from "../viewLayout/viewLayout";
 import { AxiosError } from "axios";
 
 interface ProfileFormProps {
     id: number;
     entity: DriverProfile | PassengerProfile;
-    func: (data: any) => void;
+    func: (data: unknown) => void;
 }
 
 
@@ -20,7 +19,7 @@ export const ProfileForm = ({ entity, func, id }: ProfileFormProps) => {
     const isDriver = sessionStorage.getItem('isDriver') === 'true';
     const [profile, setProfile] = useState<DriverProfile | PassengerProfile>(entity);
     const { showToast } = useContext(msjContext)
-    const setChanges = (data: any) => {
+    const setChanges = (data: unknown) => {
         func(data);
 
     }
@@ -45,11 +44,10 @@ export const ProfileForm = ({ entity, func, id }: ProfileFormProps) => {
         if (!isValid) {
             console.log("Formulario con errores:", errors);
         }
-        // setProfile(data);
         try {
             const response = await passengerService.updateProfile(id, data)
             showToast(response)
-            setChanges(data);
+            setChanges(data)
         } catch (e: unknown) {
             showToast((e as AxiosError<unknown>).response!)
         };

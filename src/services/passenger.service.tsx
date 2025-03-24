@@ -1,9 +1,8 @@
 import axios from "axios";
 import { DriverCard, FormEntity } from "../domain/driver";
-import { friends, Friends, friendsJSON, passengerProfile, PassengerProfile } from "../domain/passenger";
+import { Friends, friendsJSON, passengerProfile, PassengerProfile } from "../domain/passenger";
 import { Recommendation, recommendation1, recommendation2 } from "../domain/recomendation";
 import { REST_SERVER_URL } from "./urls";
-import Toast from "../components/toast/toast";
 
 class PassengerService {
     deleteRecom(idreco: number, idUser: number) {

@@ -39,7 +39,6 @@ export class PassengerProfile {
         public lastname: string = '',
         public phone: number = 0,
         public money: number = 0,
-        public friends: Friends[] = [],
         public img: string = ''
     ) { }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -48,7 +47,6 @@ export class PassengerProfile {
         this.lastname = json.lastname
         this.phone = json.cellphone
         this.money = json.money
-        this.friends = friendsJSON.fromJson(json.friends)
         this.img = json.img
 
         return Object.assign(new PassengerProfile(), this);

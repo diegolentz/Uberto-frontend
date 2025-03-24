@@ -94,7 +94,7 @@ export const FriendsComponent = ({ id }: { id: number }) => {
 
                     <h5>Results</h5>
                     {notFriends?.map((friend, index) => (
-                        <CardFriends key={index} isFriend={false} />
+                        <CardFriends key={index} isFriend={false} friendData={friend} id={id} func={fetchFriends} />
                     ))}
 
                     <Divider sx={{ borderColor: '#a737fc', width: '100%' }} />

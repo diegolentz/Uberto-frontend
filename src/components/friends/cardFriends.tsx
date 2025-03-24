@@ -7,7 +7,7 @@ import { useContext } from "react";
 import { msjContext } from "../viewLayout/viewLayout";
 import { AxiosError } from "axios";
 
-export const CardFriends = ({ isFriend, friendData, id, func }: { isFriend: boolean, friendData: Friends, id: number, func: any }) => {
+export const CardFriends = ({ isFriend, friendData, id, func }: { isFriend: boolean, friendData: Friends, id: number, func: () => void }) => {
 
     const { showToast } = useContext(msjContext)
 

@@ -1,7 +1,7 @@
 import { Box, Button, Stack, TextField } from "@mui/material";
 import { estilosInput } from "../homeForm/homeFormStyles";
 import { useForm } from "react-hook-form";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { passengerService } from "../../services/passenger.service";
 import { AxiosError } from "axios";
 import { msjContext } from "../viewLayout/viewLayout";
@@ -38,10 +38,6 @@ export const MoneyForm = ({ money, func, id }: MoneyFormProps) => {
             };
         }
     }
-
-    useEffect(() => {
-        console.log("MoneyForm: Money has been updated:", money);
-    }, [money]);
 
     return (
         <>
