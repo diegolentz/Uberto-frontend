@@ -1,7 +1,7 @@
 import axios from "axios";
 import { driverProfile, DriverProfile, FormEntity } from "../domain/driver";
 import { Recommendation, recommendation1, recommendation2 } from "../domain/recomendation";
-import { pastTravel, pendingTravel, TravelCard } from "../domain/travel";
+import { TravelCard } from "../domain/travel";
 import { REST_SERVER_URL } from "./urls";
 
 class DriverService {
@@ -10,10 +10,10 @@ class DriverService {
         return Promise.resolve([recommendation1,recommendation2]);
     }
 
-    getFinishtrips(id: number) : Promise<TravelCard[]> {
-        // implementar endpoint para obtener viajes finalizados
-        return Promise.resolve([pastTravel]);
-    }
+    // getFinishtrips(id: number) : Promise<TravelCard[]> {
+    //     // implementar endpoint para obtener viajes finalizados
+    //     return Promise.resolve([pastTravel]);
+    // }
     
     
     getImg(id: number, isDriver: boolean):Promise<string> {
@@ -25,21 +25,16 @@ class DriverService {
         return Promise.resolve(driverProfile);
     }
 
-    async getPendingTravels(id: number, rol: string) { 
-        const response = await axios.get(`${REST_SERVER_URL}/trip/pending`, {
-            params: {
-                id: id,
-                rol: rol
-            }
-        });
+    async getPendingTravels(data: FormEntity) { 
+        const response = await axios.post(`${REST_SERVER_URL}/trip/pending`, data);
         console.log(response)
         return response.data;
     }
 
-    getProfilePendingTravels(id: number) : Promise<TravelCard[]> {
-        // implementar endpoint para obtener viajes pendientes
-        return Promise.resolve([pendingTravel]);
-    }
+    // getProfilePendingTravels(id: number) : Promise<TravelCard[]> {
+    //     // implementar endpoint para obtener viajes pendientes
+    //     return Promise.resolve([pendingTravel]);
+    // }
 
     getRatings(idUser: number) : Promise<Recommendation[]> {
         const recom = [recommendation1,recommendation2]

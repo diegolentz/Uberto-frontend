@@ -70,7 +70,7 @@ export const ConfirmationPage = (
             <Typography sx={styles.text} component="div">
                 Duration
                 <Typography sx={styles.span} component="span">
-                    60
+                    {travel.duration}
                 </Typography>
             </Typography>
             <Typography sx={styles.text} component="div">

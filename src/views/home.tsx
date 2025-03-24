@@ -36,9 +36,10 @@ export const Home = () => {
 
 const fetchData = async (formInfo: FormDriver | FormPassenger) => {
     const data = new FormEntity(formInfo)
+    data.userId = idUser
     if (isDriver) {
         try {
-            const res = await driverService.getPendingTravels(idUser , roleUser!);// segui
+            const res = await driverService.getPendingTravels(data);// segui
             setCard(res as unknown as TravelCard[])
         } catch (e: unknown) {
             showToast((e as AxiosError<unknown>).response!)
@@ -47,6 +48,8 @@ const fetchData = async (formInfo: FormDriver | FormPassenger) => {
         try {
             const res = await passengerService.getAvailableDrivers(data);
             setCard(res.cardDrivers as DriverCard[])
+            formInfo.duration = res.time
+            infoForm(formInfo)
         } catch (e: unknown) {
             showToast((e as AxiosError<unknown>).response!)
         }
@@ -70,7 +73,7 @@ const fetchData = async (formInfo: FormDriver | FormPassenger) => {
         <>
             {isHome ? (
                 <>
-                    <HomeForm setInfo={infoForm}  fetchData={fetchData}/>
+                    <HomeForm  fetchData={fetchData}/>
 
                     {card?.map((item, index) => (
                         <CardDriver
