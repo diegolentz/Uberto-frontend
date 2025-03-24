@@ -1,6 +1,6 @@
 export class FormPassenger {
-    // public duration: number ,
-    constructor(
+    public duration:number = 0
+    constructor( 
         public origin: string,
         public destination: string,
         public date: Date,

@@ -11,15 +11,15 @@ import { passengerService } from "../../services/passenger.service"
 type HomeConfirmationProps = {
     driver: DriverCard
     travel: FormDriver
+    isDriver: boolean
     changePage: (data: DriverCard | TravelCard ) => void
 };
 
 export const ConfirmationPage = (
-    { driver, travel, changePage }: HomeConfirmationProps) => {
+    { driver , travel , isDriver , changePage }: HomeConfirmationProps) => {
 
     const [recommendation, setRecommendation] = useState<Recommendation[]>()
     const id = parseInt(sessionStorage.getItem('idDriver')!)
-    const isDriver = sessionStorage.getItem('isDriver') == "isDriver"
     
     const recommended = async () => {
         if (isDriver) {
@@ -70,7 +70,7 @@ export const ConfirmationPage = (
             <Typography sx={styles.text} component="div">
                 Duration
                 <Typography sx={styles.span} component="span">
-                    60
+                    {travel.duration}
                 </Typography>
             </Typography>
             <Typography sx={styles.text} component="div">
@@ -92,7 +92,7 @@ export const ConfirmationPage = (
             <Typography sx={styles.text} component="div">
                 Car
                 <Typography sx={styles.span} component="span">
-                    {driver.model}
+                    {driver.brand}
                 </Typography>
             </Typography>
             <Typography sx={styles.text} component="div">

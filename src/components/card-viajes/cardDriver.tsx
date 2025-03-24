@@ -49,7 +49,7 @@ export const CardDriver = ({ value, onClick, isDriver }: CardDriverProps) => {
               <Box sx={styles.passangerCountStyle}>
                 <StarIcon />
                 <Typography sx={styles.rateStyle}>
-                  {3}
+                  {(value as DriverCard).rating}
                 </Typography>
               </Box>
             ) : (

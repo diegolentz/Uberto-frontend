@@ -9,6 +9,7 @@ import { driverService } from "../services/driver.service"
 import { DriverCard, FormDriver, FormEntity } from "../domain/driver"
 import { TravelCard } from "../domain/travel"
 import { FormPassenger } from "../domain/passenger"
+import { travelService } from "../services/travel.service"
 
 // se obtiene el id y rol del sessionStorage rednderizo formulario correspondiente, 
 // el formulario se llena en formInfo ya sea de tipo FormDriver o FormPassenger
@@ -36,9 +37,10 @@ export const Home = () => {
 
 const fetchData = async (formInfo: FormDriver | FormPassenger) => {
     const data = new FormEntity(formInfo)
+    data.userId = idUser
     if (isDriver) {
         try {
-            const res = await driverService.getPendingTravels(idUser , roleUser!);// segui
+            const res = await driverService.getPendingTravels(data);// segui
             setCard(res as unknown as TravelCard[])
         } catch (e: unknown) {
             showToast((e as AxiosError<unknown>).response!)
@@ -47,6 +49,8 @@ const fetchData = async (formInfo: FormDriver | FormPassenger) => {
         try {
             const res = await passengerService.getAvailableDrivers(data);
             setCard(res.cardDrivers as DriverCard[])
+            formInfo.duration = res.time
+            infoForm(formInfo)
         } catch (e: unknown) {
             showToast((e as AxiosError<unknown>).response!)
         }
@@ -70,7 +74,7 @@ const fetchData = async (formInfo: FormDriver | FormPassenger) => {
         <>
             {isHome ? (
                 <>
-                    <HomeForm setInfo={infoForm}  fetchData={fetchData}/>
+                    <HomeForm  fetchData={fetchData}/>
 
                     {card?.map((item, index) => (
                         <CardDriver
@@ -86,6 +90,7 @@ const fetchData = async (formInfo: FormDriver | FormPassenger) => {
                     driver={driveSelected as DriverCard} 
                     travel={formInfo as FormDriver}
                     changePage={changePage} 
+                    isDriver = {isDriver}
                 />
             )}
         </>
