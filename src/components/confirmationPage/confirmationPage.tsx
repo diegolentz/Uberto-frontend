@@ -53,7 +53,7 @@ export const ConfirmationPage = (
             travel.destination,
             driver.price,
             driver.name,
-            "travel.name"
+            ""
         )
         setTravelDTO(newTravel)
     }
