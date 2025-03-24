@@ -1,53 +1,55 @@
-import { FunctionComponent as FC} from 'react';
+import { FunctionComponent as FC, useEffect } from 'react';
 import { TextField } from '@mui/material';
-import { UseFormRegister, FieldError } from 'react-hook-form';
+import { UseFormRegister, FieldError, UseFormSetError } from 'react-hook-form';
 
 interface InputTextFieldProps {
     register: UseFormRegister<any>;
+    setError:UseFormSetError<any>;
     name: string;
     error?: FieldError;
     required: boolean;
     minLength: number;
     maxLength: number;
-    touched?:boolean
+    touched?: boolean
 }
 
-export const InputTextField: FC<InputTextFieldProps> = ({
-    register,
-    name,
-    error,
-    required,
-    minLength,
-    maxLength,
-    touched,
-    // color
+export const InputTextField: FC<InputTextFieldProps> = (
+    inputProps:InputTextFieldProps,
     ...props
-}) => {
+) => {
+    const types = {
+        required: "This is required",
+        minLength: "MIN length of ",
+        maxLength: "MAX length of "
+    }
+
+    useEffect(() => {
+        inputProps.setError(inputProps.name, { types })
+    }, [inputProps.setError])
 
     return (
         <>
             <TextField
-                label={name}
-                {...register(name, {
-                    required: required,
-                    minLength: minLength,
-                    maxLength: maxLength,
+                label={inputProps.name}
+                {...inputProps.register(inputProps.name, {
+                    required: inputProps.required,
+                    minLength: inputProps.minLength,
+                    maxLength: inputProps.maxLength,
                 })}
-                placeholder={name}
-                // aria-invalid={error ? "true" : "false"}
-                error={error ? (true && touched) : false}
+                placeholder={inputProps.name}
+                error={inputProps.error ? (true && inputProps.touched) : false}
                 color="secondary"
                 {...props}
             />
 
-            {error && error.type == 'required' && (
-                <span style={{color:'crimson', fontWeight:'bold'}}>{name} required</span>
+            {inputProps.error && inputProps.error.type == 'required' && (
+                <span style={{ color: 'crimson', fontWeight: 'bold' }}>{inputProps.name} required</span>
             )}
-            {error && error.type == 'minLength' && (
-                <span style={{color:'crimson', fontWeight:'bold'}}>MIN lenght of {minLength}</span>
+            {inputProps.error && inputProps.error.type == 'minLength' && (
+                <span style={{ color: 'crimson', fontWeight: 'bold' }}>MIN lenght of {inputProps.minLength}</span>
             )}
-            {error && error.type == 'maxLength' && (
-                <span style={{color:'crimson', fontWeight:'bold'}}>MAX lenght of {maxLength}</span>
+            {inputProps.error && inputProps.error.type == 'maxLength' && (
+                <span style={{ color: 'crimson', fontWeight: 'bold' }}>MAX lenght of {inputProps.maxLength}</span>
             )}
         </>
     );

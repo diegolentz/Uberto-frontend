@@ -1,27 +1,36 @@
 import axios from "axios";
 import { REST_SERVER_URL } from "./urls";
+import { loginRequest, loginResponse } from "../domain/login";
 
-
-
-class LoginService {
-    async tryLogin(requestBody: { username: string; password: string }): Promise<boolean> {
-        try {
-            // const data = await axios.get<Login>(REST_SERVER_URL).data
-            const login = 1; /* cuando devuelva el id del back lo setea en el session momentaneamente con valor fijo */
-            const isDriver = false
-            sessionStorage.setItem("idUser", login.toString());
-            sessionStorage.setItem("isDriver", isDriver.toString());
-
-            return true;
-        } catch (error) {
-            console.error("Login failed:", error);
-            return false;
-        }
-    }
-
-
-
-    
+export async function tryLogin(loginRequest: loginRequest) {
+    const promise = axios.post<loginResponse>(REST_SERVER_URL + '/login', loginRequest)
+    const response = await promise
+    sessionStorage.setItem("userId", response.data.id.toString());
+    sessionStorage.setItem("role", response.data.rol.toString());
 }
 
-export const loginService = new LoginService();
+
+// type HttpError = {
+//     errorMessage:string;
+//     errorStatus:number;
+// }
+// export async function tryLogin(loginRequest: loginRequest): Promise<void | HttpError> {
+//     return axios.post<loginResponse>(REST_SERVER_URL + '/login', loginRequest)
+//         .then(function (response) {
+//             sessionStorage.setItem("userId", response.data.id.toString());
+//             sessionStorage.setItem("role", response.data.rol.toString());
+//         })
+//         .catch(function (error) {
+//             if (error.response) {
+//                 console.error("Login failed:", error.response.data.message);
+//                 console.error("Login failed:", error.response.status);
+//                 return {
+//                     errorMessage:error.response.data.message,
+//                     errorStatus:error.response.status
+//                 }
+//                 // throw new Error(error.response.data.message)
+//             }else{
+//                 throw new Error("Unexpected error")
+//             }
+//         });
+// }

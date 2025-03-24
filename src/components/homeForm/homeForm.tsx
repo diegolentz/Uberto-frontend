@@ -6,7 +6,6 @@ import { FormPassenger } from "../../domain/passenger";
 
 
 type HomeFormProps = {
-    setInfo: (info: FormDriver | FormPassenger) => void; 
     fetchData: (info: FormDriver | FormPassenger) => void;
 };
 
@@ -18,8 +17,8 @@ export type FormValues = {
     passengers: number;
 };
 
-export const HomeForm = ({ setInfo,fetchData }: HomeFormProps) => {
-    const isDriver = sessionStorage.getItem("isDriver") === "true";
+export const HomeForm = ({ fetchData }: HomeFormProps) => {
+    const isDriver = sessionStorage.getItem("role") === "driver"
     
         const form = useForm<FormValues>({
         defaultValues: {
@@ -41,21 +40,19 @@ export const HomeForm = ({ setInfo,fetchData }: HomeFormProps) => {
                 form.getValues().name,
                 form.getValues().origin,
                 form.getValues().destination,
-                form.getValues().passengers
+                form.getValues().passengers,
+                
             );
-            setInfo(data);
             fetchData(data)
+            
         } else {
-            const data = new FormPassenger(
+            const data = new FormPassenger( 
                 form.getValues().origin,
                 form.getValues().destination,
                 form.getValues().date,
-                form.getValues().passengers
+                form.getValues().passengers,
             );
-            setInfo(data);
-            console.log(data)
             fetchData(data)
-
         }
     }; 
 

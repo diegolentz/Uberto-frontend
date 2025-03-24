@@ -9,6 +9,7 @@ import { driverService } from "../services/driver.service"
 import { DriverCard, FormDriver, FormEntity } from "../domain/driver"
 import { TravelCard } from "../domain/travel"
 import { FormPassenger } from "../domain/passenger"
+import { travelService } from "../services/travel.service"
 
 // se obtiene el id y rol del sessionStorage rednderizo formulario correspondiente, 
 // el formulario se llena en formInfo ya sea de tipo FormDriver o FormPassenger
@@ -17,8 +18,9 @@ import { FormPassenger } from "../domain/passenger"
 // se renderiza el formulario o la pagina de confirmacion
 
 export const Home = () => {
-    parseInt(sessionStorage.getItem("idUser")!)
-    const isDriver = sessionStorage.getItem("isDriver") === "true"
+    const idUser = parseInt(sessionStorage.getItem("userId")!)
+    const roleUser = sessionStorage.getItem("role")
+    const isDriver = sessionStorage.getItem("role") === "driver"
     const [card, setCard] = useState<DriverCard[] | TravelCard[] | null>(null)
     const [isHome, setIsHome] = useState<boolean>(true)
     const [formInfo, setFormInfo] = useState<FormDriver | FormPassenger>()
@@ -35,9 +37,10 @@ export const Home = () => {
 
 const fetchData = async (formInfo: FormDriver | FormPassenger) => {
     const data = new FormEntity(formInfo)
+    data.userId = idUser
     if (isDriver) {
         try {
-            const res = await driverService.getPendingTravels(data);
+            const res = await driverService.getPendingTravels(data);// segui
             setCard(res as unknown as TravelCard[])
         } catch (e: unknown) {
             showToast((e as AxiosError<unknown>).response!)
@@ -45,7 +48,9 @@ const fetchData = async (formInfo: FormDriver | FormPassenger) => {
     } else {
         try {
             const res = await passengerService.getAvailableDrivers(data);
-            setCard(res)
+            setCard(res.cardDrivers as DriverCard[])
+            formInfo.duration = res.time
+            infoForm(formInfo)
         } catch (e: unknown) {
             showToast((e as AxiosError<unknown>).response!)
         }
@@ -69,7 +74,7 @@ const fetchData = async (formInfo: FormDriver | FormPassenger) => {
         <>
             {isHome ? (
                 <>
-                    <HomeForm setInfo={infoForm}  fetchData={fetchData}/>
+                    <HomeForm  fetchData={fetchData}/>
 
                     {card?.map((item, index) => (
                         <CardDriver

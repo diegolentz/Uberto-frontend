@@ -1,53 +1,29 @@
-import { Box, Button, styled } from "@mui/material";
-import { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { InputTextField } from "../components/inputs/textInput";
-import { loginService } from "../services/login.service";
-
-const LoginFormContainerBox = styled(Box)(({ theme }) => ({
-    backgroundColor: theme.palette.common.white,
-    display: 'flex',
-    flexDirection: 'column',
-    gap: theme.spacing(5),
-    height: '100vh',
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-}));
-
-const StyledButton = styled(Button)(({ theme }) => ({
-    backgroundColor: theme.palette.secondary.light
-}));
-
-type Inputs = {
-    username: string,
-    password: string
-};
+import { tryLogin } from "../services/login.service";
+import { useToast } from "../hooks/toast/useToast";
+import { loginRequest } from "../domain/login";
+import { LoginFormContainerBox, StyledButton } from "../utils/loginStyles";
 
 export const Login = () => {
-    const { register, handleSubmit, formState: { errors, touchedFields }, setError } = useForm<Inputs>({ criteriaMode: 'all' });
+    const {
+        register, handleSubmit,
+        formState: { errors, touchedFields },
+        setError
+    } = useForm<loginRequest>({ criteriaMode: 'all' });
     const navigate = useNavigate()
+    const toast = useToast()
 
-    // implementar, momentaneamente seteado un valor fijo
-    const onSubmit: SubmitHandler<Inputs> = async data => {
-        await loginService.tryLogin(data) ? goHome() : console
+    const onSubmit: SubmitHandler<loginRequest> = async data => {
+        try {
+            await tryLogin(data);
+            navigate("/Home");
+            toast.open('Login succesfull', 'success')
+        } catch (error:any) {
+            toast.open(error.response.data.message, 'error')
+        }
     };
-
-    
-    function goHome(){
-        navigate("/Home")
-    }
-    const types = {
-        required: "This is required",
-        minLength: "MIN length of ",
-        maxLength: "MAX length of "
-    }
-
-    useEffect(() => {
-        setError('username', {types})
-        setError('password', {types})
-    }, [setError])
     
     return <>
 
@@ -55,15 +31,15 @@ export const Login = () => {
             <h1 style={{ color: '#ba68c8' }}>UBERTO</h1>
             <form onSubmit={handleSubmit(onSubmit)} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 <InputTextField
-                    register={register} name="username"
-                    minLength={5} maxLength={20}
+                    register={register} name="username" setError={setError}
+                    minLength={2} maxLength={20}
                     required={true} error={errors.username}
                     touched={touchedFields.username}
                 />
 
                 <InputTextField
-                    register={register} name="password"
-                    minLength={5} maxLength={20}
+                    register={register} name="password" setError={setError}
+                    minLength={2} maxLength={20}
                     required={true} error={errors.password}
                     touched={touchedFields.password}
                 />

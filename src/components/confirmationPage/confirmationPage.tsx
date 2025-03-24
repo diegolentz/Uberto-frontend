@@ -1,44 +1,74 @@
 import { Box, Button, Divider, Typography } from "@mui/material"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { DriverCard, FormDriver } from "../../domain/driver"
-import { TravelCard } from "../../domain/travel"
+import { TravelCard, TravelDTO } from "../../domain/travel"
 import * as styles from './confirmationStyles'
 import { Recommendation } from "../../domain/recomendation"
 import { RecommendationCard } from "../recommendation/recommendation"
 import { driverService } from "../../services/driver.service"
 import { passengerService } from "../../services/passenger.service"
+import { travelService } from "../../services/travel.service"
+import { AxiosError } from "axios"
+import { msjContext } from "../viewLayout/viewLayout"
+
+
+
 
 type HomeConfirmationProps = {
     driver: DriverCard
     travel: FormDriver
-    changePage: (data: DriverCard | TravelCard ) => void
+    changePage: (data: DriverCard | TravelCard) => void
 };
 
 export const ConfirmationPage = (
     { driver, travel, changePage }: HomeConfirmationProps) => {
-
+   
     const [recommendation, setRecommendation] = useState<Recommendation[]>()
-    const id = parseInt(sessionStorage.getItem('idDriver')!)
-    const isDriver = sessionStorage.getItem('isDriver') == "isDriver"
-    
+    const idUser = parseInt(sessionStorage.getItem("userId")!)
+    const {showToast} = useContext(msjContext)
+
     const recommended = async () => {
-        if (isDriver) {
-            const res = await driverService.profileRatings(id)
+        try{
+            const res = await passengerService.profileRatings(driver.id)
+            console.log(res)
             setRecommendation(res)
-        } else {
-            const res = await passengerService.profileRatings(id)
-            setRecommendation(res)
+        }catch (e: unknown) {
+            showToast((e as AxiosError<unknown>).response!);
         }
     }
 
     useEffect(() => {
         recommended()
-        console.log(travel.passengers)
     }, [])
 
     const handleDecline = () => {
         changePage(driver)
     }
+
+    const handleConfirm = async () => {  
+        
+        const newTravel = new TravelDTO(
+            idUser,
+            driver.id,
+            travel.duration,
+            travel.passengers,
+            travel.date,
+            travel.origin,
+            travel.destination,
+            driver.price,
+            driver.name,
+            ""
+        )
+
+          try {
+            const res = await travelService.createTravel(newTravel);
+            showToast(res); 
+            handleDecline(); 
+          } catch (e: unknown) {
+            showToast((e as AxiosError<unknown>).response!); 
+          }
+        
+      };
 
     return (
         <>
@@ -70,7 +100,7 @@ export const ConfirmationPage = (
             <Typography sx={styles.text} component="div">
                 Duration
                 <Typography sx={styles.span} component="span">
-                    60
+                    {travel.duration}
                 </Typography>
             </Typography>
             <Typography sx={styles.text} component="div">
@@ -80,8 +110,8 @@ export const ConfirmationPage = (
                 </Typography>
             </Typography>
             <Divider />
-            <Typography sx={styles.title} component="div">
-                Driver Premium
+            <Typography sx={styles.title} component="h1">
+                {driver.type}
             </Typography>
             <Typography sx={styles.text} component="div">
                 Name
@@ -92,7 +122,7 @@ export const ConfirmationPage = (
             <Typography sx={styles.text} component="div">
                 Car
                 <Typography sx={styles.span} component="span">
-                    {driver.model}
+                    {driver.brand}
                 </Typography>
             </Typography>
             <Typography sx={styles.text} component="div">
@@ -104,7 +134,7 @@ export const ConfirmationPage = (
             <Typography sx={styles.text} component="div">
                 Rating
                 <Typography sx={styles.span} component="span">
-                    5
+                    {driver.rating}
                 </Typography>
             </Typography>
             <Box margin={2} marginBottom={10}>
@@ -114,16 +144,17 @@ export const ConfirmationPage = (
             </Box>
 
             <Box sx={styles.boxButtons}>
-                <Button 
+                <Button
                     variant="outlined"
                     color="secondary"
                     onClick={handleDecline}
                 >
                     Decline
                 </Button>
-                <Button 
+                <Button
                     variant="contained"
                     color="secondary"
+                    onClick={handleConfirm}
                 >
                     Confirm
                 </Button>
