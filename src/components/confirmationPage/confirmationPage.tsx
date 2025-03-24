@@ -11,30 +11,45 @@ import { travelService } from "../../services/travel.service"
 import { AxiosError } from "axios"
 import { msjContext } from "../viewLayout/viewLayout"
 
+
+
+
 type HomeConfirmationProps = {
     driver: DriverCard
     travel: FormDriver
-    isDriver: boolean
-    changePage: (data: DriverCard | TravelCard ) => void
+    changePage: (data: DriverCard | TravelCard) => void
 };
 
 export const ConfirmationPage = (
-    { driver , travel , isDriver , changePage }: HomeConfirmationProps) => {
+    { driver, travel, changePage }: HomeConfirmationProps) => {
+
 
     const [travelDTO,setTravelDTO] = useState<TravelDTO>()    
     const [recommendation, setRecommendation] = useState<Recommendation[]>()
     const idUser = parseInt(sessionStorage.getItem("userId")!)
     const {showToast} = useContext(msjContext)
+
+    const id = parseInt(sessionStorage.getItem('idDriver')!)
+
     
+
     const recommended = async () => {
-        if (isDriver) {
-            const res = await driverService.profileRatings(idUser)
+
+        try{
+            const res = await passengerService.profileRatings(driver.id)
+            console.log(res)
             setRecommendation(res)
-        } else {
-            const res = await passengerService.profileRatings(idUser)
-            setRecommendation(res)
+        }catch (e: unknown) {
+            showToast((e as AxiosError<unknown>).response!);
         }
     }
+
+
+    useEffect(() => {
+        recommended()
+        // console.log(travel.passengers)
+    }, [])
+
 
     const handleDecline = () => {
         changePage(driver)
@@ -148,14 +163,14 @@ export const ConfirmationPage = (
             </Box>
 
             <Box sx={styles.boxButtons}>
-                <Button 
+                <Button
                     variant="outlined"
                     color="secondary"
                     onClick={handleDecline}
                 >
                     Decline
                 </Button>
-                <Button 
+                <Button
                     variant="contained"
                     color="secondary"
                     onClick={confirmTravel}

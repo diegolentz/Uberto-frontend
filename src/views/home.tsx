@@ -48,7 +48,6 @@ const fetchData = async (formInfo: FormDriver | FormPassenger) => {
     } else {
         try {
             const res = await passengerService.getAvailableDrivers(data);
-            console.log(res)
             setCard(res.cardDrivers as DriverCard[])
             formInfo.duration = res.time
             infoForm(formInfo)
@@ -91,7 +90,6 @@ const fetchData = async (formInfo: FormDriver | FormPassenger) => {
                     driver={driveSelected as DriverCard} 
                     travel={formInfo as FormDriver}
                     changePage={changePage} 
-                    isDriver = {isDriver}
                 />
             )}
         </>
