@@ -1,20 +1,20 @@
 import { Box, Divider } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 // Removed unused import of useForm
-import { MoneyForm } from "../profileForm/moneyForm";
-import { ProfileForm } from "../profileForm/profileForm";
-import { FriendsComponent } from "../friends/friends";
-import { driverProfile, DriverProfile } from "../../domain/driver";
+import { AxiosError } from "axios";
+import {  DriverProfile } from "../../domain/driver";
 import { passengerProfile, PassengerProfile } from "../../domain/passenger";
 import { driverService } from "../../services/driver.service";
 import { passengerService } from "../../services/passenger.service";
-import { AxiosError } from "axios";
+import { FriendsComponent } from "../friends/friends";
+import { MoneyForm } from "../profileForm/moneyForm";
+import { ProfileForm } from "../profileForm/profileForm";
 import { msjContext } from "../viewLayout/viewLayout";
 
 export const Data = () => {
     const id = parseInt(sessionStorage.getItem('userId')!);
     const isDriver = sessionStorage.getItem('isDriver') === 'true';
-    const [profile, setProfile] = useState<DriverProfile | PassengerProfile>(isDriver ? driverProfile : passengerProfile);
+    const [profile, setProfile] = useState<DriverProfile | PassengerProfile | null>(isDriver ? {} as DriverProfile : {} as PassengerProfile);
     const { showToast } = useContext(msjContext)
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

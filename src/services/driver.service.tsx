@@ -5,6 +5,12 @@ import { TravelCard } from "../domain/travel";
 import { REST_SERVER_URL } from "./urls";
 
 class DriverService {
+   
+   
+   async getProfile(id: number) : Promise<DriverProfile> {
+        const response = await axios.get(`${REST_SERVER_URL}/driver`, { params: { id: id } })
+        return response.data
+    }
     // profileRatings(id: number) : Promise<Recommendation[]> {
     //     // implementar endpoint para obtener recomendaciones
     //     return Promise.resolve([recommendation1,recommendation2]);

@@ -10,14 +10,14 @@ import { AxiosError } from "axios";
 
 interface ProfileFormProps {
     id: number;
-    entity: DriverProfile | PassengerProfile;
+    entity: DriverProfile | PassengerProfile | null;
     func: (data: unknown) => void;
 }
 
 
 export const ProfileForm = ({ entity, func, id }: ProfileFormProps) => {
     const isDriver = sessionStorage.getItem('isDriver') === 'true';
-    const [profile, setProfile] = useState<DriverProfile | PassengerProfile>(entity);
+    const [profile, setProfile] = useState<DriverProfile | PassengerProfile | null>(entity);
     const { showToast } = useContext(msjContext)
     const setChanges = (data: unknown) => {
         func(data);
