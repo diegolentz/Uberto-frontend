@@ -60,6 +60,7 @@ export const Home = () => {
     const changePage = (data: DriverCard | TravelCard) => {
         setDriveSelected(data)
         setIsHome(!isHome)
+        setCard([])
     }
 
     useEffect(() => {
