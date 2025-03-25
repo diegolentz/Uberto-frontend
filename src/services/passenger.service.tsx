@@ -1,7 +1,7 @@
 import axios from "axios";
-import { DriverCard, FormEntity } from "../domain/driver";
+import { FormEntity } from "../domain/driver";
 import { Friends, friendsJSON, passengerProfile, PassengerProfile } from "../domain/passenger";
-import { Recommendation, recommendation1, recommendation2 } from "../domain/recomendation";
+import { Recommendation } from "../domain/recomendation";
 import { REST_SERVER_URL } from "./urls";
 
 class PassengerService {
