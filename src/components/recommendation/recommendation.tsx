@@ -4,6 +4,7 @@ import { Recommendation } from "../../domain/recomendation"
 import { AxiosError } from "axios"
 import { useContext } from "react"
 import { msjContext } from "../viewLayout/viewLayout"
+import { scoreDelete } from "../../services/scores.service"
 
 
 export interface recommProps {
@@ -16,15 +17,18 @@ export const RecommendationCard = ({recom, handle} : recommProps) => {
     const id = parseInt(sessionStorage.getItem('idUser')!)
     const isDriver = sessionStorage.getItem('isDriver') === 'true'
     const { showToast } = useContext(msjContext)
+    const userId = parseInt(sessionStorage.getItem("userId")!)
     const deleteRating = (id: number) => {
         handle(id)
     }
 
-    const handleDelete =  () => {
+     const handleDelete = async () => {
         try{
-            const res = await
+            console.log('=> ', recom)
+            const res = await scoreDelete(userId, recom.tripId)
+            //showToast(res)
         }catch (e: unknown) {
-            showToast((e as AxiosError<unknown>).response!)
+           // showToast((e as AxiosError<unknown>).response!)
         }
 
     }
@@ -33,7 +37,7 @@ export const RecommendationCard = ({recom, handle} : recommProps) => {
     return (
         <>
                 <Card sx={{ maxWidth: 400, p: 2, borderRadius: 3, boxShadow: 3 }}>
-                {recom.delete && <Button onclick={handleDelete}>Delte</Button>}
+                {recom.delete && <Button onClick={handleDelete}>Delte</Button>}
                 <CardHeader
                 avatar={<Avatar src={recom.avatarUrlPassenger} alt={recom.name} />}
                 title={<Typography fontWeight="bold">{recom.name}</Typography>}

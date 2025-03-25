@@ -1,5 +1,5 @@
 export class Recommendation {
-    id : number;
+    tripId : number;
     name: string;
     date: Date;
     scorePoints: number;
@@ -12,7 +12,7 @@ export class Recommendation {
     editMode: boolean;
 
     constructor(
-        id : number,
+        tripId : number,
         name: string,
         date: Date,
         scorePoints: number,
@@ -24,7 +24,7 @@ export class Recommendation {
         avatarUrlPassenger: string,
         avatarUrlDriver: string
     ) {
-        this.id = id;
+        this.tripId = tripId;
         this.name = name;
         this.date = date;
         this.scorePoints = scorePoints;
