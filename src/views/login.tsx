@@ -5,6 +5,8 @@ import { tryLogin } from "../services/login.service";
 import { useToast } from "../hooks/toast/useToast";
 import { loginRequest } from "../domain/login";
 import { LoginFormContainerBox, StyledButton } from "../utils/loginStyles";
+import { TextField } from "@mui/material";
+import { InputTextSecretField } from "../components/inputs/textInputSecret";
 
 export const Login = () => {
     const {
@@ -20,28 +22,30 @@ export const Login = () => {
             await tryLogin(data);
             navigate("/Home");
             toast.open('Login succesfull', 'success')
-        } catch (error:any) {
+        } catch (error: any) {
             toast.open(error.response.data.message, 'error')
         }
     };
-    
+
     return <>
 
         <LoginFormContainerBox>
             <h1 style={{ color: '#ba68c8' }}>UBERTO</h1>
+
             <form onSubmit={handleSubmit(onSubmit)} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                <InputTextField
-                    register={register} name="username" setError={setError}
-                    minLength={2} maxLength={20}
-                    required={true} error={errors.username}
-                    touched={touchedFields.username}
-                />
 
                 <InputTextField
-                    register={register} name="password" setError={setError}
-                    minLength={2} maxLength={20}
-                    required={true} error={errors.password}
-                    touched={touchedFields.password}
+                    register={register} setError={setError}
+                    name="username" required={true}
+                    minLength={3} maxLength={20}
+                    error={errors.username}touched={!!errors.username}
+                />
+
+                <InputTextSecretField
+                    register={register} setError={setError}
+                    name="password" required={true}
+                    minLength={6} maxLength={20}
+                    error={errors.password} touched={!!errors.password}
                 />
 
                 <StyledButton type="submit" variant="contained">Log in</StyledButton>
