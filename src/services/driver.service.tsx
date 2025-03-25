@@ -1,7 +1,7 @@
 import axios from "axios";
 import {  DriverProfile, FormEntity } from "../domain/driver";
 import { Recommendation, } from "../domain/recomendation";
-import { TravelCard } from "../domain/travel";
+import { TravelCard, TravelDTO } from "../domain/travel";
 import { REST_SERVER_URL } from "./urls";
 
 class DriverService {
@@ -24,7 +24,7 @@ class DriverService {
 
     async getPendingTravels(data: FormEntity): Promise<TravelCard[]> { 
         const response = await axios.post(`${REST_SERVER_URL}/trip/pending`, data);
-        const travels = response.data.map((item: TravelCard) => TravelCard.prototype.fromDTO(item));
+        const travels = response.data.map((item: TravelDTO) => TravelCard.prototype.fromDTO(item));
         return travels;
     }
 
