@@ -6,7 +6,6 @@ import { DriverCard } from "../domain/driver";
 class TravelService {
 
     async createTravel(data:TravelDTO) {
-        // console.log(data)
         return await axios.post(`${REST_SERVER_URL}/trip/create`,data) 
     } 
 

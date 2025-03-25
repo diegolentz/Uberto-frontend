@@ -19,7 +19,6 @@ import { travelService } from "../services/travel.service"
 
 export const Home = () => {
     const idUser = parseInt(sessionStorage.getItem("userId")!)
-    const roleUser = sessionStorage.getItem("role")
     const isDriver = sessionStorage.getItem("role") === "driver"
     const [card, setCard] = useState<DriverCard[] | TravelCard[] | null>(null)
     const [isHome, setIsHome] = useState<boolean>(true)
@@ -32,7 +31,7 @@ export const Home = () => {
     }
 
     // creo un entity con la info qe necesita el back para traer los datos
-    //  y casteo el tipo de formulario que tengo guardado en formInfo para poder pasarlo lo que necesito
+    // y casteo el tipo de formulario que tengo guardado en formInfo para poder pasarlo lo que necesito
     // dpendiendo del rol se llama a una funcion u otra
 
     const fetchData = async (formInfo: FormDriver | FormPassenger) => {
@@ -61,6 +60,7 @@ export const Home = () => {
     const changePage = (data: DriverCard | TravelCard) => {
         setDriveSelected(data)
         setIsHome(!isHome)
+        setCard([])
     }
 
     useEffect(() => {
