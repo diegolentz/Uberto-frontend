@@ -30,14 +30,14 @@ export const Home = () => {
         if (isDriver) {
             try {
                 const res = await driverService.getPendingTravels(data);// segui
-                setCard(res as unknown as TravelCard[])
+                setCard(res)
             } catch (e: unknown) {
                 showToast((e as AxiosError<unknown>).response!)
             }
         } else {
             try {
                 const res = await passengerService.getAvailableDrivers(data);
-                setCard(res.cardDrivers as DriverCard[])
+                setCard(res.cardDrivers as TravelCard[])
                 formInfo.duration = res.time
                 infoForm(formInfo)
             } catch (e: unknown) {
