@@ -1,4 +1,4 @@
-import { Stack, TextField, Button } from "@mui/material";
+import { Stack, TextField, Button, MenuItem } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { FormDriver,  } from "../../domain/driver";
 import { estilosInput } from "./homeFormStyles";
@@ -26,7 +26,7 @@ export const HomeForm = ({ fetchData }: HomeFormProps) => {
             origin: "",
             destination: "",
             date: new Date(),
-            passengers: 0,
+            passengers: 1,
         },
         mode: "onChange",
     });
@@ -117,7 +117,14 @@ export const HomeForm = ({ fetchData }: HomeFormProps) => {
                         label="Date"
                         type="datetime-local"
                         sx={estilosInput}
-                        slotProps={{ inputLabel: { shrink: true } }}
+                        slotProps={{ 
+                            inputLabel: { shrink: true },
+                            htmlInput: {
+                                max:new Date(new Date().setMonth(new Date().getMonth() + 3)).toISOString().slice(0, 16),
+                                min:new Date(new Date().setMonth(new Date().getMonth())).toISOString().slice(0, 16)
+                            }
+                        }}
+
                         {...register("date", {
                             required: "Date is required",
                             validate: (value) => {
@@ -126,32 +133,43 @@ export const HomeForm = ({ fetchData }: HomeFormProps) => {
                                 const maxDate = new Date();
                                 maxDate.setMonth(maxDate.getMonth() + 3);
 
+                                const year = selectedDate.getFullYear();
+                                if (year < 1000 || year > 9999) {
+
+                                    return "Year must be 4 digits";
+                    
+                                }
                                 if (selectedDate < currentDate) {
                                     return "Date cannot be earlier than today";
                                 }
                                 if (selectedDate > maxDate) {
                                     return "Date cannot be more than 3 months from today";
                                 }
-                                return true;
                             },
                         })}
+
                         error={!!errors.date}
                         helperText={errors.date?.message}
                     />
                 )}
 
-                <TextField
-                    size="small"
+                <TextField size="small"
                     label="Number of passengers"
                     sx={estilosInput}
-                    type="number"
+                    select
                     {...register("passengers", {
-                        required: "Number of passengers is required",
-                        min: { value: 1, message: "Must be greater than 0" },
+                        required: "Number of passengers is required"
                     })}
                     error={!!errors.passengers}
                     helperText={errors.passengers?.message}
-                />
+                    value={form.getValues().passengers}
+                >
+                    {[1,2,3,4].map((option) => (
+                        <MenuItem key={option} value={option}>
+                          {option}
+                        </MenuItem>
+                    ))}
+                </TextField>
                 <Button
                     type="submit"
                     variant="contained"
