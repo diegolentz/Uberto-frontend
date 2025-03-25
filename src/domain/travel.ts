@@ -11,18 +11,18 @@ export class TravelCard {
         public passengerName: string
     ){}
 
-    // fromDTO(data: TravelDTO): TravelCard {
-    //     return new TravelCard(
-    //         this.duration = data.duration,
-    //         this.numberPasaenger = data.numberPassengers,
-    //         this.date = data.date,
-    //         this.origin = data.origin,
-    //         this.destination = data.destination,
-    //         this.price = data.price,
-    //         this.driverName = data.driverName,
-    //         this.passengerName = data.passengerName,
-    //     )
-    // }
+    fromDTO(data: TravelDTO): TravelCard {
+        return new TravelCard(
+            this.duration = data.duration,
+            this.numberPasaenger = data.numberPassengers,
+            this.date = data.date,
+            this.origin = data.origin,
+            this.destination = data.destination,
+            this.price = data.price,
+            this.driverName = data.driverName,
+            this.passengerName = data.passengerName,
+        )
+    }
 }
 
 export class TravelDTO {

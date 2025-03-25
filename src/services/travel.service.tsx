@@ -37,13 +37,13 @@ export async function getPassengerFinished(id: number, role:string):Promise<Trav
     return travels;
 }
 
-export async function getDriver(id: number, role:string):Promise<DriverCard[]> {
-    const promise = axios.get<DriverCard[]>(REST_SERVER_URL + '/trip', {
+export async function getDriver(id: number, role:string):Promise<TravelCard[]> {
+    const promise = axios.get<TravelDTO[]>(REST_SERVER_URL + '/trip', {
         params:{
             id:id,
             rol:role
         }
     })
     const response = await promise
-    return response.data;
+    return response.data.map((item:TravelDTO)=> TravelCard.prototype.fromDTO(item));
 } 

@@ -21,12 +21,12 @@ export const CardTravel = ({value}:{value : TravelCard}) => {
             title={
                 <Box>
                   <Typography sx={styles.userNameLastnameStyle}>
-                    {(value as TravelCard).passengerName} 
+                    {value.passengerName} 
                   </Typography>
                   <Box sx={styles.iconUserStyle}>
                     <GroupIcon sx={{ fontSize: '1.2rem' }} />
                     <Typography sx={styles.rateStyle}>
-                      {'numberPassengers' in value && typeof value.numberPassengers === 'number'  ? value.numberPassengers : 0}
+                      {value.numberPasaenger}
                     </Typography>
                   </Box>
                 </Box>
@@ -65,9 +65,9 @@ export const CardTravel = ({value}:{value : TravelCard}) => {
     
                   <Typography sx={styles.infoTravelStyle}>  
                     {  
-                    `${utils.setDate((value as TravelCard).date)} |
-                     ${utils.setStartTime((value as TravelCard).date)} -
-                     ${utils.setEndTime(((value as TravelCard).date),((value as TravelCard).duration))}hs`  
+                    `${utils.setDate(value.date)} |
+                     ${utils.setStartTime(value.date)} -
+                     ${utils.setEndTime((value.date),(value.duration))}hs`  
                     }
                   </Typography>
     
