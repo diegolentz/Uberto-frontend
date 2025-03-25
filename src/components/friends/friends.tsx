@@ -12,7 +12,7 @@ import { AxiosError } from 'axios';
 export const FriendsComponent = ({ id }: { id: number }) => {
     const [visibility, setVisibility] = useState<boolean>(false);
     const [searchText, setSearchText] = useState<string>(""); // Estado para almacenar el texto del input
-    const [notFriends, setNotFriends] = useState<Friends[]>(); // Estado para almacenar el texto del input
+    const [notFriends, setNotFriends] = useState<Friends[]>();
     const [friends, setFriends] = useState<Friends[]>([]);
     const { showToast } = useContext(msjContext)
 
@@ -25,13 +25,19 @@ export const FriendsComponent = ({ id }: { id: number }) => {
     };
 
     const fetchFriend = async () => {
-        const nFriends = await passengerService.getFriends(id);
-        setNotFriends(nFriends);
+        const notFriends = await passengerService.searchFriend(id, searchText);
+        setNotFriends(notFriends);
     };
 
     const fetchFriends = async () => {
-        const nFriends = await passengerService.getFriends(id);
-        setFriends(nFriends);
+        const currentFriends = await passengerService.getFriends(id);
+        setFriends(currentFriends);
+    }
+
+    //Elimina al amigo de la lista de no amigos y actualiza la lista de amigos
+    const removeNotFriend = (friendId: number) => {
+        setNotFriends(prevNotFriends => prevNotFriends?.filter(friend => friend.id !== friendId));
+        fetchFriends();
     }
 
     useEffect(() => {
@@ -42,9 +48,6 @@ export const FriendsComponent = ({ id }: { id: number }) => {
             showToast((e as AxiosError<unknown>).response!)
         }
     }, []);
-
-
-
 
     const searchStyles = {
         height: '100%',
@@ -78,7 +81,7 @@ export const FriendsComponent = ({ id }: { id: number }) => {
                     <Box sx={{ display: 'flex', alignItems: 'center', width: '100%', height: '3rem' }}>
                         <TextField
                             variant="outlined"
-                            placeholder="Search pipol"
+                            placeholder="Search people"
                             sx={searchStyles}
                             value={searchText} // Controla el valor del input
                             onChange={handleInputChange} // Maneja el cambio de texto
@@ -94,7 +97,7 @@ export const FriendsComponent = ({ id }: { id: number }) => {
 
                     <h5>Results</h5>
                     {notFriends?.map((friend, index) => (
-                        <CardFriends key={index} isFriend={false} friendData={friend} id={id} func={fetchFriends} />
+                        <CardFriends key={index} isFriend={false} friendData={friend} id={id} func={() => removeNotFriend(friend.id)} />
                     ))}
 
                     <Divider sx={{ borderColor: '#a737fc', width: '100%' }} />
