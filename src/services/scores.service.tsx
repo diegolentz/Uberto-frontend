@@ -9,3 +9,11 @@ export async function get(userId: number): Promise<Recommendation[]> {
     console.log(response.data)
     return response.data;
 }
+
+export async function delete(userId: number): {
+    const response = await axios.delete(`${REST_SERVER_URL}`, {
+        params: { userId: userId }
+    });
+    console.log(response.data)
+    return response.data;
+}

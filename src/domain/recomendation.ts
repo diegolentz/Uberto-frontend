@@ -8,7 +8,7 @@ export class Recommendation {
     passengerName: number;
     driverName: string;
     avatarUrlPassenger: string;
-    isEdit: boolean;
+    delete: boolean;
     editMode: boolean;
 
     constructor(
@@ -19,7 +19,7 @@ export class Recommendation {
         message: string,
         passengerName: number,
         driverName: string,
-        isEdit: boolean,
+        isEdit: boolean, //me rompe cuando cambia este valor no se que onda
         editMode: boolean,
         avatarUrlPassenger: string,
         avatarUrlDriver: string
@@ -33,7 +33,7 @@ export class Recommendation {
         this.passengerName = passengerName;
         this.driverName = driverName;
         this.avatarUrlPassenger = avatarUrlPassenger;
-        this.isEdit = isEdit;
+        this.delete = isEdit;
         this.editMode = editMode;
     }
 }
