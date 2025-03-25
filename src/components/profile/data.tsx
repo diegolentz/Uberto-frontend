@@ -12,8 +12,7 @@ import { AxiosError } from "axios";
 import { msjContext } from "../viewLayout/viewLayout";
 
 export const Data = () => {
-    // const id = parseInt(sessionStorage.getItem('idUser')!);
-    const id = 1;
+    const id = parseInt(sessionStorage.getItem('userId')!);
     const isDriver = sessionStorage.getItem('isDriver') === 'true';
     const [profile, setProfile] = useState<DriverProfile | PassengerProfile>(isDriver ? driverProfile : passengerProfile);
     const { showToast } = useContext(msjContext)
