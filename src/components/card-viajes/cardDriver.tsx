@@ -5,6 +5,7 @@ import { DriverCard } from '../../domain/driver';
 import { TravelCard } from '../../domain/travel';
 
 import * as styles from './cardDriverStyle';
+import { utils } from '../../utils/formatDate';
 
 interface CardDriverProps {
   value: DriverCard | TravelCard;
@@ -19,6 +20,7 @@ export const CardDriver = ({ value, onClick, isDriver }: CardDriverProps) => {
       onClick(value); // Llama correctamente la función con `value`
     }
   };  
+
 
   return (
     <Card sx={styles.cardBodyStyle} onClick={clickCard}>
@@ -103,9 +105,12 @@ export const CardDriver = ({ value, onClick, isDriver }: CardDriverProps) => {
                 {'destination' in value ? value.destination : ''}
               </Typography>
 
-              <Typography sx={styles.infoTravelStyle}>
-                
-                {  `${(value as TravelCard).date}`  }
+              <Typography sx={styles.infoTravelStyle}>  
+                {  
+                `${utils.setDate((value as TravelCard).date)} |
+                 ${utils.setStartTime((value as TravelCard).date)} -
+                 ${utils.setEndTime(((value as TravelCard).date),((value as TravelCard).duration))}hs`  
+                }
               </Typography>
 
               <Typography sx={styles.priceTravelStyle}>
