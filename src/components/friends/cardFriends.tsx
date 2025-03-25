@@ -7,7 +7,7 @@ import { useContext } from "react";
 import { msjContext } from "../viewLayout/viewLayout";
 import { AxiosError } from "axios";
 
-export const CardFriends = ({ isFriend, friendData, id, func }: { isFriend: boolean, friendData: Friends, id: number, func: () => void }) => {
+export const CardFriends = ({ isFriend, friendData, id, func }: { isFriend: boolean, friendData: Friends, id: number, func: (id?: number) => void }) => {
 
     const { showToast } = useContext(msjContext)
 
@@ -21,6 +21,18 @@ export const CardFriends = ({ isFriend, friendData, id, func }: { isFriend: bool
             showToast((e as AxiosError<unknown>).response!)
         }
     }
+
+    const addFriend = async (friendId: number) => {
+        try {
+            const response = await passengerService.addFriend(id, friendId);
+            func(friendId);
+            showToast(response);
+        }
+        catch (e: unknown) {
+            showToast((e as AxiosError<unknown>).response!)
+        }
+    }
+
     return (
         <Box sx={{ width: '85%', flexDirection: 'row', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.5rem', border: '1.5px solid #a737fc', borderRadius: '1rem', }}>
             <Box width={'20%'}>
@@ -37,7 +49,7 @@ export const CardFriends = ({ isFriend, friendData, id, func }: { isFriend: bool
                         <DeleteForeverIcon fontSize="medium"></DeleteForeverIcon>
                     </Button>
                 ) :
-                    <Button sx={{ color: 'green', borderColor: 'green', minWidth: '3rem', minHeight: '3rem', padding: '4px' }}>
+                    <Button sx={{ color: 'green', borderColor: 'green', minWidth: '3rem', minHeight: '3rem', padding: '4px' }} onClick={() => { addFriend(friendData.id) }}>
                         <AddCircleIcon></AddCircleIcon>
                     </Button>
                 }
