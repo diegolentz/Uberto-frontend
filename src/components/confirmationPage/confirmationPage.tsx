@@ -46,7 +46,6 @@ export const ConfirmationPage = (
     }
 
     const handleConfirm = async () => {  
-        
         const newTravel = new TravelDTO(
             idUser,
             driver.id,
@@ -57,18 +56,24 @@ export const ConfirmationPage = (
             travel.destination,
             driver.price,
             driver.name,
+            "",
+            "",
             ""
-        )
-
-          try {
+        );
+    
+        // Llamar a los métodos para establecer startTime y endTime
+        newTravel.setStartTime(); // Establece startTime basado en la fecha 'date'
+        newTravel.setEndTime();   // Establece endTime sumando la duración
+    
+        console.log(newTravel)
+        try {
             const res = await travelService.createTravel(newTravel);
             showToast(res); 
             handleDecline(); 
-          } catch (e: unknown) {
+        } catch (e: unknown) {
             showToast((e as AxiosError<unknown>).response!); 
-          }
-        
-      };
+        }
+    };
 
     return (
         <>
