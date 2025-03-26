@@ -38,12 +38,14 @@ export class PassengerProfile {
         public firstName: string = '',
         public lastName: string = '',
         public phone: number = 0,
+        public money: number = 0,
     ) { }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     fromJson(json: any): PassengerProfile {
         this.firstName = json.firstname
         this.lastName = json.lastname
         this.phone = json.cellphone
+        this.money = json.money
 
         return Object.assign(new PassengerProfile(), this);
     }
