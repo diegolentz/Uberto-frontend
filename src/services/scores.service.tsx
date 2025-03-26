@@ -11,9 +11,8 @@ export async function get(userId: number): Promise<Recommendation[]> {
 }
 
 export async function scoreDelete(userId: number, tripId: number) {
-    const response = await axios.delete(`${REST_SERVER_URL}/TripScore`, {
+    return await axios.delete(`${REST_SERVER_URL}/TripScore`, {
         params: { userId, tripId }
     });
-    console.log(response.data)
-    return response.data;
+    
 }

@@ -4,6 +4,7 @@ import { useToast } from "../../hooks/toast/useToast";
 import { get } from "../../services/scores.service";
 import { Recommendation } from "../../domain/recomendation";
 import { RecommendationCard } from "../recommendation/recommendation";
+import { Button } from "@mui/material";
 
 
 export const Ratings = () => {
@@ -25,13 +26,13 @@ export const Ratings = () => {
         fetchData()
     },[])
 
+
     return (
         <>
 
             {scores.map((score:Recommendation, index:number)=>(
                 <>
-                    <RecommendationCard key={index} recom={score} handle={fetchData}/>
-                    
+                    <RecommendationCard key={index} recom={score}/>
                 </>
             ))}
         </>

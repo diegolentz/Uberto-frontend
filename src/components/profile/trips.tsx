@@ -59,7 +59,6 @@ export const Trips = () => {
                         <CardTravel key={index} value={travel} />
                     )}
                 </>
-
             }
         </>
     )
