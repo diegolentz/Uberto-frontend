@@ -50,24 +50,25 @@ export class FormEntity {
 export class DriverProfile {
     constructor(
         public id : number,
-        public firstname: string,
-        public lastname: string,
+        public serial: string,
+        public firstName: string,
+        public lastName: string,
         public brand: string,
         public model: number,
-        public price: number, // Updated to support decimals
-        public domain: string,
+        public price: number, 
     ){}
     fromJson(data: any): DriverProfile  {
         this.id = data.id
-        this.firstname = data.firstName
-        this.lastname = data.lastName
-        this.price = data.price
-        this.domain = data.serial
+        this.serial = data.serial
+        this.firstName = data.firstName
+        this.lastName = data.lastName
         this.brand = data.brand
         this.model = data.model
+        this.price = data.price
 
         return Object.assign(
-            new DriverProfile(this.id, this.firstname, this.lastname, this.brand, this.model, this.price, this.domain),
+            new DriverProfile(this.id, this.serial, this.firstName,
+                this.lastName, this.brand, this.model, this.price),
             this
         );
     }

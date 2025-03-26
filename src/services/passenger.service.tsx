@@ -62,7 +62,8 @@ class PassengerService {
         return response
     }
 
-    async updateProfile(id: number, data: any) {
+    async updateProfile(data: PassengerProfile)  {
+        const id = sessionStorage.getItem('userId')
         const response = await axios.put(`${REST_SERVER_URL}/passenger`, data, { params: { id: id } })
         return response
     }

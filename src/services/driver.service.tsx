@@ -25,6 +25,12 @@ async getProfile(id: number): Promise<DriverProfile> {
         return travels;
     }
 
+    async updateProfile(data: DriverProfile)  {
+        const id = sessionStorage.getItem('userId')
+        const response = await axios.post(`${REST_SERVER_URL}/driver`, data, { params: { id: id } })
+        return response
+    }
+
 
     // getRatings(idUser: number) : Promise<Recommendation[]> {
     //     const recom = [recommendation1,recommendation2]

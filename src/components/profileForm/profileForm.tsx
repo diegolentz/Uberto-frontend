@@ -6,6 +6,8 @@ import { DriverProfile } from "../../domain/driver";
 import { PassengerProfile } from "../../domain/passenger";
 import { msjContext } from "../viewLayout/viewLayout";
 import { AxiosError } from "axios";
+import { driverService } from "../../services/driver.service";
+import { passengerService } from "../../services/passenger.service";
 
 interface ProfileFormProps {
     entity: DriverProfile | PassengerProfile;
@@ -15,10 +17,11 @@ interface ProfileFormProps {
 export const ProfileForm = ({ entity, func }: ProfileFormProps) => {
     const isDriver = sessionStorage.getItem('role') === 'driver';
     const { showToast } = useContext(msjContext);
-    const [form, setForm] = useState<DriverProfile | PassengerProfile | null>(null);
+    const [form, setForm] = useState<DriverProfile | PassengerProfile | null>(entity);
 
-    const { register, handleSubmit, formState: { errors, isValid } } = useForm({
-        mode: "onChange",
+    const { register, handleSubmit, formState: { errors, isValid }, reset } = useForm({
+        mode: "all",
+        defaultValues: entity,
     });
 
     const onSubmit = async (data: any) => {
@@ -26,27 +29,36 @@ export const ProfileForm = ({ entity, func }: ProfileFormProps) => {
             console.log("Formulario con errores:", errors);
         }
         try {
-            // const response = await passengerService.updateProfile(id, data)
-            // showToast(response)
-            // func(data)
+            if (isDriver) {
+                const response = await driverService.updateProfile({ ...data });
+                console.log(response);
+                showToast(response);
+            } else {
+                const response = await passengerService.updateProfile({ ...data });
+                console.log("entre nomas" + response);
+                showToast(response);
+            }
+            func(data);
         } catch (e: unknown) {
             showToast((e as AxiosError<unknown>).response!);
         }
     };
 
     useEffect(() => {
-        setForm(entity);
-    },[]);
+        reset(entity);
+    }, [entity, reset]);
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} style={{ display: 'flex', justifyContent: 'center', height: 'auto', margin: '1rem ' }}>
+        <form onSubmit={handleSubmit(onSubmit)}
+            style={{ display: 'flex', justifyContent: 'center', height: 'auto', margin: '1rem ' }}
+        >
             <Stack spacing={2} width={'80vw'}>
                 <TextField
                     size="small"
                     label="Name"
                     type="text"
-                    defaultValue={entity.firstname} 
-                    {...register("firstname", {
+                    defaultValue={entity.firstName}
+                    {...register("firstName", {
                         required: "Este campo es obligatorio.",
                         pattern: {
                             value: /^[A-Za-z\s]+$/,
@@ -56,16 +68,16 @@ export const ProfileForm = ({ entity, func }: ProfileFormProps) => {
                         maxLength: { value: 15, message: "Debe tener como máximo 15 caracteres." }
                     })}
                     sx={estilosInput}
-                    error={!!errors.firstname}
-                    slotProps={{ inputLabel: { shrink: !!entity.firstname } }} 
-                    helperText={typeof errors.firstname?.message === "string" ? errors.firstname.message : ""}
+                    error={!!errors.firstName}
+                    slotProps={{ inputLabel: { shrink: true } }}
+                    helperText={typeof errors.firstName?.message === "string" ? errors.firstName.message : ""}
                 />
                 <TextField
                     size="small"
                     label="Last Name"
                     type="text"
-                    defaultValue={entity.lastname}
-                    {...register("lastname", {
+                    defaultValue={entity.lastName}
+                    {...register("lastName", {
                         required: "Este campo es obligatorio.",
                         pattern: {
                             value: /^[A-Za-z\s]+$/,
@@ -75,9 +87,9 @@ export const ProfileForm = ({ entity, func }: ProfileFormProps) => {
                         maxLength: { value: 15, message: "Debe tener como máximo 15 caracteres." }
                     })}
                     sx={estilosInput}
-                    error={!!errors.lastname}
-                    slotProps={{ inputLabel: { shrink: !!entity.lastname } }} 
-                    helperText={typeof errors.lastname?.message === "string" ? errors.lastname.message : ""}
+                    error={!!errors.lastName}
+                    slotProps={{ inputLabel: { shrink: true } }}
+                    helperText={typeof errors.lastName?.message === "string" ? errors.lastName.message : ""}
                 />
                 {isDriver ? (
                     <>
@@ -94,7 +106,7 @@ export const ProfileForm = ({ entity, func }: ProfileFormProps) => {
                             })}
                             sx={estilosInput}
                             error={!!errors.price}
-                            slotProps={{ inputLabel: { shrink: !!entity.price } }} 
+                            slotProps={{ inputLabel: { shrink: true } }}
                             helperText={typeof errors.price?.message === "string" ? errors.price.message : ""}
                         />
                         <Divider aria-hidden="true" sx={{ borderColor: '#a737fc' }} />
@@ -103,8 +115,8 @@ export const ProfileForm = ({ entity, func }: ProfileFormProps) => {
                             size="small"
                             label="Domain"
                             type="text"
-                            defaultValue={(entity as DriverProfile).domain}
-                            {...register("domain", {
+                            defaultValue={(entity as DriverProfile).serial}
+                            {...register("serial", {
                                 required: "Este campo es obligatorio.",
                                 pattern: {
                                     value: /^[A-Za-z0-9\s]+$/,
@@ -114,9 +126,9 @@ export const ProfileForm = ({ entity, func }: ProfileFormProps) => {
                                 maxLength: { value: 7, message: "Debe tener como máximo 7 caracteres." }
                             })}
                             sx={estilosInput}
-                            error={!!errors.domain}
-                            slotProps={{ inputLabel: { shrink: !!entity.domain } }} 
-                            helperText={typeof errors.domain?.message === "string" ? errors.domain.message : ""}
+                            error={!!errors.serial}
+                            slotProps={{ inputLabel: { shrink: true } }}
+                            helperText={typeof errors.serial?.message === "string" ? errors.serial.message : ""}
                         />
                         <TextField
                             size="small"
@@ -134,7 +146,7 @@ export const ProfileForm = ({ entity, func }: ProfileFormProps) => {
                             })}
                             sx={estilosInput}
                             error={!!errors.brand}
-                            slotProps={{ inputLabel: { shrink: !!entity.brand } }} 
+                            slotProps={{ inputLabel: { shrink: true } }}
                             helperText={typeof errors.brand?.message === "string" ? errors.brand.message : ""}
                         />
                         <TextField
@@ -151,7 +163,7 @@ export const ProfileForm = ({ entity, func }: ProfileFormProps) => {
                             })}
                             sx={estilosInput}
                             error={!!errors.model}
-                            slotProps={{ inputLabel: { shrink: !!entity.model } }} 
+                            slotProps={{ inputLabel: { shrink: true } }}
                             helperText={typeof errors.model?.message === "string" ? errors.model.message : ""}
                         />
                     </>
@@ -170,7 +182,7 @@ export const ProfileForm = ({ entity, func }: ProfileFormProps) => {
                         })}
                         sx={estilosInput}
                         error={!!errors.cellphone}
-                        slotProps={{ inputLabel: { shrink: !!entity.phone } }} 
+                        slotProps={{ inputLabel: { shrink: true } }}
                         helperText={typeof errors.cellphone?.message === "string" ? errors.cellphone.message : ""}
                     />
                 )}
