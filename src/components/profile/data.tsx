@@ -24,7 +24,7 @@ export const Data = () => {
         try {
             if (isDriver) {
                 const response = await driverService.getProfile(id);
-                console.log(response);
+                // console.log(response);
                 setProfile(response);
             } else {
                 const response = await passengerService.getProfile(id);
