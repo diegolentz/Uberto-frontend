@@ -54,9 +54,22 @@ export class DriverProfile {
         public brand: string,
         public model: number,
     ){}
+    fromJson(data: any): DriverProfile  {
+        this.firstname = data.firstname
+        this.lastname = data.lastname
+        this.price = data.price
+        this.domain = data.domain
+        this.brand = data.brand
+        this.model = data.model
+
+        return Object.assign(
+            new DriverProfile(this.firstname, this.lastname, this.price, this.domain, this.brand, this.model),
+            this
+        );
+    }
 }
 
 // export const searchDriver = new SearchDrivers("Usuario disponible", "Unsam", "Parque san martin", 4);
 // const formDriver = new FormDriver("Usuario disponible", "Unsam", "Parque San Martin", 4, new Date(Date.now() + 2 * 24 * 60 * 60 * 1000));
 // export const formEntity = new FormEntity(formDriver);
-// export const driverProfile = new DriverProfile("Pedro", "Geraghty", 160.0, "AB586CD", "Toyota", 2022);
+export const driverProfile = new DriverProfile("Pedro", "Geraghty", 160.0, "AB586CD", "Toyota", 2022);

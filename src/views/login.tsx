@@ -44,7 +44,7 @@ export const Login = () => {
                 <InputTextSecretField
                     register={register} setError={setError}
                     name="password" required={true}
-                    minLength={6} maxLength={20}
+                    minLength={3} maxLength={20}
                     error={errors.password} touched={!!errors.password}
                 />
 

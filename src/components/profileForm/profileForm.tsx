@@ -9,15 +9,15 @@ import { msjContext } from "../viewLayout/viewLayout";
 import { AxiosError } from "axios";
 
 interface ProfileFormProps {
-    id: number;
-    entity: DriverProfile | PassengerProfile | null;
+    entity: DriverProfile | PassengerProfile;
     func: (data: unknown) => void;
 }
 
 
-export const ProfileForm = ({ entity, func, id }: ProfileFormProps) => {
-    const isDriver = sessionStorage.getItem('isDriver') === 'true';
-    const [profile, setProfile] = useState<DriverProfile | PassengerProfile | null>(entity);
+export const ProfileForm = ({ entity, func }: ProfileFormProps) => {
+    const isDriver = sessionStorage.getItem('role') === 'driver';
+
+    const [profile, setProfile] = useState<DriverProfile | PassengerProfile>(entity);
     const { showToast } = useContext(msjContext)
     const setChanges = (data: unknown) => {
         func(data);
@@ -45,9 +45,9 @@ export const ProfileForm = ({ entity, func, id }: ProfileFormProps) => {
             console.log("Formulario con errores:", errors);
         }
         try {
-            const response = await passengerService.updateProfile(id, data)
-            showToast(response)
-            setChanges(data)
+            // const response = await passengerService.updateProfile(id, data)
+            // showToast(response)
+            // setChanges(data)
         } catch (e: unknown) {
             showToast((e as AxiosError<unknown>).response!)
         };
@@ -93,7 +93,7 @@ export const ProfileForm = ({ entity, func, id }: ProfileFormProps) => {
                         error={!!errors.lastname}
                         helperText={typeof errors.lastname?.message === "string" ? errors.lastname.message : ""}
                     />
-                    {isDriver ? (
+                    {!isDriver ? (
                         <>
                             <TextField
                                 size="small"

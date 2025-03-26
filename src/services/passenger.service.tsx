@@ -39,7 +39,7 @@ class PassengerService {
 
     async getFriends(id: number): Promise<Friends[]> {
         const response = await axios.get(`${REST_SERVER_URL}/passenger/friends`, { params: { id: id } })
-        return friendsJSON.fromJson(response.data)
+        return (response.data)
     }
 
     async removeFriend(id: number, friendId: number) {

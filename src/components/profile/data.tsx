@@ -13,8 +13,8 @@ import { msjContext } from "../viewLayout/viewLayout";
 
 export const Data = () => {
     const id = parseInt(sessionStorage.getItem('userId')!);
-    const isDriver = sessionStorage.getItem('isDriver') === 'true';
-    const [profile, setProfile] = useState<DriverProfile | PassengerProfile | null>(isDriver ? {} as DriverProfile : {} as PassengerProfile);
+    const isDriver = sessionStorage.getItem('role') === 'driver';
+    const [profile, setProfile] = useState<DriverProfile | PassengerProfile >(isDriver ? {} as DriverProfile : {} as PassengerProfile);
     const { showToast } = useContext(msjContext)
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -23,40 +23,43 @@ export const Data = () => {
     }
 
 
-    const fetchForm = async () => {
-        if (isDriver) {
-            const response = await driverService.getProfile(id)
-            setProfile(response);
-        } else {
-            const response = await passengerService.getProfile(id);
-            setProfile(response);
-        };
-        // Profile will be logged in the useEffect below
-    }
+    
 
     useEffect(() => {
-        try {
-            fetchForm();
-        }
-        catch (e: unknown) {
-            showToast((e as AxiosError<unknown>).response!)
+        const fetchForm = async () => {
+            try {
+                if (isDriver) {
+                    const response = await driverService.getProfile(id);
+                    console.log(response);
+                    setProfile(response);
+                } else {
+                    const response = await passengerService.getProfile(id);
+                    console.log(response);
+                    setProfile(response);
+                }
+            } catch (e: unknown) {
+                showToast((e as AxiosError<unknown>).response!);
+            }
         };
+
+        fetchForm();
     }, []);
 
 
     return (
         <>
             <Box sx={{ padding: '2rem 1rem 3rem 1rem' }}>
-                <ProfileForm entity={profile} func={setChanges} id={id} />
+                <ProfileForm entity={profile} func={setChanges} />
                 <Divider aria-hidden="true" sx={{ borderColor: '#a737fc' }} />
-                {!isDriver && (
+                {/* {isDriver && (
                     <>
                         <MoneyForm money={(profile as PassengerProfile).money} id={id} func={setChanges} />
                         <Divider aria-hidden="true" sx={{ borderColor: '#a737fc' }} />
                         <FriendsComponent  id={id} />
                     </>
-                )}
+                )} */}
             </Box>
         </>
     );
 }; 
+
