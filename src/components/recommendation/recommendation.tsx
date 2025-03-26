@@ -5,6 +5,7 @@ import { AxiosError } from "axios"
 import { useContext, useState } from "react"
 import { msjContext } from "../viewLayout/viewLayout"
 import { scoreCreate, scoreDelete } from "../../services/scores.service"
+import { utils } from "../../utils/formatDate"
 
 interface RecommendationCardProps {
     recom: Recommendation;
@@ -72,7 +73,7 @@ export const RecommendationCard = ({recom, handle} : RecommendationCardProps) =>
                 />
                 <CardContent>
                 <Typography variant="body2" color="textSecondary">
-                    {recom.date.toString()}
+                    {utils.setDate(recom.date)}
                 </Typography>
                     {
                         recom.editMode ? 
