@@ -1,5 +1,5 @@
 import axios from "axios";
-import {  DriverProfile, FormEntity } from "../domain/driver";
+import {  driverProfile, DriverProfile, FormEntity } from "../domain/driver";
 import { Recommendation, } from "../domain/recomendation";
 import { TravelCard, TravelDTO } from "../domain/travel";
 import { REST_SERVER_URL } from "./urls";
@@ -7,15 +7,12 @@ import { REST_SERVER_URL } from "./urls";
 class DriverService {
    
    
-   async getProfile(id: number) : Promise<DriverProfile> {
-        const response = await axios.get(`${REST_SERVER_URL}/driver`, { params: { id: id } })
-        return response.data
-    }
-    // profileRatings(id: number) : Promise<Recommendation[]> {
-    //     // implementar endpoint para obtener recomendaciones
-    //     return Promise.resolve([recommendation1,recommendation2]);
-    // }
-
+async getProfile(id: number): Promise<DriverProfile> {
+      const response = await axios.get(`${REST_SERVER_URL}/driver`, {
+            params: { driverId: id }
+      });
+      return driverProfile.fromJson(response.data)
+ }
     
     getImg(id: number, isDriver: boolean):Promise<string> {
         
