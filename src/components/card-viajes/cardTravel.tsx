@@ -42,60 +42,66 @@ export const CardTravel = ({ value }: { value: TravelCard }) => {
         }
         action={
           <Box sx={styles.actionStyle}>
-            <Avatar sx={styles.imgUserStyle} alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+            {role == 'passenger' ? (
+              <Avatar sx={styles.imgUserStyle} alt="Remy Sharp" src={value.imgDriver} />
+            ) : (
+              <Avatar sx={styles.imgUserStyle} alt="Remy Sharp" src={value.imgPassenger} />
+            )
+            }
+
           </Box>
         }
       />
       <CardContent sx={styles.boxInfoStyle}>
-      <Box sx={styles.boxInfoTravelStyle}>
-        <Box>
-        <Typography sx={styles.dataTravelStyle}>
-          {'Origin'}
-        </Typography>
-        <Typography sx={styles.dataTravelStyle}>
-          {'Destination'}
-        </Typography>
-        <Typography sx={styles.dataTravelStyle}>
-          {'Date'}
-        </Typography>
-        <Typography sx={styles.priceTravelStyle}>
-          {'Price'}
-        </Typography>
-        </Box>
-        <Box sx={styles.infoTravelStyle}>
+        <Box sx={styles.boxInfoTravelStyle}>
+          <Box>
+            <Typography sx={styles.dataTravelStyle}>
+              {'Origin'}
+            </Typography>
+            <Typography sx={styles.dataTravelStyle}>
+              {'Destination'}
+            </Typography>
+            <Typography sx={styles.dataTravelStyle}>
+              {'Date'}
+            </Typography>
+            <Typography sx={styles.priceTravelStyle}>
+              {'Price'}
+            </Typography>
+          </Box>
+          <Box sx={styles.infoTravelStyle}>
 
-        <Typography sx={styles.infoTravelStyle}>
-          {value.origin}
-        </Typography>
+            <Typography sx={styles.infoTravelStyle}>
+              {value.origin}
+            </Typography>
 
-        <Typography sx={styles.infoTravelStyle}>
-          {value.destination}
-        </Typography>
+            <Typography sx={styles.infoTravelStyle}>
+              {value.destination}
+            </Typography>
 
-        <Typography sx={styles.infoTravelStyle}>
-          {
-          `${utils.setDate(value.date)} |
+            <Typography sx={styles.infoTravelStyle}>
+              {
+                `${utils.setDate(value.date)} |
              ${utils.setStartTime(value.date)} -
              ${utils.setEndTime((value.date), (value.duration))}hs`
-          }
-        </Typography>
+              }
+            </Typography>
 
-        <Typography sx={styles.priceTravelStyle}>
-          {`$ ${value.price}`}
-        </Typography>
+            <Typography sx={styles.priceTravelStyle}>
+              {`$ ${value.price}`}
+            </Typography>
 
+          </Box>
         </Box>
-      </Box>
       </CardContent>
 
-      {new Date(value.date) < new Date() && (
-      <>
+      {new Date(value.date) < new Date() && role == 'passenger' && (
+        <>
 
-        <Button onClick={handleCreate}>Calificar</Button>
-        {flag && <RecommendationCard recom={recomEmpty} handle={handleCreate}></RecommendationCard>}
+          <Button onClick={handleCreate}>Calificar</Button>
+          {flag && <RecommendationCard recom={recomEmpty} handle={handleCreate}></RecommendationCard>}
 
 
-      </>
+        </>
       )}
     </Card>
   );

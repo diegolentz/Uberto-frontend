@@ -9,7 +9,9 @@ export class TravelCard {
         public price: number,
         public driverName: string,
         public passengerName: string,
-        public id: number
+        public id: number,
+        public imgPassenger: string,
+        public imgDriver: string
     ){}
 
     fromDTO(data: TravelDTO): TravelCard {
@@ -22,7 +24,9 @@ export class TravelCard {
             this.price = data.price,
             this.driverName = data.driverName,
             this.passengerName = data.passengerName,
-            this.id = data.id
+            this.id = data.id,
+            this.imgPassenger = data.imgPassenger,
+            this.imgDriver = data.imgDriver
         )
     }
 }
@@ -41,7 +45,12 @@ export class TravelDTO {
         public passengerName: string,
         public startTime: string,
         public endTime: string,
-        public id: number
+        public id: number,
+        public imgPassenger : string,
+        public imgDriver : string
+        
+
+
     ){}
 
     // Método para extraer la hora de la fecha y asignarla a startTime

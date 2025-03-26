@@ -10,28 +10,24 @@ import { driverService } from "../../services/driver.service";
 import { passengerService } from "../../services/passenger.service";
 
 export const ProfileImg = () => {
-  const id = parseInt(sessionStorage.getItem('idUser')!);
-  const isDriver = sessionStorage.getItem('isDriver') === 'true';
+  const id = parseInt(sessionStorage.getItem('userId')!);
+  const isDriver = sessionStorage.getItem('role')?.toLowerCase() === 'driver';
   const [myImg, setImg] = useState<string>("")
 
-
-  // pregunto id y si es driver o pasajero para pegarle al endpoint correspondiente
   const getImage = async () => {
     var img = ""
     if (isDriver) {
-      img = await driverService.getImg(id, isDriver) 
+      img = await driverService.getImg(id) 
     } else {
-      img = String(await passengerService.getImg(id, isDriver)) 
+      img = await passengerService.getImg(id) 
     }
+    console.log("img", img)
     setImg(img)
   }
 
-
-
-
   useEffect(() => {
-
     getImage()
+
   }, [])
 
   const StyledBadge = styled(Badge)(({ theme }) => ({
