@@ -16,7 +16,7 @@ import { Role } from "../../views/profile";
 export const CardTravel = ({ value }: { value: TravelCard }) => {
   const recomEmpty: Recommendation = new Recommendation(value.id, '', new Date, 0, '', 0, '', true, true, '', '')
   const [flag, setFlag] = useState(false)
-  const role = sessionStorage.getItem("role") as Role
+  const role = sessionStorage.getItem("role") as Role 
   const handleCreate = () => {
     setFlag(!flag)
   }
@@ -42,7 +42,7 @@ export const CardTravel = ({ value }: { value: TravelCard }) => {
         }
         action={
           <Box sx={styles.actionStyle}>
-            <Avatar sx={styles.imgUserStyle} alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+            <Avatar sx={styles.imgUserStyle} alt="Remy Sharp" src={value.imgDriver  } />
           </Box>
         }
       />
