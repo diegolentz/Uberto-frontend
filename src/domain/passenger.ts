@@ -35,16 +35,16 @@ export class Friends {
 
 export class PassengerProfile {
     constructor(
-        public firstname: string = '',
-        public lastname: string = '',
+        public firstName: string = '',
+        public lastName: string = '',
         public phone: number = 0,
         public money: number = 0,
         public img: string = ''
     ) { }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     fromJson(json: any): PassengerProfile {
-        this.firstname = json.firstname
-        this.lastname = json.lastname
+        this.firstName = json.firstname
+        this.lastName = json.lastname
         this.phone = json.cellphone
         this.money = json.money
         this.img = json.img

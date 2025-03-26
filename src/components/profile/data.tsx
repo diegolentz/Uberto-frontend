@@ -17,7 +17,6 @@ export const Data = () => {
     const [profile, setProfile] = useState<DriverProfile | PassengerProfile>(isDriver ? {} as DriverProfile : {} as PassengerProfile);
     const { showToast } = useContext(msjContext)
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const setChanges = (data: any) => {
         setProfile({ ...profile, ...data });
     }
@@ -29,7 +28,6 @@ export const Data = () => {
                 setProfile(response);
             } else {
                 const response = await passengerService.getProfile(id);
-                console.log(response);
                 setProfile(response);
             }
         } catch (e: unknown) {
