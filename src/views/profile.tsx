@@ -4,11 +4,11 @@ import { NavBar } from "../components/navBar/navBar"
 import { ProfileImg } from "../components/profileImg/profileImg"
 import { useState } from "react"
 
-type role = 'driver' | 'passenger'
+export type Role = 'driver' | 'passenger'
 
 export type OutletProps = {
     id:number;
-    role:role;
+    role:Role;
 }
 
 type OutletContextType = { outletProps: OutletProps | null };
@@ -21,7 +21,7 @@ export const Profile = () => {
 
     const [outletProps] = useState<OutletProps>({
         id: parseInt(sessionStorage.getItem('userId')!),
-        role: sessionStorage.getItem('role') as role
+        role: sessionStorage.getItem('role') as Role
     })
     return (
         <>
