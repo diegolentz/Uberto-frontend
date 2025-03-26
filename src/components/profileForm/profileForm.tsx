@@ -57,7 +57,6 @@ export const ProfileForm = ({ entity, func }: ProfileFormProps) => {
                     size="small"
                     label="Name"
                     type="text"
-                    defaultValue={entity.firstName}
                     {...register("firstName", {
                         required: "Este campo es obligatorio.",
                         pattern: {
@@ -76,7 +75,6 @@ export const ProfileForm = ({ entity, func }: ProfileFormProps) => {
                     size="small"
                     label="Last Name"
                     type="text"
-                    defaultValue={entity.lastName}
                     {...register("lastName", {
                         required: "Este campo es obligatorio.",
                         pattern: {
@@ -97,7 +95,6 @@ export const ProfileForm = ({ entity, func }: ProfileFormProps) => {
                             size="small"
                             label="Base price"
                             type="number"
-                            defaultValue={(entity as DriverProfile).price}
                             {...register("price", {
                                 required: "Este campo es obligatorio.",
                                 valueAsNumber: true,
@@ -115,7 +112,6 @@ export const ProfileForm = ({ entity, func }: ProfileFormProps) => {
                             size="small"
                             label="Domain"
                             type="text"
-                            defaultValue={(entity as DriverProfile).serial}
                             {...register("serial", {
                                 required: "Este campo es obligatorio.",
                                 pattern: {
@@ -134,7 +130,6 @@ export const ProfileForm = ({ entity, func }: ProfileFormProps) => {
                             size="small"
                             label="Brand"
                             type="text"
-                            defaultValue={(entity as DriverProfile).brand}
                             {...register("brand", {
                                 required: "Este campo es obligatorio.",
                                 pattern: {
@@ -153,7 +148,6 @@ export const ProfileForm = ({ entity, func }: ProfileFormProps) => {
                             size="small"
                             label="Model"
                             type="number"
-                            defaultValue={(entity as DriverProfile).model}
                             {...register("model", {
                                 required: "Este campo es obligatorio.",
                                 valueAsNumber: true,
@@ -172,8 +166,7 @@ export const ProfileForm = ({ entity, func }: ProfileFormProps) => {
                         size="small"
                         label="Phone"
                         type="number"
-                        defaultValue={(entity as PassengerProfile).phone}
-                        {...register("cellphone", {
+                        {...register("phone", {
                             required: "Este campo es obligatorio.",
                             pattern: {
                                 value: /^\d{10}$/,
@@ -181,9 +174,9 @@ export const ProfileForm = ({ entity, func }: ProfileFormProps) => {
                             }
                         })}
                         sx={estilosInput}
-                        error={!!errors.cellphone}
+                        error={!!errors.phone}
                         slotProps={{ inputLabel: { shrink: true } }}
-                        helperText={typeof errors.cellphone?.message === "string" ? errors.cellphone.message : ""}
+                        helperText={typeof errors.phone?.message === "string" ? errors.phone.message : ""}
                     />
                 )}
                 <Button type="submit" variant="contained" color="secondary" disabled={!isValid}>
