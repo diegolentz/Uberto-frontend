@@ -32,7 +32,7 @@ export const Ratings = () => {
 
             {scores.map((score:Recommendation, index:number)=>(
                 <>
-                    <RecommendationCard key={index} recom={score}/>
+                    <RecommendationCard key={index} recom={score} handle={()=>{}}/>
                 </>
             ))}
         </>

@@ -22,6 +22,7 @@ export const CardTravel = ({value}:{value : TravelCard}) => {
       setFlag(!flag)
     }
 
+
     return (
         <Card sx={styles.cardBodyStyle} >
           <CardHeader
@@ -87,7 +88,7 @@ export const CardTravel = ({value}:{value : TravelCard}) => {
               </Box>
           </CardContent>
           <Button onClick={handleCreate}>Calificar</Button>
-          {flag && <RecommendationCard recom={recomEmpty}></RecommendationCard>}
+          {flag && <RecommendationCard recom={recomEmpty} handle={handleCreate}></RecommendationCard>}
         </Card>
       );
 

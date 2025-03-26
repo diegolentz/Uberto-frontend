@@ -1,4 +1,4 @@
-import { Card, CardHeader, CardContent, Typography, Avatar, Box, TextField, Rating, Button, ButtonBaseActions } from "@mui/material"
+import { Card, CardHeader, CardContent, Typography, Avatar, Box, TextField, Rating, Button } from "@mui/material"
 import StarIcon from "@mui/icons-material/Star"
 import { Recommendation } from "../../domain/recomendation"
 import { AxiosError } from "axios"
@@ -8,10 +8,11 @@ import { scoreDelete } from "../../services/scores.service"
 
 interface RecommendationCardProps {
     recom: Recommendation;
+    handle: () => void
 }
 
 
-export const RecommendationCard = ({recom} : RecommendationCardProps) => {
+export const RecommendationCard = ({recom, handle} : RecommendationCardProps) => {
     const recomEmpty: Recommendation = new Recommendation(0,'',new Date, 0, '', 0, '', true, false, '', '')
     const [recommendation, setRecom] = useState(recom)
     // const id = parseInt(sessionStorage.getItem('idUser')!)
@@ -30,10 +31,12 @@ export const RecommendationCard = ({recom} : RecommendationCardProps) => {
 
     const handleClose = () =>{
         setRecom({...recomEmpty})
+        handle()
     }
 
     const handleSave = () => {
         alert(JSON.stringify(recommendation))
+        handle()
     }
 
     return (
