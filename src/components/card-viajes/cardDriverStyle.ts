@@ -1,6 +1,6 @@
 
 export const cardBodyStyle = {
-    margin: '2rem',
+    margin: '1rem',
     borderRadius: ' 1rem 0'
 }
 
@@ -95,7 +95,7 @@ export const boxInfoTravelStyle = {
 }
 
 export const dataTravelStyle = {
-    fontSize: '1rem',
+    fontSize: '0.9rem',
     fontWeight: 'bold',
     color: '#430c8c',
     // width: '7rem'
@@ -110,7 +110,7 @@ export const priceTravelStyle = {
 }
 
 export const infoTravelStyle = {
-    fontSize: '1rem',
+    fontSize: '0.9rem',
     color: '#430c8c',
     width: '100%'
 }
