@@ -1,9 +1,13 @@
-import { Card, CardHeader, Typography, Box, Avatar, CardContent, CardMedia } from "@mui/material";
+import { Card, CardHeader, Typography, Box, Avatar, CardContent, CardMedia, Button } from "@mui/material";
 import { DriverCard } from "../../domain/driver";
 import { TravelCard } from "../../domain/travel";
 import * as styles from './cardDriverStyle';
 import GroupIcon from '@mui/icons-material/Group';
 import { utils } from "../../utils/formatDate";
+import { useState } from "react";
+import { Recommend } from "@mui/icons-material";
+import { Recommendation } from "../../domain/recomendation";
+import { RecommendationCard } from "../recommendation/recommendation";
 
 
 
@@ -11,7 +15,12 @@ import { utils } from "../../utils/formatDate";
 
 
 export const CardTravel = ({value}:{value : TravelCard}) => {
+  const recomEmpty: Recommendation = new Recommendation(value.id,'',new Date, 0, '', 0, '', true, true, '', '') 
+  const [flag, setFlag] = useState(false)
 
+    const handleCreate = () => {
+      setFlag(!flag)
+    }
 
 
     return (
@@ -78,6 +87,8 @@ export const CardTravel = ({value}:{value : TravelCard}) => {
                 </Box>
               </Box>
           </CardContent>
+          <Button onClick={handleCreate}>Calificar</Button>
+          {flag && <RecommendationCard recom={recomEmpty} handle={handleCreate}></RecommendationCard>}
         </Card>
       );
 

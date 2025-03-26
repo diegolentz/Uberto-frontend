@@ -9,3 +9,13 @@ export async function get(userId: number): Promise<Recommendation[]> {
     console.log(response.data)
     return response.data;
 }
+
+export async function scoreDelete(userId: number, tripId: number) {
+    return await axios.delete(`${REST_SERVER_URL}/TripScore`, {
+        params: { userId, tripId }
+    });
+}
+
+export async function scoreCreate(recom: Recommendation) {
+    return await axios.post(`${REST_SERVER_URL}/TripScore`, recom);
+}

@@ -1,5 +1,5 @@
 export class Recommendation {
-    id : number;
+    tripId : number;
     name: string;
     date: Date;
     scorePoints: number;
@@ -8,23 +8,23 @@ export class Recommendation {
     passengerName: number;
     driverName: string;
     avatarUrlPassenger: string;
-    isEdit: boolean;
+    delete: boolean;
     editMode: boolean;
 
     constructor(
-        id : number,
+        tripId : number,
         name: string,
         date: Date,
         scorePoints: number,
         message: string,
         passengerName: number,
         driverName: string,
-        isEdit: boolean,
+        isEdit: boolean, //me rompe cuando cambia este valor no se que onda
         editMode: boolean,
         avatarUrlPassenger: string,
         avatarUrlDriver: string
     ) {
-        this.id = id;
+        this.tripId = tripId;
         this.name = name;
         this.date = date;
         this.scorePoints = scorePoints;
@@ -33,7 +33,7 @@ export class Recommendation {
         this.passengerName = passengerName;
         this.driverName = driverName;
         this.avatarUrlPassenger = avatarUrlPassenger;
-        this.isEdit = isEdit;
+        this.delete = isEdit;
         this.editMode = editMode;
     }
 }
