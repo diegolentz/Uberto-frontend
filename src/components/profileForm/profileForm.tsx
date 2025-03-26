@@ -35,7 +35,7 @@ export const ProfileForm = ({ entity, func }: ProfileFormProps) => {
                 showToast(response);
             } else {
                 const response = await passengerService.updateProfile({ ...data });
-                console.log("entre nomas" + response);
+                console.log("entre nomas" + response.data);
                 showToast(response);
             }
             func(data);
