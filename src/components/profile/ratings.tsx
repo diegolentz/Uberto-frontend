@@ -4,7 +4,7 @@ import { useToast } from "../../hooks/toast/useToast";
 import { get } from "../../services/scores.service";
 import { Recommendation } from "../../domain/recomendation";
 import { RecommendationCard } from "../recommendation/recommendation";
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 
 
 export const Ratings = () => {
@@ -22,19 +22,21 @@ export const Ratings = () => {
         }
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         fetchData()
-    },[])
+    }, [])
 
 
     return (
         <>
+            <Box sx={{height:'100%', padding:'1rem'}}>
+                {scores.map((score: Recommendation, index: number) => (
+                    <>
+                        <RecommendationCard key={index} recom={score} handle={() => { }} />
+                    </>
+                ))}
+            </Box>
 
-            {scores.map((score:Recommendation, index:number)=>(
-                <>
-                    <RecommendationCard key={index} recom={score} handle={()=>{}}/>
-                </>
-            ))}
         </>
     )
 
