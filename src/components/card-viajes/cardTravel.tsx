@@ -15,7 +15,7 @@ import { RecommendationCard } from "../recommendation/recommendation";
 
 
 export const CardTravel = ({value}:{value : TravelCard}) => {
-  const recomEmpty: Recommendation = new Recommendation(0,'',new Date, 0, '', 0, '', true, true, '', '') 
+  const recomEmpty: Recommendation = new Recommendation(value.id,'',new Date, 0, '', 0, '', true, true, '', '') 
   const [flag, setFlag] = useState(false)
 
     const handleCreate = () => {

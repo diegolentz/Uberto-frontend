@@ -4,7 +4,7 @@ import { Recommendation } from "../../domain/recomendation"
 import { AxiosError } from "axios"
 import { useContext, useState } from "react"
 import { msjContext } from "../viewLayout/viewLayout"
-import { scoreDelete } from "../../services/scores.service"
+import { scoreCreate, scoreDelete } from "../../services/scores.service"
 
 interface RecommendationCardProps {
     recom: Recommendation;
@@ -34,8 +34,14 @@ export const RecommendationCard = ({recom, handle} : RecommendationCardProps) =>
         handle()
     }
 
-    const handleSave = () => {
-        alert(JSON.stringify(recommendation))
+    const handleSave = async () => {
+        console.log(recommendation)
+        try{
+            const res = await scoreCreate(recommendation)
+            showToast(res)
+        } catch (e: unknown) {
+            showToast((e as AxiosError<unknown>).response!)
+        }
         handle()
     }
 
