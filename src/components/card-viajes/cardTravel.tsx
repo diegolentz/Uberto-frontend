@@ -129,7 +129,7 @@ export const CardTravel = ({ value }: { value: TravelCard }) => {
             transition={{ duration: 0.5 }}
             style={{ overflow: "hidden" }}
           >
-            <RecommendationCard recom={recomEmpty} deleteRecommendation={(id:number) => setFlag(false)} />
+            <RecommendationCard recom={recomEmpty} deleteRecommendation={(id:number)=>{}} handle={() => setFlag(false)} />
           </motion.div>
         )}
       </AnimatePresence>

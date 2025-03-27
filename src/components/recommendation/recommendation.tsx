@@ -13,10 +13,11 @@ import * as styles from '../card-viajes/cardDriverStyle';
 
 interface RecommendationCardProps {
     recom: Recommendation;
+    handle:() => void,
     deleteRecommendation: (id:number) => void
 }
 
-export const RecommendationCard = ({ recom, deleteRecommendation }: RecommendationCardProps) => {
+export const RecommendationCard = ({ recom, handle ,deleteRecommendation }: RecommendationCardProps) => {
     const recomEmpty: Recommendation = new Recommendation(0, '', new Date, 0, '', 0, '', true, false, '', '')
     const [recommendation, setRecom] = useState(recom)
     const { showToast } = useContext(msjContext)
@@ -25,7 +26,7 @@ export const RecommendationCard = ({ recom, deleteRecommendation }: Recommendati
     const handleDelete = async () => {
         try {
             const res = await scoreDelete(userId, recom.tripId)
-            deleteRecommendation(recom.tripId)
+            deleteRecommendation!(recom.tripId)
             showToast(res)
         } catch (e: unknown) {
             showToast((e as AxiosError<unknown>).response!)
@@ -34,6 +35,8 @@ export const RecommendationCard = ({ recom, deleteRecommendation }: Recommendati
 
     const handleClose = () => {
         setRecom(recom)
+        handle()
+
     }
 
     const handleSave = async () => {
@@ -43,7 +46,7 @@ export const RecommendationCard = ({ recom, deleteRecommendation }: Recommendati
         } catch (e: unknown) {
             showToast((e as AxiosError<unknown>).response!)
         }
-
+        handle()
     }
 
     function cardHeaderTitle() {
