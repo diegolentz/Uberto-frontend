@@ -28,7 +28,6 @@ export const Data = () => {
                 setProfile(response);
             } else {
                 const response = await passengerService.getProfile(id);
-                console.log(response);
                 setProfile(response);
             }
         } catch (e: unknown) {

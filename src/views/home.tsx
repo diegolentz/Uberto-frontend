@@ -57,7 +57,6 @@ export const Home = () => {
         if (formInfo) {
             fetchData(formInfo);
         }
-        console.log(isDriver)
     }, [formInfo]);
 
 

@@ -9,15 +9,14 @@ import { scoreCreate, scoreDelete } from "../../services/scores.service"
 import { utils } from "../../utils/formatDate"
 import { Role } from "../../views/profile"
 import { StyledCard } from "../../utils/recommendationCardStyles"
-import { Height, Style } from "@mui/icons-material"
 import * as styles from '../card-viajes/cardDriverStyle';
 
 interface RecommendationCardProps {
     recom: Recommendation;
-    handle: () => void
+    deleteRecommendation: (id:number) => void
 }
 
-export const RecommendationCard = ({ recom, handle }: RecommendationCardProps) => {
+export const RecommendationCard = ({ recom, deleteRecommendation }: RecommendationCardProps) => {
     const recomEmpty: Recommendation = new Recommendation(0, '', new Date, 0, '', 0, '', true, false, '', '')
     const [recommendation, setRecom] = useState(recom)
     const { showToast } = useContext(msjContext)
@@ -26,6 +25,7 @@ export const RecommendationCard = ({ recom, handle }: RecommendationCardProps) =
     const handleDelete = async () => {
         try {
             const res = await scoreDelete(userId, recom.tripId)
+            deleteRecommendation(recom.tripId)
             showToast(res)
         } catch (e: unknown) {
             showToast((e as AxiosError<unknown>).response!)
@@ -33,8 +33,7 @@ export const RecommendationCard = ({ recom, handle }: RecommendationCardProps) =
     }
 
     const handleClose = () => {
-        setRecom({ ...recomEmpty })
-        handle()
+        setRecom(recom)
     }
 
     const handleSave = async () => {
@@ -44,16 +43,15 @@ export const RecommendationCard = ({ recom, handle }: RecommendationCardProps) =
         } catch (e: unknown) {
             showToast((e as AxiosError<unknown>).response!)
         }
-        handle()
+
     }
 
     function cardHeaderTitle() {
         return <>
-            {(recom.editMode) ? (
-                <Avatar src={recom.avatarUrlPassenger} alt={recom.name} sx={{ width: 56, height: 56 }} />
-            ): (
-                    <Avatar src={recom.avatarUrlDriver} alt={recom.name} sx={{ width: 56, height: 56 }} />)
-                }
+            <Avatar
+                src={recom.editMode ? recom.avatarUrlPassenger: recom.avatarUrlDriver}
+                alt={recom.name} sx={{ width: 56, height: 56 }}
+            />
         </>
     }
 
@@ -81,14 +79,10 @@ export const RecommendationCard = ({ recom, handle }: RecommendationCardProps) =
         <>
             <StyledCard sx={{ maxWidth: 400, p: 2, borderRadius: 3 }}>
 
-                {recom.editMode ? (
-                    <CardHeader sx={{margin: '0 auto'}}
+                <CardHeader
+                    sx={recom.editMode ? {margin: '0 auto'}: {display: 'flex'}}
                     title={cardHeaderTitle()} action={cardHeaderAction()}
-                    />) : (
-                        <CardHeader
-                        title={cardHeaderTitle()} action={cardHeaderAction()}
-                    />)
-                }
+                />
 
                 <Typography variant="body2"  sx={styles.dataTravelStyle}>
                     {`Date: ${utils.setDate(recom.date)}`}
@@ -107,8 +101,8 @@ export const RecommendationCard = ({ recom, handle }: RecommendationCardProps) =
                 {recom.editMode ?
                     <Box component="section" sx={{ display: "flex", justifyContent: 'space-between', width: "90%", gap: 2, margin: "0 auto", padding: "1rem" }}>
 
-                        <Button size="medium" sx={{ backgroundColor: "red", color: "white", fontWeight: "bold", padding: '0.5rem' }} onClick={handleClose}>Cancelar</Button>
-                        <Button size="medium" sx={{ backgroundColor: "green", color: "white", fontWeight: "bold" }} onClick={handleSave}>Guardar</Button>
+                        <Button size="medium" sx={{ backgroundColor: "red", color: "white", fontWeight: "bold", padding: '0.5rem' }} onClick={handleClose}>Resetear</Button>
+                        <Button size="medium" sx={{ backgroundColor: "green", color: "white", fontWeight: "bold" }} onClick={handleSave} disabled={recommendation.message.length == 0}>Guardar</Button>
                     </Box> : <></>
                 }
             </StyledCard>
