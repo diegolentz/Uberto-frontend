@@ -47,13 +47,13 @@ export const RecommendationCard = ({ recom, handle }: RecommendationCardProps) =
 
     function cardHeaderTitle() {
         return <>
-            <Typography variant="body2" color="textSecondary" sx={{ display: 'flex', flexDirection: 'column' }}>
-                {`Date: ${utils.setDate(recom.date)}`}
-            </Typography>
+                <Typography variant="body2" color="textSecondary" sx={{ display: 'flex', flexDirection: 'column' }}>
+                    {`Date: ${utils.setDate(recom.date)}`}
+                </Typography>
 
-            <Typography variant="body2" color="textSecondary" sx={{ display: 'flex', flexDirection: 'column' }}>
-                {role == 'passenger' ? `To: ${recom.driverName}` : `From: ${recom.passengerName}`}
-            </Typography>
+                <Typography variant="body2" color="textSecondary" sx={{ display: 'flex', flexDirection: 'column' }}>
+                    {role == 'passenger' ? `To: ${recom.driverName}` : `From: ${recom.passengerName}`}
+                </Typography>
         </>
     }
 

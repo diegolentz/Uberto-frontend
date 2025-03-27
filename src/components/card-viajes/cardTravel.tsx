@@ -14,9 +14,11 @@ import { Role } from "../../views/profile";
 
 
 export const CardTravel = ({ value }: { value: TravelCard }) => {
-  const recomEmpty: Recommendation = new Recommendation(value.id, '', new Date, 0, '', 0, '', true, true, '', '')
+  const recomEmpty: Recommendation = new Recommendation(value.id, '', new Date, 0, '', 0, value.driverName, true, true, value.imgPassenger, '')
   const [flag, setFlag] = useState(false)
   const role = sessionStorage.getItem("role") as Role
+  
+  
   const handleCreate = () => {
     setFlag(!flag)
   }
@@ -96,11 +98,16 @@ export const CardTravel = ({ value }: { value: TravelCard }) => {
 
       {new Date(value.date) < new Date() && role == 'passenger' && (
         <>
-
-          <Button onClick={handleCreate}>Calificar</Button>
-          {flag && <RecommendationCard recom={recomEmpty} handle={handleCreate}></RecommendationCard>}
-
-
+          <Box sx={{ width: '100%', display: 'flex', justifyContent: 'flex-end' }}>
+            <Button 
+              sx={{ backgroundColor: 'secondary.main', color: 'white', marginRight: '0rem', width: '50%', height: '2rem' }}
+              variant="contained"    
+              onClick={handleCreate}
+            >
+              Calificar
+            </Button>
+          </Box>
+          {flag && <RecommendationCard recom={recomEmpty} handle={handleCreate} />}
         </>
       )}
     </Card>

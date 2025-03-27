@@ -60,7 +60,7 @@ export const Trips = () => {
                         <Divider sx={{ borderColor: '#a737fc', width: '100%' }} />
 
                         {passengerFinishedTrips.length > 0 && (
-                            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                            <Box sx={{ display: 'flex', flexDirection: 'column', padding: '1rem' }}>
                                 <Typography variant="h6" color="secondary" sx={{ textAlign: 'center', width: '100%', marginTop: '1rem', fontWeight: 'bold' }}>Completed trips</Typography>
                                 {passengerFinishedTrips.map((travel: TravelCard, index: number) => (
                                     <CardTravel key={index} value={travel} />
