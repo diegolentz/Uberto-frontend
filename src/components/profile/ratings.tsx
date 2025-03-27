@@ -4,8 +4,7 @@ import { useToast } from "../../hooks/toast/useToast";
 import { get } from "../../services/scores.service";
 import { Recommendation } from "../../domain/recomendation";
 import { RecommendationCard } from "../recommendation/recommendation";
-import { Box, Button } from "@mui/material";
-import { SettingsInputComponent } from "@mui/icons-material";
+import { Box } from "@mui/material";
 
 
 export const Ratings = () => {
