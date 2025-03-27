@@ -43,15 +43,21 @@ export const CardTravel = ({ value }: { value: TravelCard }) => {
           </Box>
         }
         action={
-          <Box sx={styles.actionStyle}>
+            <Box sx={styles.actionStyle}>
             {role == 'passenger' ? (
-              <Avatar sx={styles.imgUserStyle} alt="Remy Sharp" src={value.imgDriver} />
+              <Avatar
+              sx={{ ...styles.imgUserStyle, width: 45, height: 45 }}
+              alt="Remy Sharp"
+              src={value.imgDriver}
+              />
             ) : (
-              <Avatar sx={styles.imgUserStyle} alt="Remy Sharp" src={value.imgPassenger} />
-            )
-            }
-
-          </Box>
+              <Avatar
+              sx={{ ...styles.imgUserStyle, width: 45, height: 45 }}
+              alt="Remy Sharp"
+              src={value.imgPassenger}
+              />
+            )}
+            </Box>
         }
       />
       <CardContent sx={styles.boxInfoStyle}>

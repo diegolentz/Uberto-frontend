@@ -82,10 +82,10 @@ export const RecommendationCard = ({ recom, handle }: RecommendationCardProps) =
             <StyledCard sx={{ maxWidth: 400, p: 2, borderRadius: 3 }}>
 
                 {recom.editMode ? (
-                    <CardHeader avatar={<Avatar src={recom.avatarUrlPassenger} alt={recom.name} />}
+                    <CardHeader avatar={<Avatar src={recom.avatarUrlPassenger} alt={recom.name} sx={{ width: 56, height: 56 }} />}
                         title={cardHeaderTitle()} action={cardHeaderAction()}
                     />) : (
-                    <CardHeader avatar={<Avatar src={recom.avatarUrlDriver} alt={recom.name} />}
+                    <CardHeader avatar={<Avatar src={recom.avatarUrlDriver} alt={recom.name} sx={{ width: 56, height: 56 }} />}
                         title={cardHeaderTitle()} action={cardHeaderAction()}
                     />)
                 }
