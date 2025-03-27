@@ -7,6 +7,7 @@ import { useState } from "react";
 import { Recommendation } from "../../domain/recomendation";
 import { RecommendationCard } from "../recommendation/recommendation";
 import { Role } from "../../views/profile";
+import { AnimatePresence, motion } from "framer-motion";
 
 
 
@@ -17,8 +18,8 @@ export const CardTravel = ({ value }: { value: TravelCard }) => {
   const recomEmpty: Recommendation = new Recommendation(value.id, '', new Date, 0, '', 0, value.driverName, true, true, value.imgPassenger, value.imgDriver)
   const [flag, setFlag] = useState(false)
   const role = sessionStorage.getItem("role") as Role
-  
-  
+
+
   const handleCreate = () => {
     setFlag(!flag)
   }
@@ -43,21 +44,21 @@ export const CardTravel = ({ value }: { value: TravelCard }) => {
           </Box>
         }
         action={
-            <Box sx={styles.actionStyle}>
+          <Box sx={styles.actionStyle}>
             {role == 'passenger' ? (
               <Avatar
-              sx={{ ...styles.imgUserStyle, width: 45, height: 45 }}
-              alt="Remy Sharp"
-              src={value.imgDriver}
+                sx={{ ...styles.imgUserStyle, width: 45, height: 45 }}
+                alt="Remy Sharp"
+                src={value.imgDriver}
               />
             ) : (
               <Avatar
-              sx={{ ...styles.imgUserStyle, width: 45, height: 45 }}
-              alt="Remy Sharp"
-              src={value.imgPassenger}
+                sx={{ ...styles.imgUserStyle, width: 45, height: 45 }}
+                alt="Remy Sharp"
+                src={value.imgPassenger}
               />
             )}
-            </Box>
+          </Box>
         }
       />
       <CardContent sx={styles.boxInfoStyle}>
@@ -102,20 +103,49 @@ export const CardTravel = ({ value }: { value: TravelCard }) => {
         </Box>
       </CardContent>
 
-      {new Date(value.date) < new Date() && role == 'passenger' && (
-        <>
-          <Box sx={{ width: '100%', display: 'flex', justifyContent: 'flex-end' }}>
-            <Button 
-              sx={{ backgroundColor: 'secondary.main', color: 'white', marginRight: '0rem', width: '50%', height: '2rem' }}
-              variant="contained"    
-              onClick={handleCreate}
-            >
-              Calificar
-            </Button>
-          </Box>
-          {flag && <RecommendationCard recom={recomEmpty} handle={handleCreate} />}
-        </>
-      )}
+      <AnimatePresence>
+  {new Date(value.date) < new Date() && role === "passenger" && (
+    <motion.div
+      initial={{ opacity: 0, height: 0 }}
+      animate={{ opacity: 1, height: "auto" }}
+      exit={{ opacity: 0, height: 0 }}
+      transition={{ duration: 0.5 }}
+      style={{ overflow: "hidden" }}
+    >
+      <Box sx={{ width: "100%", display: "flex", justifyContent: "flex-end" }}>
+        <Button
+          sx={{
+            backgroundColor: "secondary.main",
+            color: "white",
+            marginRight: "0rem",
+            width: "50%",
+            height: "2rem",
+          }}
+          variant="contained"
+          onClick={() => setFlag((prev) => !prev)} // Alternar entre abrir/cerrar
+        >
+          {flag ? "Cancelar" : "Calificar"}
+        </Button>
+      </Box>
+
+      <AnimatePresence>
+        {flag && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.5 }}
+            style={{ overflow: "hidden" }}
+          >
+            <RecommendationCard recom={recomEmpty} handle={() => setFlag(false)} />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  )}
+</AnimatePresence>
+
+
     </Card>
   );
 

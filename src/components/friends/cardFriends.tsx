@@ -34,7 +34,7 @@ export const CardFriends = ({ isFriend, friendData, id, func }: { isFriend: bool
     }
 
     return (
-        <Box sx={{ width: '85%', flexDirection: 'row', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.5rem', border: '1.5px solid #a737fc', borderRadius: '1rem', }}>
+        <Box sx={{ width: '18rem', flexDirection: 'row', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.5rem', border: '1.5px solid #a737fc', borderRadius: '1rem', }}>
             <Box width={'20%'}>
                 <Avatar alt="Remy Sharp" src={friendData.img} sx={{ border: '2px solid #430c8c' }} />
             </Box>

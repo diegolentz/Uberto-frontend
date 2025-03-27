@@ -8,6 +8,7 @@ import { Friends } from '../../domain/passenger';
 import { passengerService } from '../../services/passenger.service';
 import { msjContext } from '../viewLayout/viewLayout';
 import { AxiosError } from 'axios';
+import { AnimatePresence, motion } from "framer-motion";
 
 export const FriendsComponent = ({ id }: { id: number }) => {
     const [visibility, setVisibility] = useState<boolean>(false);
@@ -76,33 +77,54 @@ export const FriendsComponent = ({ id }: { id: number }) => {
                     {visibility ? <ExpandLessIcon /> : <ExpandMoreIcon />}
                 </Button>
             </Box>
-            {visibility && (
-                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', width: '100%', height: '3rem' }}>
-                        <TextField
-                            variant="outlined"
-                            placeholder="Search people"
-                            sx={searchStyles}
-                            value={searchText} // Controla el valor del input
-                            onChange={handleInputChange} // Maneja el cambio de texto
-                        />
-                        <Button onClick={fetchFriend} variant="contained" color="secondary" sx={{
-                            height: '100%',
-                            width: '20%',
-                            borderRadius: '0 0.5rem 0.5rem 0'
-                        }}>
-                            <ZoomInIcon />
-                        </Button>
-                    </Box>
-
-                    <h5>Results</h5>
-                    {notFriends?.map((friend, index) => (
-                        <CardFriends key={index} isFriend={false} friendData={friend} id={id} func={() => removeNotFriend(friend.id)} />
-                    ))}
-
-                    <Divider sx={{ borderColor: '#a737fc', width: '100%' }} />
-                </Box>
-            )}
+            <AnimatePresence>
+                {visibility && (
+                    <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }} // Transición de altura controlada
+                        exit={{ opacity: 0, height: 0 }} // Cuando se cierra, la altura se reduce a 0
+                        transition={{
+                            duration: 0.5,
+                            // type: "spring",
+                        }}
+                        style={{ overflow: "hidden" }} // Evita que el contenido sobresalga
+                    >
+                        <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem" }}>
+                            <Box sx={{ display: "flex", alignItems: "center", width: "100%", height: "3rem" }}>
+                                <TextField
+                                    variant="outlined"
+                                    placeholder="Search people"
+                                    sx={searchStyles}
+                                    value={searchText}
+                                    onChange={handleInputChange}
+                                />
+                                <Button
+                                    onClick={fetchFriend}
+                                    variant="contained"
+                                    color="secondary"
+                                    sx={{ height: "100%", width: "20%", borderRadius: "0 0.5rem 0.5rem 0" }}
+                                    >
+                                    <ZoomInIcon />
+                                </Button>
+                            </Box>
+    
+                            <h5>Results</h5>
+                            {notFriends?.map((friend, index) => (
+                                <motion.div
+                                key={friend.id}
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -10 }}
+                                transition={{ duration: 0.5, delay: index * 0.2 }}
+                                >
+                                    <CardFriends isFriend={false} friendData={friend} id={id} func={() => removeNotFriend(friend.id)} />
+                                </motion.div>
+                            ))}
+                            <Divider sx={{ borderColor: "#a737fc", width: "100%" }} />
+                        </Box>
+                </motion.div>
+                )}
+            </AnimatePresence>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}>
                 <h5>My friends</h5>
                 {friends.map((friend, index) => (
