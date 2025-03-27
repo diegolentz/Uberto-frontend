@@ -14,7 +14,7 @@ import { Role } from "../../views/profile";
 
 
 export const CardTravel = ({ value }: { value: TravelCard }) => {
-  const recomEmpty: Recommendation = new Recommendation(value.id, '', new Date, 0, '', 0, value.driverName, true, true, value.imgPassenger, '')
+  const recomEmpty: Recommendation = new Recommendation(value.id, '', new Date, 0, '', 0, value.driverName, true, true, value.imgPassenger, value.imgDriver)
   const [flag, setFlag] = useState(false)
   const role = sessionStorage.getItem("role") as Role
   

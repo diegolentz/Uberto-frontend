@@ -47,13 +47,13 @@ export const RecommendationCard = ({ recom, handle }: RecommendationCardProps) =
 
     function cardHeaderTitle() {
         return <>
-                <Typography variant="body2" color="textSecondary" sx={{ display: 'flex', flexDirection: 'column' }}>
-                    {`Date: ${utils.setDate(recom.date)}`}
-                </Typography>
+            <Typography variant="body2" color="textSecondary" sx={{ display: 'flex', flexDirection: 'column' }}>
+                {`Date: ${utils.setDate(recom.date)}`}
+            </Typography>
 
-                <Typography variant="body2" color="textSecondary" sx={{ display: 'flex', flexDirection: 'column' }}>
-                    {role == 'passenger' ? `To: ${recom.driverName}` : `From: ${recom.passengerName}`}
-                </Typography>
+            <Typography variant="body2" color="textSecondary" sx={{ display: 'flex', flexDirection: 'column' }}>
+                {role == 'passenger' ? `To: ${recom.driverName}` : `From: ${recom.passengerName}`}
+            </Typography>
         </>
     }
 
@@ -80,9 +80,16 @@ export const RecommendationCard = ({ recom, handle }: RecommendationCardProps) =
     return (
         <>
             <StyledCard sx={{ maxWidth: 400, p: 2, borderRadius: 3 }}>
-                <CardHeader avatar={<Avatar src={recom.avatarUrlPassenger} alt={recom.name} />}
-                    title={cardHeaderTitle()} action={cardHeaderAction()}
-                />
+
+                {recom.editMode ? (
+                    <CardHeader avatar={<Avatar src={recom.avatarUrlPassenger} alt={recom.name} />}
+                        title={cardHeaderTitle()} action={cardHeaderAction()}
+                    />) : (
+                    <CardHeader avatar={<Avatar src={recom.avatarUrlDriver} alt={recom.name} />}
+                        title={cardHeaderTitle()} action={cardHeaderAction()}
+                    />)
+                }
+
                 <CardContent sx={{ display: 'flex', flexDirection: 'column' }}>
                     <TextField fullWidth multiline rows={3} label="Comentario" disabled={!recom.editMode}
                         value={recom.editMode ? recommendation.message : recom.message} sx={{ mt: 2 }}
@@ -90,9 +97,10 @@ export const RecommendationCard = ({ recom, handle }: RecommendationCardProps) =
                     />
                 </CardContent>
                 {recom.editMode ?
-                    <Box component="section" sx={{ display: "flex", justifyContent: "end" }}>
-                        <Button onClick={handleSave}>Guardar</Button>
-                        <Button onClick={handleClose}>Cancelar</Button>
+                    <Box component="section" sx={{ display: "flex", justifyContent: 'space-between', width: "90%", gap: 2, margin: "0 auto", padding: "1rem" }}>
+
+                        <Button size="medium" sx={{ backgroundColor: "red", color: "white", fontWeight: "bold", padding: '0.5rem' }} onClick={handleClose}>Cancelar</Button>
+                        <Button size="medium" sx={{ backgroundColor: "green", color: "white", fontWeight: "bold" }} onClick={handleSave}>Guardar</Button>
                     </Box> : <></>
                 }
             </StyledCard>
