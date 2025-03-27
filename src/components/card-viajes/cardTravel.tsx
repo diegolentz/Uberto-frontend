@@ -11,19 +11,10 @@ import { AnimatePresence, motion } from "framer-motion";
 
 
 
-
-
-
 export const CardTravel = ({ value }: { value: TravelCard }) => {
   const recomEmpty: Recommendation = new Recommendation(value.id, '', new Date, 0, '', 0, value.driverName, true, true, value.imgPassenger, value.imgDriver)
   const [flag, setFlag] = useState(false)
   const role = sessionStorage.getItem("role") as Role
-
-
-  const handleCreate = () => {
-    setFlag(!flag)
-  }
-
 
   return (
     <Card sx={styles.cardBodyStyle} >
@@ -123,8 +114,9 @@ export const CardTravel = ({ value }: { value: TravelCard }) => {
           }}
           variant="contained"
           onClick={() => setFlag((prev) => !prev)} // Alternar entre abrir/cerrar
+          disabled={value.scored}
         >
-          {flag ? "Cancelar" : "Calificar"}
+          {flag ? "Cancel" : value.scored ? 'Scored': 'Score'}
         </Button>
       </Box>
 
@@ -137,7 +129,7 @@ export const CardTravel = ({ value }: { value: TravelCard }) => {
             transition={{ duration: 0.5 }}
             style={{ overflow: "hidden" }}
           >
-            <RecommendationCard recom={recomEmpty} handle={() => setFlag(false)} />
+            <RecommendationCard recom={recomEmpty} deleteRecommendation={(id:number) => setFlag(false)} />
           </motion.div>
         )}
       </AnimatePresence>

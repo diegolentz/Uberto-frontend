@@ -5,6 +5,7 @@ import { get } from "../../services/scores.service";
 import { Recommendation } from "../../domain/recomendation";
 import { RecommendationCard } from "../recommendation/recommendation";
 import { Box, Button } from "@mui/material";
+import { SettingsInputComponent } from "@mui/icons-material";
 
 
 export const Ratings = () => {
@@ -21,6 +22,12 @@ export const Ratings = () => {
             toast.open(error.response.data.message, 'error')
         }
     }
+    
+    function deleteScore(id:number){
+        setScores(
+            scores.filter(score => score.tripId !== id)
+        );
+    }
 
     useEffect(() => {
         fetchData()
@@ -29,10 +36,10 @@ export const Ratings = () => {
 
     return (
         <>
-            <Box sx={{height:'100%', padding:'1rem'}}>
-                {scores.map((score: Recommendation, index: number) => (
+            <Box sx={{height:'100%', padding:'1rem', display:'flex', flexDirection:'column', gap:'1rem'}}>
+                {scores.map((score: Recommendation) => (
                     <>
-                        <RecommendationCard key={index} recom={score} handle={() => { }} />
+                        <RecommendationCard key={score.tripId} recom={score} deleteRecommendation={deleteScore} />
                     </>
                 ))}
             </Box>
