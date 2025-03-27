@@ -1,6 +1,6 @@
 import { Stack, TextField, Button, MenuItem } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { FormDriver,  } from "../../domain/driver";
+import { FormDriver, } from "../../domain/driver";
 import { estilosInput } from "./homeFormStyles";
 import { FormPassenger } from "../../domain/passenger";
 
@@ -19,8 +19,8 @@ export type FormValues = {
 
 export const HomeForm = ({ fetchData }: HomeFormProps) => {
     const isDriver = sessionStorage.getItem("role") === "driver"
-    
-        const form = useForm<FormValues>({
+
+    const form = useForm<FormValues>({
         defaultValues: {
             name: "",
             origin: "",
@@ -28,10 +28,10 @@ export const HomeForm = ({ fetchData }: HomeFormProps) => {
             date: new Date(),
             passengers: 1,
         },
-        mode: "onChange",
+        mode: "onChange"
     });
 
-    const { register, handleSubmit, formState } = form;
+    const { register, handleSubmit, formState, setValue } = form;
     const { errors } = formState;
 
     const onsubmit = () => {
@@ -41,12 +41,12 @@ export const HomeForm = ({ fetchData }: HomeFormProps) => {
                 form.getValues().origin,
                 form.getValues().destination,
                 form.getValues().passengers,
-                
+
             );
             fetchData(data)
-            
+
         } else {
-            const data = new FormPassenger( 
+            const data = new FormPassenger(
                 form.getValues().origin,
                 form.getValues().destination,
                 form.getValues().date,
@@ -54,7 +54,7 @@ export const HomeForm = ({ fetchData }: HomeFormProps) => {
             );
             fetchData(data)
         }
-    }; 
+    };
 
     return (
         <form onSubmit={handleSubmit(onsubmit)} noValidate>
@@ -117,11 +117,11 @@ export const HomeForm = ({ fetchData }: HomeFormProps) => {
                         label="Date"
                         type="datetime-local"
                         sx={estilosInput}
-                        slotProps={{ 
+                        slotProps={{
                             inputLabel: { shrink: true },
                             htmlInput: {
-                                max:new Date(new Date().setMonth(new Date().getMonth() + 3)).toISOString().slice(0, 16),
-                                min:new Date(new Date().setMonth(new Date().getMonth())).toISOString().slice(0, 16)
+                                max: new Date(new Date().setMonth(new Date().getMonth() + 3)).toISOString().slice(0, 16),
+                                min: new Date(new Date().setMonth(new Date().getMonth())).toISOString().slice(0, 16)
                             }
                         }}
 
@@ -137,7 +137,7 @@ export const HomeForm = ({ fetchData }: HomeFormProps) => {
                                 if (year < 1000 || year > 9999) {
 
                                     return "Year must be 4 digits";
-                    
+
                                 }
                                 if (selectedDate < currentDate) {
                                     return "Date cannot be earlier than today";
@@ -157,16 +157,14 @@ export const HomeForm = ({ fetchData }: HomeFormProps) => {
                     label="Number of passengers"
                     sx={estilosInput}
                     select
-                    {...register("passengers", {
-                        required: "Number of passengers is required"
-                    })}
+
                     error={!!errors.passengers}
                     helperText={errors.passengers?.message}
-                    value={form.getValues().passengers}
+                    defaultValue={form.getValues().passengers}
                 >
-                    {[1,2,3,4].map((option) => (
+                    {[1, 2, 3, 4].map((option) => (
                         <MenuItem key={option} value={option}>
-                          {option}
+                            {option}
                         </MenuItem>
                     ))}
                 </TextField>
@@ -174,7 +172,7 @@ export const HomeForm = ({ fetchData }: HomeFormProps) => {
                     type="submit"
                     variant="contained"
                     sx={{ background: "#a737fc" }}
-                    
+
                 >
                     Filter
                 </Button>
