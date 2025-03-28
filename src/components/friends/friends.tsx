@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import { Box, Button, Divider, TextField } from "@mui/material";
-import { CardFriends } from './cardFriends';
+import { CardFriends } from '../cards/cardFriends';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import { Friends } from '../../domain/passenger';

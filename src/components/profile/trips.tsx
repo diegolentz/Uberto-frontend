@@ -3,9 +3,9 @@ import { TravelCard } from "../../domain/travel"
 import { usetOutletProps } from "../../views/profile"
 import { getPassengerPending, getPassengerFinished, getDriver } from "../../services/travel.service"
 import { useToast } from "../../hooks/toast/useToast"
-import { CardDriver } from "../card-viajes/cardDriver"
+import { CardDriver } from "../cards/cardDriver"
 import { DriverCard } from "../../domain/driver"
-import { CardTravel } from "../card-viajes/cardTravel"
+import { CardTravel } from "../cards/cardTravel"
 import { Box, Divider, Typography } from "@mui/material"
 
 export const Trips = () => {

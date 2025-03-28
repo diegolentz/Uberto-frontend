@@ -1,6 +1,6 @@
 import { Card, CardHeader, Typography, Box, Avatar, CardContent, Button } from "@mui/material";
 import { TravelCard } from "../../domain/travel";
-import * as styles from './cardDriverStyle';
+import * as styles from '../../utils/cardDriverStyle';
 import GroupIcon from '@mui/icons-material/Group';
 import { utils } from "../../utils/formatDate";
 import { useState } from "react";

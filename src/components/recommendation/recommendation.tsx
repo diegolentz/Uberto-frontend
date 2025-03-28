@@ -9,7 +9,7 @@ import { scoreCreate, scoreDelete } from "../../services/scores.service"
 import { utils } from "../../utils/formatDate"
 import { Role } from "../../views/profile"
 import { StyledCard } from "../../utils/recommendationCardStyles"
-import * as styles from '../card-viajes/cardDriverStyle';
+import * as styles from '../../utils/cardDriverStyle';
 
 interface RecommendationCardProps {
     recom: Recommendation;

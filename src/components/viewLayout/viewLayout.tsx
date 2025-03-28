@@ -20,12 +20,10 @@ export const ViewLayoutComponent = () => {
 
     return <>
         <HeaderComponent></HeaderComponent>
-        <div className="content">
             <Toast res={toast}/>
             <msjContext.Provider value={{showToast}}>
                 <Outlet />
             </msjContext.Provider>
-        </div>
         <NavBar></NavBar>
     </>
 }
