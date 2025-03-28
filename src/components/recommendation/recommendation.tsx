@@ -1,28 +1,28 @@
-import { CardHeader, CardContent, Typography, Avatar, Box, TextField, Rating, Button, Paper, styled, IconButton } from "@mui/material"
-import StarIcon from "@mui/icons-material/Star"
 import DeleteIcon from "@mui/icons-material/Delete"
-import { Recommendation } from "../../domain/recomendation"
+import StarIcon from "@mui/icons-material/Star"
+import { Avatar, Box, Button, CardContent, CardHeader, IconButton, Rating, TextField, Typography } from "@mui/material"
 import { AxiosError } from "axios"
 import { useContext, useState } from "react"
-import { msjContext } from "../viewLayout/viewLayout"
+import { Recommendation } from "../../domain/recomendation"
 import { scoreCreate, scoreDelete } from "../../services/scores.service"
+import * as styles from '../../utils/cardDriverStyle'
 import { utils } from "../../utils/formatDate"
-import { Role } from "../../views/profile"
 import { StyledCard } from "../../utils/recommendationCardStyles"
-import * as styles from '../../utils/cardDriverStyle';
+import { msjContext } from "../viewLayout/viewLayout"
 
 interface RecommendationCardProps {
     recom: Recommendation;
-    handle:() => void,
+    createRecomendation:() => void,
     deleteRecommendation: (id:number) => void
+    close : () => void
 }
 
-export const RecommendationCard = ({ recom, handle ,deleteRecommendation }: RecommendationCardProps) => {
+export const RecommendationCard = ({ recom, createRecomendation ,deleteRecommendation, close }: RecommendationCardProps) => {
     const recomEmpty: Recommendation = new Recommendation(0, '', new Date, 0, '', 0, '', true, false, '', '')
     const [recommendation, setRecom] = useState(recom)
     const { showToast } = useContext(msjContext)
     const userId = parseInt(sessionStorage.getItem("userId")!)
-    const role = sessionStorage.getItem("role") as Role
+    const isDriver = sessionStorage.getItem("isDriver") == 'true'
     const handleDelete = async () => {
         try {
             const res = await scoreDelete(userId, recom.tripId)
@@ -34,19 +34,20 @@ export const RecommendationCard = ({ recom, handle ,deleteRecommendation }: Reco
     }
 
     const handleClose = () => {
-        setRecom(recom)
-        handle()
-
+        // setRecom(recom)
+        close()
     }
 
     const handleSave = async () => {
         try {
+
             const res = await scoreCreate(recommendation)
+            setRecom(recommendation)
             showToast(res)
         } catch (e: unknown) {
             showToast((e as AxiosError<unknown>).response!)
         }
-        handle()
+        createRecomendation()
     }
 
     function cardHeaderTitle() {
@@ -92,7 +93,7 @@ export const RecommendationCard = ({ recom, handle ,deleteRecommendation }: Reco
                 </Typography>
 
                 <Typography variant="body2" sx={styles.dataTravelStyle} >
-                    {role == 'passenger' ? `To: ${recom.driverName}` : `From: ${recom.passengerName}`}
+                    {!isDriver ? `To: ${recom.driverName}` : `From: ${recom.passengerName}`}
                 </Typography>
 
                 <CardContent sx={{ display: 'flex', flexDirection: 'column' }}>
@@ -104,7 +105,7 @@ export const RecommendationCard = ({ recom, handle ,deleteRecommendation }: Reco
                 {recom.editMode ?
                     <Box component="section" sx={{ display: "flex", justifyContent: 'space-between', width: "90%", gap: 2, margin: "0 auto", padding: "1rem" }}>
 
-                        <Button size="medium" sx={{ backgroundColor: "red", color: "white", fontWeight: "bold", padding: '0.5rem' }} onClick={handleClose}>Resetear</Button>
+                        <Button size="medium" sx={{ backgroundColor: "red", color: "white", fontWeight: "bold", padding: '0.5rem' }} onClick={handleClose}>Cancel</Button>
                         <Button size="medium" sx={{ backgroundColor: "green", color: "white", fontWeight: "bold" }} onClick={handleSave} disabled={recommendation.message.length == 0}>Guardar</Button>
                     </Box> : <></>
                 }

@@ -1,20 +1,40 @@
-import { Card, CardHeader, Typography, Box, Avatar, CardContent, Button } from "@mui/material";
+import GroupIcon from '@mui/icons-material/Group';
+import { Avatar, Box, Button, Card, CardContent, CardHeader, Typography } from "@mui/material";
+import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { Recommendation } from "../../domain/recomendation";
 import { TravelCard } from "../../domain/travel";
 import * as styles from '../../utils/cardDriverStyle';
-import GroupIcon from '@mui/icons-material/Group';
 import { utils } from "../../utils/formatDate";
-import { useState } from "react";
-import { Recommendation } from "../../domain/recomendation";
 import { RecommendationCard } from "../recommendation/recommendation";
-import { Role } from "../../views/profile";
-import { AnimatePresence, motion } from "framer-motion";
+import { Margin } from '@mui/icons-material';
+import { travelService } from '../../services/travel.service';
 
 
 
 export const CardTravel = ({ value }: { value: TravelCard }) => {
   const recomEmpty: Recommendation = new Recommendation(value.id, '', new Date, 0, '', 0, value.driverName, true, true, value.imgPassenger, value.imgDriver)
   const [flag, setFlag] = useState(false)
-  const role = sessionStorage.getItem("role") as Role
+  const isDriver = sessionStorage.getItem('isDriver') === 'true'
+  const [travelCard, setTravelCard] = useState(value)
+
+  const wasRecommended = async () => {
+    setFlag(false);
+    const update = travelCard;
+    update.scored = true;
+    setTravelCard(update);
+
+
+    // await travelService.updateTravel(update.id, update) falta implementar el servicio, cuando hago la 
+    // recomendacion, tengo que cambiar el estado del travel. en este caso scored tiene qe ser true
+    // solo esta cambiando en el front, hay que hacer todo el endpoint
+}
+
+
+  useEffect(() => {
+    setTravelCard(value)
+  }, [value.scored])
+
 
   return (
     <Card sx={styles.cardBodyStyle} >
@@ -24,7 +44,7 @@ export const CardTravel = ({ value }: { value: TravelCard }) => {
         title={
           <Box>
             <Typography sx={styles.userNameLastnameStyle}>
-              {role == 'passenger' ? value.driverName : value.passengerName}
+              {!isDriver ? value.driverName : value.passengerName}
             </Typography>
             <Box sx={styles.iconUserStyle}>
               <GroupIcon sx={{ fontSize: '1.2rem' }} />
@@ -36,7 +56,7 @@ export const CardTravel = ({ value }: { value: TravelCard }) => {
         }
         action={
           <Box sx={styles.actionStyle}>
-            {role == 'passenger' ? (
+            {!isDriver ? (
               <Avatar
                 sx={{ ...styles.imgUserStyle, width: 45, height: 45 }}
                 alt="Remy Sharp"
@@ -95,33 +115,7 @@ export const CardTravel = ({ value }: { value: TravelCard }) => {
       </CardContent>
 
       <AnimatePresence>
-  {new Date(value.date) < new Date() && role === "passenger" && (
-    <motion.div
-      initial={{ opacity: 0, height: 0 }}
-      animate={{ opacity: 1, height: "auto" }}
-      exit={{ opacity: 0, height: 0 }}
-      transition={{ duration: 0.5 }}
-      style={{ overflow: "hidden" }}
-    >
-      <Box sx={{ width: "100%", display: "flex", justifyContent: "flex-end" }}>
-        <Button
-          sx={{
-            backgroundColor: "secondary.main",
-            color: "white",
-            marginRight: "0rem",
-            width: "50%",
-            height: "2rem",
-          }}
-          variant="contained"
-          onClick={() => setFlag((prev) => !prev)} // Alternar entre abrir/cerrar
-          disabled={value.scored}
-        >
-          {flag ? "Cancel" : value.scored ? 'Scored': 'Score'}
-        </Button>
-      </Box>
-
-      <AnimatePresence>
-        {flag && (
+        {new Date(value.date) < new Date() && !isDriver && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
@@ -129,13 +123,39 @@ export const CardTravel = ({ value }: { value: TravelCard }) => {
             transition={{ duration: 0.5 }}
             style={{ overflow: "hidden" }}
           >
-            <RecommendationCard recom={recomEmpty} deleteRecommendation={(id:number)=>{}} handle={() => setFlag(false)} />
+            <Box sx={{ width: "100%", display: "flex", justifyContent: "flex-end" }}>
+              <Button
+                sx={{
+                  backgroundColor: "secondary.main",
+                  color: "white",
+                  marginRight: "0rem",
+                  width: "50%",
+                  height: "2rem",
+                }}
+                variant="contained"
+                onClick={() => setFlag((prev) => !prev)} // Alternar entre abrir/cerrar
+                disabled={value.scored}
+              >
+                {value.scored ? 'Scored' : 'Score'}
+              </Button>
+            </Box>
+
+            <AnimatePresence>
+              {flag && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.5 }}
+                  style={{ overflow: "hidden" }}
+                >
+                  <RecommendationCard recom={recomEmpty} deleteRecommendation={(id: number) => { }} createRecomendation={wasRecommended} close={() => setFlag(false)} />
+                </motion.div>
+              )}
+            </AnimatePresence>
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.div>
-  )}
-</AnimatePresence>
 
 
     </Card>

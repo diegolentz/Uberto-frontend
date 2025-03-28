@@ -1,13 +1,13 @@
 import { Button, Divider, Stack, TextField } from "@mui/material";
-import { useContext, useEffect, useState } from "react";
+import { AxiosError } from "axios";
+import { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { estilosInput } from "../homeForm/homeFormStyles";
 import { DriverProfile } from "../../domain/driver";
 import { PassengerProfile } from "../../domain/passenger";
-import { msjContext } from "../viewLayout/viewLayout";
-import { AxiosError } from "axios";
 import { driverService } from "../../services/driver.service";
 import { passengerService } from "../../services/passenger.service";
+import { estilosInput } from "../homeForm/homeFormStyles";
+import { msjContext } from "../viewLayout/viewLayout";
 
 interface ProfileFormProps {
     entity: DriverProfile | PassengerProfile;
@@ -15,9 +15,8 @@ interface ProfileFormProps {
 }
 
 export const ProfileForm = ({ entity, func }: ProfileFormProps) => {
-    const isDriver = sessionStorage.getItem('role') === 'driver';
+    const isDriver = sessionStorage.getItem('isDriver') === 'true';
     const { showToast } = useContext(msjContext);
-    const [form, setForm] = useState<DriverProfile | PassengerProfile | null>(entity);
 
     const { register, handleSubmit, formState: { errors, isValid }, reset } = useForm({
         mode: "all",
@@ -29,15 +28,10 @@ export const ProfileForm = ({ entity, func }: ProfileFormProps) => {
             console.log("Formulario con errores:", errors);
         }
         try {
-            if (isDriver) {
-                const response = await driverService.updateProfile({ ...data });
-                console.log(response);
-                showToast(response);
-            } else {
-                const response = await passengerService.updateProfile({ ...data });
-                console.log("entre nomas" + response.data);
-                showToast(response);
-            }
+            const response = isDriver 
+                ? await driverService.updateProfile({ ...data }) 
+                : await passengerService.updateProfile({ ...data });
+            showToast(response);
             func(data);
         } catch (e: unknown) {
             showToast((e as AxiosError<unknown>).response!);
