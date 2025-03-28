@@ -13,7 +13,7 @@ import { msjContext } from "../viewLayout/viewLayout";
 
 export const Data = () => {
     const id = parseInt(sessionStorage.getItem('userId')!);
-    const isDriver = sessionStorage.getItem('role') === 'driver';
+    const isDriver = sessionStorage.getItem('isDriver') === 'true';
     const [profile, setProfile] = useState<DriverProfile | PassengerProfile>(isDriver ? {} as DriverProfile : {} as PassengerProfile);
     const { showToast } = useContext(msjContext)
 
@@ -22,14 +22,10 @@ export const Data = () => {
     }
     const fetchForm = async () => {
         try {
-            if (isDriver) {
-                const response = await driverService.getProfile(id);
-                // console.log(response);
-                setProfile(response);
-            } else {
-                const response = await passengerService.getProfile(id);
-                setProfile(response);
-            }
+            const response = isDriver 
+                ? await driverService.getProfile(id) 
+                : await passengerService.getProfile(id);
+            setProfile(response);
         } catch (e: unknown) {
             showToast((e as AxiosError<unknown>).response!);
         }

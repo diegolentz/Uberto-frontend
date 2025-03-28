@@ -1,8 +1,8 @@
-import { Stack, TextField, Button, MenuItem } from "@mui/material";
+import { Button, MenuItem, Stack, TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { FormDriver, } from "../../domain/driver";
-import { estilosInput } from "./homeFormStyles";
 import { FormPassenger } from "../../domain/passenger";
+import { estilosInput } from "./homeFormStyles";
 
 
 type HomeFormProps = {
@@ -18,7 +18,7 @@ export type FormValues = {
 };
 
 export const HomeForm = ({ fetchData }: HomeFormProps) => {
-    const isDriver = sessionStorage.getItem("role") === "driver"
+    const isDriver = sessionStorage.getItem("isDriver") === "true"
 
     const form = useForm<FormValues>({
         defaultValues: {
@@ -86,7 +86,7 @@ export const HomeForm = ({ fetchData }: HomeFormProps) => {
                     {...register("origin", {
                         required: "origin is required",
                         pattern: {
-                            value: /^[A-Za-z0-9\s]{10,25}$/,
+                            value: /^[A-Za-z0-9\s]{3,25}$/,
                             message:
                                 "Origin must only contain letters and numbers 10-25 characters",
                         },
@@ -103,7 +103,7 @@ export const HomeForm = ({ fetchData }: HomeFormProps) => {
                     {...register("destination", {
                         required: "destination is required",
                         pattern: {
-                            value: /^[A-Za-z0-9\s]{10,25}$/,
+                            value: /^[A-Za-z0-9\s]{3,25}$/,
                             message:
                                 "Destination must only contain letters and numbers 10-25 characters",
                         },

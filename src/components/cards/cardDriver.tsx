@@ -2,7 +2,7 @@ import StarIcon from '@mui/icons-material/Star';
 import { Box, Card, CardContent, CardHeader, CardMedia, Typography } from '@mui/material';
 import { DriverCard } from '../../domain/driver';
 
-import * as styles from './cardDriverStyle';
+import * as styles from '../../utils/cardDriverStyle';
 
 interface CardDriverProps {
   value: DriverCard

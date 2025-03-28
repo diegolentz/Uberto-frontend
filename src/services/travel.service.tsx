@@ -38,6 +38,7 @@ export async function getPassengerFinished(id: number, role:string):Promise<Trav
 }
 
 export async function getDriver(id: number, role:string):Promise<TravelCard[]> {
+    
     const promise = axios.get<TravelDTO[]>(REST_SERVER_URL + '/trip', {
         params:{
             id:id,

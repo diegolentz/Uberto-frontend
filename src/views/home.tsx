@@ -1,7 +1,7 @@
 import { AxiosError } from "axios"
 import { useContext, useEffect, useState } from "react"
-import { CardDriver } from "../components/card-viajes/cardDriver"
-import { CardTravel } from "../components/card-viajes/cardTravel"
+import { CardDriver } from "../components/cards/cardDriver"
+import { CardTravel } from "../components/cards/cardTravel"
 import { ConfirmationPage } from "../components/confirmationPage/confirmationPage"
 import { HomeForm } from "../components/homeForm/homeForm"
 import { msjContext } from "../components/viewLayout/viewLayout"
@@ -10,9 +10,10 @@ import { FormPassenger } from "../domain/passenger"
 import { TravelCard } from "../domain/travel"
 import { driverService } from "../services/driver.service"
 import { passengerService } from "../services/passenger.service"
+
 export const Home = () => {
     const idUser = parseInt(sessionStorage.getItem("userId")!)
-    const isDriver = sessionStorage.getItem("role") === "driver" ? true : false
+    const isDriver = sessionStorage.getItem("isDriver") === "true"
 
     const [card, setCard] = useState<DriverCard[] | TravelCard[] | null>(null)
     const [isHome, setIsHome] = useState<boolean>(true)
@@ -29,7 +30,7 @@ export const Home = () => {
         data.userId = idUser
         if (isDriver) {
             try {
-                const res = await driverService.getPendingTravels(data);// segui
+                const res = await driverService.getPendingTravels(data);
                 setCard(res)
             } catch (e: unknown) {
                 showToast((e as AxiosError<unknown>).response!)
@@ -46,7 +47,6 @@ export const Home = () => {
         }
     };
 
-    // atrapo los datos del chofer clickeado y cambio de pantalla
     const changePage = (data: DriverCard | TravelCard) => {
         setDriveSelected(data)
         setIsHome(!isHome)
