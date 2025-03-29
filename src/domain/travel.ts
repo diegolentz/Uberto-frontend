@@ -52,27 +52,6 @@ export class TravelDTO {
         public imgDriver : string,
         public scored: boolean
     ){}
-
-    // Método para extraer la hora de la fecha y asignarla a startTime
-    setStartTime(): void {
-        // Asegurarse de que 'date' sea un objeto Date
-        const dateObj = new Date(this.date);
-        
-        const hours = dateObj.getHours().toString().padStart(2, '0');
-        const minutes = dateObj.getMinutes().toString().padStart(2, '0');
-        this.startTime = `${hours}:${minutes}`;
-    }
-
-    // Método para sumar la duración al startTime y asignarlo a endTime
-    setEndTime(): void {
-        // Asegurarse de que 'date' sea un objeto Date
-        const startDate = new Date(this.date);
-        startDate.setMinutes(startDate.getMinutes() + this.duration); // Sumar la duración en minutos
-        
-        const hours = startDate.getHours().toString().padStart(2, '0');
-        const minutes = startDate.getMinutes().toString().padStart(2, '0');
-        this.endTime = `${hours}:${minutes}`;
-    }
 }
 
 export class CreateTravelDTO {
