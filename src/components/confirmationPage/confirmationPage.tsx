@@ -58,7 +58,6 @@ export const ConfirmationPage = () => {
             endTime
         );
     
-        console.log(newTravel)
         try {
             const res = await travelService.createTravel(newTravel);
             showToast(res); 
