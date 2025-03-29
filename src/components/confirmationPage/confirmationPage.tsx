@@ -1,28 +1,28 @@
 import { Box, Button, Divider, Typography } from "@mui/material"
 import { useContext, useEffect, useState } from "react"
 import { DriverCard, FormDriver } from "../../domain/driver"
-import { TravelCard, TravelDTO } from "../../domain/travel"
+import { CreateTravelDTO, TravelCard, TravelDTO } from "../../domain/travel"
 import * as styles from './confirmationStyles'
 import { Recommendation } from "../../domain/recomendation"
 import { RecommendationCard } from "../recommendation/recommendation"
-import { driverService } from "../../services/driver.service"
 import { passengerService } from "../../services/passenger.service"
 import { travelService } from "../../services/travel.service"
 import { AxiosError } from "axios"
 import { msjContext } from "../viewLayout/viewLayout"
-
-
+import { FormPassenger } from "../../domain/passenger"
+import { utils } from "../../utils/formatDate"
 
 
 type HomeConfirmationProps = {
     driver: DriverCard
-    travel: FormDriver
+    travel: FormPassenger
     changePage: (data: DriverCard | TravelCard) => void
 };
 
 export const ConfirmationPage = (
     { driver, travel, changePage }: HomeConfirmationProps) => {
-   
+    const starTime = utils.setStartTime(travel.date)
+    const endTime = utils.setEndTime(travel.date,travel.duration)
     const [recommendation, setRecommendation] = useState<Recommendation[]>()
     const idUser = parseInt(sessionStorage.getItem("userId")!)
     const {showToast} = useContext(msjContext)
@@ -46,7 +46,8 @@ export const ConfirmationPage = (
     }
 
     const handleConfirm = async () => {  
-        const newTravel = new TravelDTO(
+
+        const newTravel = new CreateTravelDTO(
             idUser,
             driver.id,
             travel.duration,
@@ -57,13 +58,9 @@ export const ConfirmationPage = (
             driver.price,
             driver.name,
             "",
-            "",
-            ""
+            starTime,
+            endTime
         );
-    
-        // Llamar a los métodos para establecer startTime y endTime
-        newTravel.setStartTime(); // Establece startTime basado en la fecha 'date'
-        newTravel.setEndTime();   // Establece endTime sumando la duración
     
         console.log(newTravel)
         try {
@@ -95,11 +92,15 @@ export const ConfirmationPage = (
             <Typography sx={styles.text} component="div">
                 Date
                 <Typography sx={styles.span} component="span">
-                    {new Date(travel.date).toLocaleDateString('es-AR', {
+                    {
+                    new Date(travel.date).toLocaleDateString('es-AR', {
                         year: 'numeric',
                         month: 'long',
                         day: 'numeric',
-                    })}
+                    })
+                    
+                    }
+                    {` ${starTime} - ${endTime}hs`}
                 </Typography>
             </Typography>
             <Typography sx={styles.text} component="div">
@@ -142,11 +143,14 @@ export const ConfirmationPage = (
                     {driver.rating}
                 </Typography>
             </Typography>
-            <Box margin={2} marginBottom={10}>
+            
+            {/* NO BORRAR. Quedamos con diego que iba a resolver esta card.
+
+            <Box margin={2} marginBottom={10}>      
                 {recommendation?.map((reco, index) => (
                     <RecommendationCard key={index} recom={reco} handle={recommended} />
                 ))}
-            </Box>
+            </Box> */}
 
             <Box sx={styles.boxButtons}>
                 <Button

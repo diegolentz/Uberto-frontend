@@ -74,3 +74,19 @@ export class TravelDTO {
         this.endTime = `${hours}:${minutes}`;
     }
 }
+
+export class CreateTravelDTO {
+    constructor(
+        public userId: number,
+        public driverId: number,
+        public duration: number, // duración en minutos
+        public numberPassengers: number,
+        public date: Date , // Aceptar tanto Date como string
+        public origin: string,
+        public destination: string,
+        public price: number,
+        public driverName: string,
+        public passengerName: string,
+        public startTime: string,
+        public endTime: string,){}    
+}
