@@ -17,6 +17,11 @@ export const ConfirmationPage = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const { driver, travel }: { driver: DriverCard; travel: FormPassenger } = location.state || {};
+        // Verificar si location.state existe antes de desestructurar
+    if (!location.state) {
+        navigate("/");
+        return null;
+    }
     const starTime = utils.setStartTime(travel.date)
     const endTime = utils.setEndTime(travel.date,travel.duration)
     const [recommendation, setRecommendation] = useState<Recommendation[]>()
