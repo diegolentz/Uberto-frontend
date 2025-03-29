@@ -79,9 +79,9 @@ export class CreateTravelDTO {
     constructor(
         public userId: number,
         public driverId: number,
-        public duration: number, // duración en minutos
+        public duration: number, 
         public numberPassengers: number,
-        public date: Date , // Aceptar tanto Date como string
+        public date: Date , 
         public origin: string,
         public destination: string,
         public price: number,

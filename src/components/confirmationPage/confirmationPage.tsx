@@ -1,7 +1,6 @@
 import { Box, Button, Divider, Typography } from "@mui/material"
 import { useContext, useEffect, useState } from "react"
-import { DriverCard, FormDriver } from "../../domain/driver"
-import { CreateTravelDTO, TravelCard, TravelDTO } from "../../domain/travel"
+import { CreateTravelDTO,  } from "../../domain/travel"
 import * as styles from './confirmationStyles'
 import { Recommendation } from "../../domain/recomendation"
 import { RecommendationCard } from "../recommendation/recommendation"
@@ -9,18 +8,15 @@ import { passengerService } from "../../services/passenger.service"
 import { travelService } from "../../services/travel.service"
 import { AxiosError } from "axios"
 import { msjContext } from "../viewLayout/viewLayout"
-import { FormPassenger } from "../../domain/passenger"
 import { utils } from "../../utils/formatDate"
+import { useLocation, useNavigate } from "react-router-dom"
+import { DriverCard } from "../../domain/driver"
+import { FormPassenger } from "../../domain/passenger"
 
-
-type HomeConfirmationProps = {
-    driver: DriverCard
-    travel: FormPassenger
-    changePage: (data: DriverCard | TravelCard) => void
-};
-
-export const ConfirmationPage = (
-    { driver, travel, changePage }: HomeConfirmationProps) => {
+export const ConfirmationPage = () => {
+    const location = useLocation();
+    const navigate = useNavigate();
+    const { driver, travel }: { driver: DriverCard; travel: FormPassenger } = location.state || {};
     const starTime = utils.setStartTime(travel.date)
     const endTime = utils.setEndTime(travel.date,travel.duration)
     const [recommendation, setRecommendation] = useState<Recommendation[]>()
@@ -42,8 +38,8 @@ export const ConfirmationPage = (
     }, [])
 
     const handleDecline = () => {
-        changePage(driver)
-    }
+        navigate("/Home");
+    };
 
     const handleConfirm = async () => {  
 
