@@ -7,7 +7,6 @@ import { loginRequest } from "../domain/login";
 import { LoginFormContainerBox, StyledButton } from "../utils/loginStyles";
 import { TextField } from "@mui/material";
 import { InputTextSecretField } from "../components/inputs/textInputSecret";
-import { AxiosError } from "axios";
 
 export const Login = () => {
     const {
@@ -24,7 +23,7 @@ export const Login = () => {
             navigate("/Home");
             toast.open('Login succesfull', 'success')
         } catch (error: any) {
-            toast.openAxiosError(error)
+            toast.open(error.response.data.message, 'error')
         }
     };
 
