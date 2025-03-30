@@ -7,7 +7,7 @@ import { AxiosError, AxiosResponse } from "axios"
 type ToastContextType = {
     open: (message: string, type: ToastOptions) => void,
     openAxiosToast: (res:AxiosResponse) => void,
-    openAxiosError: (res:AxiosError) => void,
+    // openAxiosError: (res:unknown) => void,
     close: (id: number) => void,
 }
 
@@ -40,24 +40,28 @@ export const ToastProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     }
 
     function openAxiosToast(res:AxiosResponse): void {
-        const message = res.status >= 200 && res.status < 300 ? res.data : res.data.message
-        const status:ToastOptions = (res.status >= 200 && res.status <=299) ? 'success' : 'error'
-        const toast = newToast(message, status)
+        // const message = res.status >= 200 && res.status < 300 ? res.data : res.data.message
+        
+        // {status:500, data:{message:'Error de conexión'}} as AxiosResponse
+        const res2 = res ? res : ({status:500, data:{message:'Error de conexión'}} as AxiosResponse)
+        const status:ToastOptions = (res2.status >= 200 && res2.status <=299) ? 'success' : 'error'
+        const toast = newToast(res2.data.message, status)
         setToasts((prevToasts) => [...prevToasts, toast])
         setTimeout(() => {
             closeToast(toast.id);
         }, 3000);
     }
 
-    function openAxiosError(error:unknown): void {
-        const parsedError:AxiosError<unknown> = (error as AxiosError<unknown>)
-        const errorMessage:string = parsedError.response!.data.message
-        const toast = newToast(errorMessage, 'error')
-        setToasts((prevToasts) => [...prevToasts, toast])
-        setTimeout(() => {
-            closeToast(toast.id);
-        }, 3000);
-    }
+    // function openAxiosError(error:unknown): void {
+    //     const parsedError:AxiosError<unknown> = (error as AxiosError<unknown>)
+    //     const axiosResponse:AxiosResponse = parsedError.response!
+    //     const message:string = axiosResponse.data.message
+    //     const toast = newToast(message, 'error')
+    //     setToasts((prevToasts) => [...prevToasts, toast])
+    //     setTimeout(() => {
+    //         closeToast(toast.id);
+    //     }, 3000);
+    // }
 
     function closeToast(id: number): void {
         setToasts((prevToasts) =>
@@ -68,7 +72,7 @@ export const ToastProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     const contextValue = useMemo(() => ({
         open: openToast,
         openAxiosToast: openAxiosToast,
-        openAxiosError: openAxiosError,
+        // openAxiosError: openAxiosError,
         close: closeToast
     }), [])
     return (
