@@ -69,7 +69,7 @@ export const HomeForm = ({ fetchData }: HomeFormProps) => {
                         {...register("name", {
                             required: "name is required",
                             pattern: {
-                                value: /^[A-Za-z\s]{3,25}$/,
+                                value: /^[A-Za-z\s]{3,30}$/,
                                 message:
                                     "Name must only contain letters 3 - 25 characters",
                             },
@@ -84,11 +84,10 @@ export const HomeForm = ({ fetchData }: HomeFormProps) => {
                     type="text"
                     sx={estilosInput}
                     {...register("origin", {
-                        required: "origin is required",
+                        required: "Origin is required",
                         pattern: {
-                            value: /^[A-Za-z0-9\s]{3,25}$/,
-                            message:
-                                "Origin must only contain letters and numbers 10-25 characters",
+                            value: /^[A-Za-z0-9.\s]{3,}$/,
+                            message: "Destination must only contain letters, numbers, and periods with a minimum of 3 characters",
                         },
                     })}
                     error={!!errors.origin}
@@ -103,9 +102,8 @@ export const HomeForm = ({ fetchData }: HomeFormProps) => {
                     {...register("destination", {
                         required: "destination is required",
                         pattern: {
-                            value: /^[A-Za-z0-9\s]{3,25}$/,
-                            message:
-                                "Destination must only contain letters and numbers 10-25 characters",
+                            value: /^[A-Za-z0-9.\s]{3,}$/,
+                            message: "Destination must only contain letters, numbers, and periods with a minimum of 3 characters",
                         },
                     })}
                     error={!!errors.destination}
