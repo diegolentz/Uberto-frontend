@@ -7,18 +7,20 @@ import { REST_SERVER_URL } from "./urls";
 class DriverService {
    
    
-async getProfile(id: number): Promise<DriverProfile> {
-      const response = await axios.get(`${REST_SERVER_URL}/driver`, {
-            params: { driverId: id }
-      });
-      return driverProfile.fromJson(response.data)
- }
-    
-    async getImg(id: number): Promise<any> {
-        const response = await axios.get(`${REST_SERVER_URL}/driver/img`, {
-            params: { driverId: id }
+    async getProfile(id: number): Promise<DriverProfile> {
+        const response = await axios.get(`${REST_SERVER_URL}/driver`, {
+            params: { id: id } 
         });
-        return response.data.img;
+        return driverProfile.fromJson(response.data);
+    }
+    
+    
+    async getImg(id: number): Promise<string> {
+        const response = await axios.get(`${REST_SERVER_URL}/driver/img`, {
+            params: { driverid: id }
+        });
+        console.log(response.data.img)
+        return response.data;
     }
 
     async getPendingTravels(data: FormEntity): Promise<TravelCard[]> { 
