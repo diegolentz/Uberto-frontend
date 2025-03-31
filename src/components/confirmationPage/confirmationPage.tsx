@@ -1,28 +1,29 @@
 import { Box, Button, Divider, Typography } from "@mui/material"
 import { useContext, useEffect, useState } from "react"
-import { DriverCard, FormDriver } from "../../domain/driver"
-import { TravelCard, TravelDTO } from "../../domain/travel"
+import { CreateTravelDTO,  } from "../../domain/travel"
 import * as styles from './confirmationStyles'
 import { Recommendation } from "../../domain/recomendation"
 import { RecommendationCard } from "../recommendation/recommendation"
-import { driverService } from "../../services/driver.service"
 import { passengerService } from "../../services/passenger.service"
 import { travelService } from "../../services/travel.service"
 import { AxiosError } from "axios"
 import { msjContext } from "../viewLayout/viewLayout"
+import { utils } from "../../utils/formatDate"
+import { useLocation, useNavigate } from "react-router-dom"
+import { DriverCard } from "../../domain/driver"
+import { FormPassenger } from "../../domain/passenger"
 
-
-
-
-type HomeConfirmationProps = {
-    driver: DriverCard
-    travel: FormDriver
-    changePage: (data: DriverCard | TravelCard) => void
-};
-
-export const ConfirmationPage = (
-    { driver, travel, changePage }: HomeConfirmationProps) => {
-   
+export const ConfirmationPage = () => {
+    const location = useLocation();
+    const navigate = useNavigate();
+    const { driver, travel }: { driver: DriverCard; travel: FormPassenger } = location.state || {};
+        // Verificar si location.state existe antes de desestructurar
+    if (!location.state) {
+        navigate("/");
+        return null;
+    }
+    const starTime = utils.setStartTime(travel.date)
+    const endTime = utils.setEndTime(travel.date,travel.duration)
     const [recommendation, setRecommendation] = useState<Recommendation[]>()
     const idUser = parseInt(sessionStorage.getItem("userId")!)
     const {showToast} = useContext(msjContext)
@@ -42,11 +43,12 @@ export const ConfirmationPage = (
     }, [])
 
     const handleDecline = () => {
-        changePage(driver)
-    }
+        navigate("/Home");
+    };
 
     const handleConfirm = async () => {  
-        const newTravel = new TravelDTO(
+
+        const newTravel = new CreateTravelDTO(
             idUser,
             driver.id,
             travel.duration,
@@ -57,15 +59,10 @@ export const ConfirmationPage = (
             driver.price,
             driver.name,
             "",
-            "",
-            ""
+            starTime,
+            endTime
         );
     
-        // Llamar a los métodos para establecer startTime y endTime
-        newTravel.setStartTime(); // Establece startTime basado en la fecha 'date'
-        newTravel.setEndTime();   // Establece endTime sumando la duración
-    
-        console.log(newTravel)
         try {
             const res = await travelService.createTravel(newTravel);
             showToast(res); 
@@ -95,11 +92,15 @@ export const ConfirmationPage = (
             <Typography sx={styles.text} component="div">
                 Date
                 <Typography sx={styles.span} component="span">
-                    {new Date(travel.date).toLocaleDateString('es-AR', {
+                    {
+                    new Date(travel.date).toLocaleDateString('es-AR', {
                         year: 'numeric',
                         month: 'long',
                         day: 'numeric',
-                    })}
+                    })
+                    
+                    }
+                    {` ${starTime} - ${endTime}hs`}
                 </Typography>
             </Typography>
             <Typography sx={styles.text} component="div">
@@ -142,11 +143,14 @@ export const ConfirmationPage = (
                     {driver.rating}
                 </Typography>
             </Typography>
-            <Box margin={2} marginBottom={10}>
+            
+            {/* NO BORRAR. Quedamos con diego que iba a resolver esta card.
+
+            <Box margin={2} marginBottom={10}>      
                 {recommendation?.map((reco, index) => (
                     <RecommendationCard key={index} recom={reco} handle={recommended} />
                 ))}
-            </Box>
+            </Box> */}
 
             <Box sx={styles.boxButtons}>
                 <Button
