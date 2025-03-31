@@ -34,13 +34,14 @@ class PassengerService {
 
 
     async getProfile(id: number): Promise<PassengerProfile> {
-        const response = await axios.get(`${REST_SERVER_URL}/passenger`, { params: { id: id } })
+        const response = await axios.get(`${REST_SERVER_URL}/passenger/${id}`)
         return passengerProfile.fromJson(response.data)
     }
 
 
     async getFriends(id: number): Promise<Friends[]> {
-        const response = await axios.get(`${REST_SERVER_URL}/passenger/friends`, { params: { id: id } })
+        const promise = axios.get(`${REST_SERVER_URL}/passenger/${id}/friends`)
+        const response = await promise
         return (response.data)
     }
 
