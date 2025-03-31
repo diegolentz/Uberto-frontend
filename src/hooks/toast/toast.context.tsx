@@ -1,10 +1,13 @@
 import { createContext, ReactNode, useMemo, useState } from "react"
 import { Toast, ToastOptions } from "../../components/toast/toastAdrian"
+import { AxiosError, AxiosResponse } from "axios"
 
 
 
 type ToastContextType = {
     open: (message: string, type: ToastOptions) => void,
+    openAxiosToast: (res:AxiosResponse) => void,
+    // openAxiosError: (res:unknown) => void,
     close: (id: number) => void,
 }
 
@@ -36,6 +39,30 @@ export const ToastProvider: React.FC<{ children: ReactNode }> = ({ children }) =
         }, 3000);
     }
 
+    function openAxiosToast(res:AxiosResponse): void {
+        // const message = res.status >= 200 && res.status < 300 ? res.data : res.data.message
+        
+        // {status:500, data:{message:'Error de conexión'}} as AxiosResponse
+        const res2 = res ? res : ({status:500, data:{message:'Error de conexión'}} as AxiosResponse)
+        const status:ToastOptions = (res2.status >= 200 && res2.status <=299) ? 'success' : 'error'
+        const toast = newToast(res2.data.message, status)
+        setToasts((prevToasts) => [...prevToasts, toast])
+        setTimeout(() => {
+            closeToast(toast.id);
+        }, 3000);
+    }
+
+    // function openAxiosError(error:unknown): void {
+    //     const parsedError:AxiosError<unknown> = (error as AxiosError<unknown>)
+    //     const axiosResponse:AxiosResponse = parsedError.response!
+    //     const message:string = axiosResponse.data.message
+    //     const toast = newToast(message, 'error')
+    //     setToasts((prevToasts) => [...prevToasts, toast])
+    //     setTimeout(() => {
+    //         closeToast(toast.id);
+    //     }, 3000);
+    // }
+
     function closeToast(id: number): void {
         setToasts((prevToasts) =>
             prevToasts.filter((toast) => toast.id !== id)
@@ -44,6 +71,8 @@ export const ToastProvider: React.FC<{ children: ReactNode }> = ({ children }) =
 
     const contextValue = useMemo(() => ({
         open: openToast,
+        openAxiosToast: openAxiosToast,
+        // openAxiosError: openAxiosError,
         close: closeToast
     }), [])
     return (

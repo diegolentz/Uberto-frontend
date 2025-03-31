@@ -8,6 +8,7 @@ import { driverService } from "../../services/driver.service";
 import { passengerService } from "../../services/passenger.service";
 import { estilosInput } from "../homeForm/homeFormStyles";
 import { msjContext } from "../viewLayout/viewLayout";
+import { useToast } from "../../hooks/toast/useToast";
 
 interface ProfileFormProps {
     entity: DriverProfile | PassengerProfile;
@@ -16,7 +17,7 @@ interface ProfileFormProps {
 
 export const ProfileForm = ({ entity, func }: ProfileFormProps) => {
     const isDriver = sessionStorage.getItem('isDriver') === 'true';
-    const { showToast } = useContext(msjContext);
+    const toast = useToast()
 
     const { register, handleSubmit, formState: { errors, isValid }, reset } = useForm({
         mode: "all",
@@ -31,10 +32,10 @@ export const ProfileForm = ({ entity, func }: ProfileFormProps) => {
             const response = isDriver 
                 ? await driverService.updateProfile({ ...data }) 
                 : await passengerService.updateProfile({ ...data });
-            showToast(response);
+            toast.openAxiosToast(response);
             func(data);
         } catch (e: unknown) {
-            showToast((e as AxiosError<unknown>).response!);
+            toast.openAxiosToast((e as AxiosError<unknown>).response!);
         }
     };
 
