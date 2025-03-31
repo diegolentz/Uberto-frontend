@@ -7,39 +7,25 @@ import { TravelCard } from "../../domain/travel";
 import * as styles from '../../utils/cardDriverStyle';
 import { utils } from "../../utils/formatDate";
 import { RecommendationCard } from "../recommendation/recommendation";
-import { Margin } from '@mui/icons-material';
-import { travelService } from '../../services/travel.service';
-
-
 
 export const CardTravel = ({ value }: { value: TravelCard }) => {
-  const recomEmpty: Recommendation = new Recommendation(value.id, '', new Date, 0, '', 0, value.driverName, true, true, value.imgPassenger, value.imgDriver)
-  const [flag, setFlag] = useState(false)
-  const isDriver = sessionStorage.getItem('isDriver') === 'true'
-  const [travelCard, setTravelCard] = useState(value)
+  const recomEmpty: Recommendation = new Recommendation(value.id, '', new Date, 0, '', 0, value.driverName, true, true, value.imgPassenger, value.imgDriver);
+  const [flag, setFlag] = useState(false);
+  const isDriver = sessionStorage.getItem('isDriver') === 'true';
+  const [travelCard, setTravelCard] = useState(value);
 
   const wasRecommended = async () => {
     setFlag(false);
-    const update = travelCard;
-    update.scored = true;
-    setTravelCard(update);
-
-
-    // await travelService.updateTravel(update.id, update) falta implementar el servicio, cuando hago la 
-    // recomendacion, tengo que cambiar el estado del travel. en este caso scored tiene qe ser true
-    // solo esta cambiando en el front, hay que hacer todo el endpoint
-}
-
+    setTravelCard({ ...value, scored: true, fromDTO: value.fromDTO });
+  };
 
   useEffect(() => {
-    setTravelCard(value)
-  }, [value.scored])
-
+    setTravelCard(value);
+  }, [value]);
 
   return (
-    <Card sx={styles.cardBodyStyle} >
+    <Card sx={styles.cardBodyStyle}>
       <CardHeader
-
         sx={styles.cardHeaderStyle}
         title={
           <Box>
@@ -89,15 +75,12 @@ export const CardTravel = ({ value }: { value: TravelCard }) => {
             </Typography>
           </Box>
           <Box sx={styles.infoTravelStyle}>
-
             <Typography sx={styles.infoTravelStyle}>
               {value.origin}
             </Typography>
-
             <Typography sx={styles.infoTravelStyle}>
               {value.destination}
             </Typography>
-
             <Typography sx={styles.infoTravelStyle}>
               {
                 `${utils.setDate(value.date)} |
@@ -105,11 +88,9 @@ export const CardTravel = ({ value }: { value: TravelCard }) => {
              ${utils.setEndTime((value.date), (value.duration))}hs`
               }
             </Typography>
-
             <Typography sx={styles.priceTravelStyle}>
               {`$ ${value.price}`}
             </Typography>
-
           </Box>
         </Box>
       </CardContent>
@@ -133,10 +114,10 @@ export const CardTravel = ({ value }: { value: TravelCard }) => {
                   height: "2rem",
                 }}
                 variant="contained"
-                onClick={() => setFlag((prev) => !prev)} // Alternar entre abrir/cerrar
-                disabled={value.scored}
+                onClick={() => setFlag(prev => !prev)} // Alternar entre abrir/cerrar
+                disabled={travelCard.scored} // Deshabilitar si ya se puntuó
               >
-                {value.scored ? 'Scored' : 'Score'}
+                {travelCard.scored ? 'Scored' : 'Score'}
               </Button>
             </Box>
 
@@ -149,18 +130,18 @@ export const CardTravel = ({ value }: { value: TravelCard }) => {
                   transition={{ duration: 0.5 }}
                   style={{ overflow: "hidden" }}
                 >
-                  <RecommendationCard recom={recomEmpty} deleteRecommendation={(id: number) => { }} createRecomendation={wasRecommended} close={() => setFlag(false)} />
+                  <RecommendationCard
+                    recom={recomEmpty}
+                    deleteRecommendation={(id: number) => { }}
+                    createRecomendation={wasRecommended}
+                    close={() => setFlag(false)}
+                  />
                 </motion.div>
               )}
             </AnimatePresence>
           </motion.div>
         )}
       </AnimatePresence>
-
-
     </Card>
   );
-
-
-
-}
+};
