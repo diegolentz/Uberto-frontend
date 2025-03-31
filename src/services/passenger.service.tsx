@@ -56,7 +56,9 @@ class PassengerService {
     }
 
     async searchFriend(id: number, filterText: string) {
-        const response = await axios.get(`${REST_SERVER_URL}/passenger/friends/search`, { params: { id: id, filter: filterText } })
+        const response = await axios.get(`${REST_SERVER_URL}/passenger/${id}/friends/search`,
+            { params: {filter: filterText } }
+        )
         return response.data
     }
 
