@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 // Removed unused import of useForm
 import { AxiosError } from "axios";
 import { DriverProfile } from "../../domain/driver";
-import { passengerProfile, PassengerProfile } from "../../domain/passenger";
+import { PassengerProfile } from "../../domain/passenger";
 import { driverService } from "../../services/driver.service";
 import { passengerService } from "../../services/passenger.service";
 import { FriendsComponent } from "../friends/friends";

@@ -27,9 +27,16 @@ class PassengerService {
 
 
     async getAvailableDrivers(data: FormEntity) {
-        const response = await axios.post(`${REST_SERVER_URL}/driver/avaliable`, data)
+        const response = await axios.get(`${REST_SERVER_URL}/driver/avaliable`, {
+            params: { 
+                date: data.date,
+                origin: data.origin,
+                destination: data.destination,
+                numberpassengers: data.numberPassengers
+            }
+        });
         
-        return response.data
+        return response.data;
     }
 
 
