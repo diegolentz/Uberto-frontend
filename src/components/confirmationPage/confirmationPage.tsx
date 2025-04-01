@@ -149,7 +149,6 @@ export const ConfirmationPage = () => {
                 {recommendation?.map((reco, index) => (
                     <RecommendationCard key={index} recom={reco} createRecomendation={function (): void {
                     } } deleteRecommendation={function (id: number): void {
-                    } } close={function (): void {
                     } } />
                 ))}
             </Box>

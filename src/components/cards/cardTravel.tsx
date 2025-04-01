@@ -14,9 +14,16 @@ export const CardTravel = ({ value }: { value: TravelCard }) => {
   const isDriver = sessionStorage.getItem('isDriver') === 'true';
   const [travelCard, setTravelCard] = useState(value);
 
-  const wasRecommended = async () => {
-    setFlag(false);
-    setTravelCard({ ...value, scored: true, fromDTO: value.fromDTO });
+  const wasRecommended = async (isSave : boolean) => {
+   
+   if (isSave) {
+     
+         setFlag(false);
+         setTravelCard({ ...value, scored: true, fromDTO: value.fromDTO });
+        } else{ 
+     setFlag(false);
+
+   }
   };
 
   useEffect(() => {
@@ -131,10 +138,9 @@ export const CardTravel = ({ value }: { value: TravelCard }) => {
                   style={{ overflow: "hidden" }}
                 >
                   <RecommendationCard
-                    recom={recomEmpty}
-                    deleteRecommendation={(id: number) => { }}
-                    createRecomendation={wasRecommended}
-                    close={() => setFlag(false)}
+                  recom={recomEmpty}
+                  deleteRecommendation={(id: number) => { }}
+                  createRecomendation={wasRecommended}
                   />
                 </motion.div>
               )}
