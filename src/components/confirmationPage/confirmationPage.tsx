@@ -144,13 +144,15 @@ export const ConfirmationPage = () => {
                 </Typography>
             </Typography>
             
-            {/* NO BORRAR. Quedamos con diego que iba a resolver esta card.
 
             <Box margin={2} marginBottom={10}>      
                 {recommendation?.map((reco, index) => (
-                    <RecommendationCard key={index} recom={reco} handle={recommended} />
+                    <RecommendationCard key={index} recom={reco} createRecomendation={function (): void {
+                    } } deleteRecommendation={function (id: number): void {
+                    } } close={function (): void {
+                    } } />
                 ))}
-            </Box> */}
+            </Box>
 
             <Box sx={styles.boxButtons}>
                 <Button
