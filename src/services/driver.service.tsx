@@ -1,6 +1,5 @@
 import axios from "axios";
-import {  driverProfile, DriverProfile, FormEntity } from "../domain/driver";
-import { Recommendation, } from "../domain/recomendation";
+import { driverProfile, DriverProfile, FormEntity } from "../domain/driver";
 import { TravelCard, TravelDTO } from "../domain/travel";
 import { REST_SERVER_URL } from "./urls";
 
@@ -8,9 +7,7 @@ class DriverService {
    
    
     async getProfile(id: number): Promise<DriverProfile> {
-        const response = await axios.get(`${REST_SERVER_URL}/driver`, {
-            params: { id: id } 
-        });
+        const response = await axios.get(`${REST_SERVER_URL}/driver/${id}`);
         return driverProfile.fromJson(response.data);
     }
     
@@ -19,8 +16,7 @@ class DriverService {
         const response = await axios.get(`${REST_SERVER_URL}/driver/img`, {
             params: { driverid: id }
         });
-        console.log(response.data.img)
-        return response.data;
+        return response.data.img;
     }
 
     async getPendingTravels(data: FormEntity): Promise<TravelCard[]> { 
