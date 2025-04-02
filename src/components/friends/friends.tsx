@@ -12,7 +12,7 @@ import { AnimatePresence, motion } from "framer-motion";
 
 export const FriendsComponent = ({ id }: { id: number }) => {
     const [visibility, setVisibility] = useState<boolean>(false);
-    const [searchText, setSearchText] = useState<string>(""); // Estado para almacenar el texto del input
+    const [searchText, setSearchText] = useState<string>(""); 
     const [notFriends, setNotFriends] = useState<Friends[]>();
     const [friends, setFriends] = useState<Friends[]>([]);
     const { showToast } = useContext(msjContext)
@@ -22,12 +22,16 @@ export const FriendsComponent = ({ id }: { id: number }) => {
     };
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchText(event.target.value); // obtengo el valor del input, habria que mejorarlo
+        setSearchText(event.target.value);
     };
 
     const fetchFriend = async () => {
-        const notFriends = await passengerService.searchFriend(id, searchText);
-        setNotFriends(notFriends);
+        try{
+            const notFriends = await passengerService.searchFriend(id, searchText);
+            setNotFriends(notFriends);
+        }catch (e: unknown) {
+            showToast((e as AxiosError<unknown>).response!)
+        }
     };
 
     const fetchFriends = async () => {
@@ -35,7 +39,6 @@ export const FriendsComponent = ({ id }: { id: number }) => {
         setFriends(currentFriends);
     }
 
-    //Elimina al amigo de la lista de no amigos y actualiza la lista de amigos
     const removeNotFriend = (friendId: number) => {
         setNotFriends(prevNotFriends => prevNotFriends?.filter(friend => friend.id !== friendId));
         fetchFriends();
@@ -87,7 +90,7 @@ export const FriendsComponent = ({ id }: { id: number }) => {
                             duration: 0.5,
                             // type: "spring",
                         }}
-                        style={{ overflow: "hidden" }} // Evita que el contenido sobresalga
+                        style={{ overflow: "hidden" }} 
                     >
                         <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem" }}>
                             <Box sx={{ display: "flex", alignItems: "center", width: "100%", height: "3rem" }}>
