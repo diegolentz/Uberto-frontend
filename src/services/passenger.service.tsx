@@ -9,7 +9,7 @@ class PassengerService {
         // eliminar la recom de usuario, solo se eliminan las que crea el usuario
     }
     async profileRatings(userId: number): Promise<Recommendation[]> {
-        const res = await axios.get(`${REST_SERVER_URL}/TripScore`, {
+        const res = await axios.get(`${REST_SERVER_URL}/tripScore`, {
             params: { userId: userId }
         });
         console.log(res);
