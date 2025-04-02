@@ -1,5 +1,5 @@
 import { Box, Button, Divider, Typography } from "@mui/material"
-import { useContext, useEffect, useState } from "react"
+import {  useState, useContext, useEffect } from "react"
 import { CreateTravelDTO,  } from "../../domain/travel"
 import * as styles from './confirmationStyles'
 import { Recommendation } from "../../domain/recomendation"
@@ -16,17 +16,12 @@ import { FormPassenger } from "../../domain/passenger"
 export const ConfirmationPage = () => {
     const location = useLocation();
     const navigate = useNavigate();
+    const {showToast} = useContext(msjContext)
     const { driver, travel }: { driver: DriverCard; travel: FormPassenger } = location.state || {};
-        // Verificar si location.state existe antes de desestructurar
-    if (!location.state) {
-        navigate("/");
-        return null;
-    }
     const starTime = utils.setStartTime(travel.date)
     const endTime = utils.setEndTime(travel.date,travel.duration)
     const [recommendation, setRecommendation] = useState<Recommendation[]>()
     const idUser = parseInt(sessionStorage.getItem("userId")!)
-    const {showToast} = useContext(msjContext)
 
     const recommended = async () => {
         try{
@@ -41,6 +36,11 @@ export const ConfirmationPage = () => {
     useEffect(() => {
         recommended()
     }, [])
+
+    if (!location.state) {
+        navigate("/");
+        return null;
+    }
 
     const handleDecline = () => {
         navigate("/Home");
