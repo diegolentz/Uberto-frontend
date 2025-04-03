@@ -1,6 +1,6 @@
 import axios from "axios";
 import { REST_SERVER_URL } from "./urls";
-import { TravelDTO, TravelCard, CreateTravelDTO } from "../domain/travel";
+import { TravelDTO, TravelCard, CreateTravelDTO, PassengerTrips } from "../domain/travel";
 
 class TravelService {
 
@@ -12,29 +12,29 @@ class TravelService {
 
 export const travelService = new TravelService()
 
-export async function getPassengerPending(id: number, role:string):Promise<TravelCard[]> {
-    const promise = axios.get<TravelDTO[]>(REST_SERVER_URL + '/trip/pending', {
+export async function getPassenger(id: number, role:string):Promise<PassengerTrips> {
+    type ResponseType = {
+        pendingTrips: TravelDTO[],
+        finishedTrips: TravelDTO[]
+    }
+    const promise = axios.get<ResponseType>(REST_SERVER_URL + '/trip/passenger', {
         params:{
             id:id,
             rol:role
         }
     })
+
     const response = await promise
-    const travels = response.data.map((item:TravelDTO)=> TravelCard.prototype.fromDTO(item))
-    return travels;
+
+    const pending = response.data.pendingTrips.map((trip:TravelDTO)=> TravelCard.prototype.fromDTO(trip))
+    const finished = response.data.finishedTrips.map((trip:TravelDTO)=> TravelCard.prototype.fromDTO(trip))
+
+    return {
+        pending: pending,
+        finished: finished
+    };
 }
 
-export async function getPassengerFinished(id: number, role:string):Promise<TravelCard[]> {
-    const promise = axios.get<TravelDTO[]>(REST_SERVER_URL + '/trip/finished', {
-        params:{
-            id:id,
-            rol:role
-        }
-    })
-    const response = await promise
-    const travels = response.data.map((item:TravelDTO)=> TravelCard.prototype.fromDTO(item))
-    return travels;
-}
 
 export async function getDriver(id: number, role:string):Promise<TravelCard[]> {
     

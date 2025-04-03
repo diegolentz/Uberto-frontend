@@ -69,3 +69,8 @@ export class CreateTravelDTO {
         public startTime: string,
         public endTime: string,){}    
 }
+
+export type PassengerTrips = {
+    pending: TravelCard[],
+    finished: TravelCard[]
+}
