@@ -18,7 +18,6 @@ export const Home = () => {
     const [card, setCard] = useState<DriverCard[] | TravelCard[] | null>(null);
     const [formInfo, setFormInfo] = useState<FormDriver | FormPassenger>();
     const { showToast } = useContext(msjContext);
-    const [driveSelected, setDriveSelected] = useState<DriverCard | TravelCard>();
     const navigate = useNavigate();
 
     const infoForm = (formValues: FormDriver | FormPassenger) => {
@@ -48,7 +47,6 @@ export const Home = () => {
     };
 
     const changePage = (data: DriverCard | TravelCard) => {
-        setDriveSelected(data);
         navigate("/confirmation-page", { state: { driver: data, travel: formInfo } });
     };
 
