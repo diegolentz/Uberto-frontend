@@ -1,5 +1,5 @@
 import { Box, Button, Stack, TextField } from "@mui/material";
-import { estilosInput } from "../homeForm/homeFormStyles";
+import { estilosInput } from "../../utils/homeFormStyles";
 import { useForm } from "react-hook-form";
 import { useContext } from "react";
 import { passengerService } from "../../services/passenger.service";

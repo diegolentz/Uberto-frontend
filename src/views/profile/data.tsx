@@ -6,10 +6,10 @@ import { DriverProfile } from "../../domain/driver";
 import { PassengerProfile } from "../../domain/passenger";
 import { driverService } from "../../services/driver.service";
 import { passengerService } from "../../services/passenger.service";
-import { FriendsComponent } from "../friends/friends";
-import { MoneyForm } from "../profileForm/moneyForm";
-import { ProfileForm } from "../profileForm/profileForm";
-import { msjContext } from "../viewLayout/viewLayout";
+import { FriendsComponent } from "../../components/friends/friends";
+import { MoneyForm } from "../../components/forms/moneyForm";
+import { ProfileForm } from "../../components/forms/profileForm";
+import { msjContext } from "../../components/viewLayout/viewLayout";
 
 export const Data = () => {
     const id = parseInt(sessionStorage.getItem('userId')!);

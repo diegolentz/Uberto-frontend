@@ -2,12 +2,12 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { Login } from "./views/login";
 import { ViewLayoutComponent } from "./components/viewLayout/viewLayout";
 import { Home } from "./views/home";
-import { Profile } from "./views/profile";
-import { Trips } from "./components/profile/trips";
-import { Data } from "./components/profile/data";
-import { Ratings } from "./components/profile/ratings";
+import { Profile } from "./views/profile/profile";
+import { Trips } from "./views/profile/trips";
+import { Data } from "./views/profile/data";
+import { Ratings } from "./views/profile/ratings";
 import { NotFound } from "./views/notFound";
-import { ConfirmationPage } from "./components/confirmationPage/confirmationPage";
+import { ConfirmationPage } from "./views/confirmationPage";
 
 export const AppRouter = () => {
     return <>

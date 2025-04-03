@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useToast } from "../../hooks/toast/useToast";
 import { get } from "../../services/scores.service";
 import { Recommendation } from "../../domain/recomendation";
-import { RecommendationCard } from "../recommendation/recommendation";
+import { RecommendationCard } from "../../components/cards/recommendation";
 import { Box } from "@mui/material";
 
 

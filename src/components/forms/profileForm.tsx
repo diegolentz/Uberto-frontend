@@ -7,7 +7,7 @@ import { PassengerProfile } from "../../domain/passenger";
 import { useToast } from "../../hooks/toast/useToast";
 import { driverService } from "../../services/driver.service";
 import { passengerService } from "../../services/passenger.service";
-import { estilosInput } from "../homeForm/homeFormStyles";
+import { estilosInput } from "../../utils/homeFormStyles";
 
 interface ProfileFormProps {
     entity: DriverProfile | PassengerProfile;

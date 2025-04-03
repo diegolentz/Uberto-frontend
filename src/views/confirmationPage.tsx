@@ -1,17 +1,17 @@
 import { Box, Button, Divider, Typography } from "@mui/material"
 import {  useState, useContext, useEffect } from "react"
-import { CreateTravelDTO,  } from "../../domain/travel"
-import * as styles from './confirmationStyles'
-import { Recommendation } from "../../domain/recomendation"
-import { RecommendationCard } from "../recommendation/recommendation"
-import { passengerService } from "../../services/passenger.service"
-import { travelService } from "../../services/travel.service"
+import { CreateTravelDTO,  } from "../domain/travel"
+import * as styles from '../utils/confirmationStyles'
+import { Recommendation } from "../domain/recomendation"
+import { RecommendationCard } from "../components/cards/recommendation"
+import { passengerService } from "../services/passenger.service"
+import { travelService } from "../services/travel.service"
 import { AxiosError } from "axios"
-import { msjContext } from "../viewLayout/viewLayout"
-import { utils } from "../../utils/formatDate"
+import { msjContext } from "../components/viewLayout/viewLayout"
+import { utils } from "../utils/formatDate"
 import { useLocation, useNavigate } from "react-router-dom"
-import { DriverCard } from "../../domain/driver"
-import { FormPassenger } from "../../domain/passenger"
+import { DriverCard } from "../domain/driver"
+import { FormPassenger } from "../domain/passenger"
 
 export const ConfirmationPage = () => {
     const location = useLocation();
