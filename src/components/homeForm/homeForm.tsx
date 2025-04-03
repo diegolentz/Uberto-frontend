@@ -152,14 +152,16 @@ export const HomeForm = ({ fetchData }: HomeFormProps) => {
                     />
                 )}
 
-                <TextField size="small"
+                <TextField
+                    size="small"
                     label="Number of passengers"
                     sx={estilosInput}
                     select
-
+                    {...register("passengers", { required: "Select the number of passengers" })}
                     error={!!errors.passengers}
                     helperText={errors.passengers?.message}
-                    defaultValue={form.getValues().passengers}
+                    value={form.watch("passengers")} // Para mantener sincronizado el valor seleccionado
+                    onChange={(e) => setValue("passengers", Number(e.target.value))} // Actualiza el estado en react-hook-form
                 >
                     {[1, 2, 3, 4].map((option) => (
                         <MenuItem key={option} value={option}>
