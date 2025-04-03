@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { PassengerTrips, TravelCard } from "../../domain/travel"
 import { getPassenger as tripsFromPassenger} from "../../services/travel.service"
 import { getDriver } from "../../services/travel.service"
-import { CardTravel } from "../cards/cardTravel"
+import { CardTravel } from "../../components/cards/cardTravel"
 
 
 export const Trips = () => {

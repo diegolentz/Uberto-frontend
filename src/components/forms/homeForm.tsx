@@ -2,7 +2,7 @@ import { Button, MenuItem, Stack, TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { FormDriver, } from "../../domain/driver";
 import { FormPassenger } from "../../domain/passenger";
-import { estilosInput } from "./homeFormStyles";
+import { estilosInput } from "../../utils/homeFormStyles";
 
 
 type HomeFormProps = {

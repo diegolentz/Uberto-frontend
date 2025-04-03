@@ -6,7 +6,7 @@ import { Recommendation } from "../../domain/recomendation";
 import { TravelCard } from "../../domain/travel";
 import * as styles from '../../utils/cardDriverStyle';
 import { utils } from "../../utils/formatDate";
-import { RecommendationCard } from "../recommendation/recommendation";
+import { RecommendationCard } from "./recommendation";
 
 export const CardTravel = ({ value }: { value: TravelCard }) => {
   const recomEmpty: Recommendation = new Recommendation(value.id, '', new Date, 0, '', 0, value.driverName, true, true, value.imgPassenger, value.imgDriver);
