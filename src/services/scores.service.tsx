@@ -3,9 +3,7 @@ import { REST_SERVER_URL } from "./urls";
 import { Recommendation } from "../domain/recomendation";
 
 export async function get(userId: number): Promise<Recommendation[]> {
-    const response = await axios.get(`${REST_SERVER_URL}/tripScore`, {
-        params: { userId: userId }
-    });
+    const response = await axios.get(`${REST_SERVER_URL}/tripScore/passenger/${userId}`);
     return response.data;
 }
 

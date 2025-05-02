@@ -32,6 +32,6 @@ export async function getPassenger(id: number):Promise<PassengerTrips> {
 
 export async function getDriver(id: number):Promise<TravelCard[]> {
     
-    const res = await axios.get<TravelDTO[]>(`${REST_SERVER_URL}/trip/profile/driver/${id}`)
-    return res.data.map((item:TravelDTO)=> TravelCard.prototype.fromDTO(item));
+    const res = await axios.get(`${REST_SERVER_URL}/trip/profile/driver/${id}`)
+    return res.data.finishedTrips.map((item:TravelDTO)=> TravelCard.prototype.fromDTO(item));
 } 
