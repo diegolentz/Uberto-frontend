@@ -6,5 +6,5 @@ export async function tryLogin(loginRequest: loginRequest): Promise<void> {
     const promise = axios.post<loginResponse>(REST_SERVER_URL + '/login', loginRequest);
     const response = await promise;
     sessionStorage.setItem("userId", response.data.id.toString());
-    sessionStorage.setItem("isDriver", (response.data.rol === "driver").toString());
+    sessionStorage.setItem("isDriver", (response.data.rol.toLowerCase() === "driver").toString());
 }
