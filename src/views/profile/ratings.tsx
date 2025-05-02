@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react"
-import { useToast } from "../../hooks/toast/useToast";
-import { get } from "../../services/scores.service";
-import { Recommendation } from "../../domain/recomendation";
-import { RecommendationCard } from "../../components/cards/recommendation";
 import { Box } from "@mui/material";
+import { useEffect, useState } from "react";
+import { RecommendationCard } from "../../components/cards/recommendation";
+import { Recommendation } from "../../domain/recomendation";
+import { useToast } from "../../hooks/toast/useToast";
+import { scoreService } from "../../services/scores.service";
 
 
 export const Ratings = () => {
@@ -14,8 +14,14 @@ export const Ratings = () => {
 
     async function fetchData() {
         try {
-            const data = await get(idUser)
-            setScores(data)
+            if (isDriver) {
+                const data = await scoreService.getDriverRatings(idUser)
+                setScores(data)
+
+            }else {
+                const data = await scoreService.getPassengerRatings(idUser)
+                setScores(data)
+            }
         }
         catch (error: any) {
             toast.open(error.response.data.message, 'error')
@@ -38,7 +44,7 @@ export const Ratings = () => {
             <Box sx={{height:'100%', padding:'1rem', display:'flex', flexDirection:'column', gap:'1rem'}}>
                 {scores.map((score: Recommendation) => (
                     <>
-                        <RecommendationCard key={score.tripId} recom={score} deleteRecommendation={deleteScore} handle={function (): void {
+                        <RecommendationCard key={score.tripId} recom={score} deleteRecommendation={deleteScore} createRecomendation={function (): void {
                             throw new Error("Function not implemented.");
                         } } />
                     </>

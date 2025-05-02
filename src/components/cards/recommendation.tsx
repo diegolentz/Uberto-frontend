@@ -4,11 +4,11 @@ import { Avatar, Box, Button, CardContent, CardHeader, IconButton, Rating, TextF
 import { AxiosError } from "axios";
 import { useContext, useState } from "react";
 import { Recommendation } from "../../domain/recomendation";
-import { scoreCreate, scoreDelete } from "../../services/scores.service";
 import * as styles from "../../utils/cardDriverStyle";
 import { utils } from "../../utils/formatDate";
 import { StyledCard } from "../../utils/recommendationCardStyles";
 import { msjContext } from "../viewLayout/viewLayout";
+import { scoreService } from "../../services/scores.service";
 
 interface RecommendationCardProps {
     recom: Recommendation;
@@ -16,7 +16,7 @@ interface RecommendationCardProps {
     deleteRecommendation: (id: number) => void;
 }
 
-export const RecommendationCard = ({ recom, createRecomendation, deleteRecommendation }: RecommendationCardProps) => {
+export const RecommendationCard = ({ recom,deleteRecommendation, createRecomendation }: RecommendationCardProps) => {
     const recomEmpty: Recommendation = new Recommendation(0, "", new Date(), 0, "", 0, "", true, false, "", "");
     const [recommendation, setRecom] = useState(recom);
     const { showToast } = useContext(msjContext);
@@ -25,7 +25,7 @@ export const RecommendationCard = ({ recom, createRecomendation, deleteRecommend
 
     const handleDelete = async () => {
         try {
-            const res = await scoreDelete(userId, recom.tripId);
+            const res = await scoreService.scoreDelete(userId, recom.tripId);
             deleteRecommendation(recom.tripId);
             showToast(res);
         } catch (e: unknown) {
@@ -36,7 +36,7 @@ export const RecommendationCard = ({ recom, createRecomendation, deleteRecommend
     const handlePush = async (isSave: boolean) => {
         if (isSave) {
             try {
-                const res = await scoreCreate(recommendation);
+                const res = await scoreService.scoreCreate(recommendation);
                 setRecom(recommendation);
                 showToast(res);
             } catch (e: unknown) {
