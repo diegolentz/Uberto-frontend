@@ -24,35 +24,19 @@ export const ProfileForm = ({ entity, func }: ProfileFormProps) => {
     });
 
     const onSubmit = async (data: any) => {
-        const { firstName, lastName, price, serial, brand, model, phone } = data;
-      
-        const hasChanges = isDriver
-          ? firstName !== entity.firstName ||
-            lastName !== entity.lastName ||
-            price !== entity.price ||
-            serial !== entity.serial ||
-            brand !== entity.brand ||
-            model !== entity.model
-          : firstName !== entity.firstName ||
-            lastName !== entity.lastName ||
-            phone !== entity.phone;
-      
-        if (!hasChanges) {
-          toast.open("No changes were made to the form.", "info");
-          return;
+        if (!isValid) {
+            console.log("Formulario con errores:", errors);
         }
-      
         try {
-          const response = isDriver
-            ? await driverService.updateProfile(data)
-            : await passengerService.updateProfile(data);
-          toast.openAxiosToast(response);
-          func(data);
+            const response = isDriver 
+                ? await driverService.updateProfile(data) 
+                : await passengerService.updateProfile(data);
+            toast.openAxiosToast(response);
+            func(data);
         } catch (e: unknown) {
-          toast.openAxiosToast((e as AxiosError<unknown>).response!);
+            toast.openAxiosToast((e as AxiosError<unknown>).response!);
         }
-      };
-      
+    };
 
     useEffect(() => {
         reset(entity);
