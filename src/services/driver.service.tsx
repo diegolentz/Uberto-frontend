@@ -20,10 +20,19 @@ class DriverService {
     }
 
     async getPendingTravels(data: FormEntity): Promise<TravelCard[]> { 
-        const response = await axios.post(`${REST_SERVER_URL}/trip/pending`, data);
+        const response = await axios.get(`${REST_SERVER_URL}/trip/pending`, {
+            params:{
+                origin: data.origin,
+                destination: data.destination,
+                driverId: data.userId,
+                name: data.name,
+                numberPassenger: data.numberPassengers
+            }
+        });
         const travels = response.data.map((item: TravelDTO) => TravelCard.prototype.fromDTO(item));
         return travels;
     }
+
     async updateProfile(data: DriverProfile) {
         const id = Number(sessionStorage.getItem('userId')!);
         const updatedData = { ...data, id };
