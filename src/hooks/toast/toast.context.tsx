@@ -43,7 +43,7 @@ export const ToastProvider: React.FC<{ children: ReactNode }> = ({ children }) =
         // const message = res.status >= 200 && res.status < 300 ? res.data : res.data.message
         
         // {status:500, data:{message:'Error de conexión'}} as AxiosResponse
-        const res2 = res ? res : ({status:500, data:{message:'Error de conexión'}} as AxiosResponse)
+        const res2 = res.data ? res.data : ({status:500, data:{message:'Error de conexión'}} as AxiosResponse)
         const status:ToastOptions = (res2.status >= 200 && res2.status <=299) ? 'success' : 'error'
         const toast = newToast(res2.data.message, status)
         setToasts((prevToasts) => [...prevToasts, toast])

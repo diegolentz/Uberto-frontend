@@ -78,6 +78,7 @@ class PassengerService {
         const id = parseInt(sessionStorage.getItem('userId')!)
         console.log("datos que se mandan al back" , data)
         const response = await axios.put(`${REST_SERVER_URL}/passenger`, data, { params: { id: id } })
+        console.log("response", response.data)
         return response
     }
 
