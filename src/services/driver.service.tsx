@@ -24,18 +24,12 @@ class DriverService {
         const travels = response.data.map((item: TravelDTO) => TravelCard.prototype.fromDTO(item));
         return travels;
     }
-
-    async updateProfile(data: DriverProfile)  {
-        const id = sessionStorage.getItem('userId')
-        const response = await axios.post(`${REST_SERVER_URL}/driver`, data, { params: { id: id } })
-        return response
+    async updateProfile(data: DriverProfile) {
+        const id = Number(sessionStorage.getItem('userId')!);
+        const updatedData = { ...data, id };
+        const response = await axios.post(`${REST_SERVER_URL}/driver`, updatedData);
+        return response;
     }
-
-
-    // getRatings(idUser: number) : Promise<Recommendation[]> {
-    //     const recom = [recommendation1,recommendation2]
-    //     return  Promise.resolve(recom);
-    // }
 }
 
 export const driverService = new DriverService();

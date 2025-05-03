@@ -2,17 +2,27 @@ import axios from "axios";
 import { REST_SERVER_URL } from "./urls";
 import { Recommendation } from "../domain/recomendation";
 
-export async function get(userId: number): Promise<Recommendation[]> {
-    const response = await axios.get(`${REST_SERVER_URL}/tripScore/passenger/${userId}`);
-    return response.data;
-}
+class ScoreService{
+    
+    async getDriverRatings(userId: number): Promise<Recommendation[]> {
+        const response = await axios.get(`${REST_SERVER_URL}/tripScore/driver/${userId}`);
+        return response.data;
+    }
 
-export async function scoreDelete(userId: number, tripId: number) {
-    return await axios.delete(`${REST_SERVER_URL}/tripScore`, {
-        params: { userId, tripId }
-    });
-}
+    async getPassengerRatings(userId: number): Promise<Recommendation[]> {
+        const response = await axios.get(`${REST_SERVER_URL}/tripScore/passenger/${userId}`);
+        return response.data;
+    }
+    
+    async scoreDelete(userId: number, tripId: number) {
+        return await axios.delete(`${REST_SERVER_URL}/tripScore`, {
+            params: { userId, tripId }
+        });
+    }
+    
+    async scoreCreate(recom: Recommendation) {
+        return await axios.post(`${REST_SERVER_URL}/tripScore`, recom);
+    }
 
-export async function scoreCreate(recom: Recommendation) {
-    return await axios.post(`${REST_SERVER_URL}/tripScore`, recom);
 }
+export const scoreService = new ScoreService();

@@ -11,10 +11,23 @@ type ToastProperties = {
 export function Toast({ message, option, close }: ToastProperties) {
 
     return (
-        <Alert variant="filled" severity={option} sx={{ position: "absolute", width: "auto", height: 'auto', right: "0", top: "0rem", zIndex: "10" }} data-testid="alert" onClose={close}>
+        <Alert 
+            variant="filled" 
+            severity={option} 
+            sx={{ 
+                position: "fixed", 
+                top: "0rem", 
+                left: "50%", 
+                // transform: "translateX(-50%)", 
+                width: "auto", 
+                height: 'auto', 
+                zIndex: "10" 
+            }} 
+            data-testid="alert" 
+            onClose={close}
+        >
             <AlertTitle>{message}</AlertTitle>
         </Alert>
     )
 
 }
-
