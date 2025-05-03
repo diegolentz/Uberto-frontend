@@ -30,8 +30,8 @@ export const ProfileForm = ({ entity, func }: ProfileFormProps) => {
 
 
   const wasChanged = (data: any): boolean => {
-      console.log("Data:", data);
-      console.log("Entity:", entity);
+    //   console.log("Data:", data);
+    //   console.log("Entity:", entity);
     return JSON.stringify(data) !== JSON.stringify(entity);
   }
 
@@ -44,10 +44,10 @@ export const ProfileForm = ({ entity, func }: ProfileFormProps) => {
       const response = isDriver
         ? await driverService.updateProfile(data)
         : await passengerService.updateProfile(data);
-      toast.open(response.data, "success");
+      toast.openAxiosToast(response);
       func(data);
     } catch (e: any) {
-      toast.open(e.data, "error");
+      toast.openAxiosToast(e);
     }
   };
 
