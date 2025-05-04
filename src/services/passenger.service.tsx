@@ -9,9 +9,7 @@ class PassengerService {
         // eliminar la recom de usuario, solo se eliminan las que crea el usuario
     }
     async profileRatings(userId: number): Promise<Recommendation[]> {
-        const res = await axios.get(`${REST_SERVER_URL}/tripScore`, {
-            params: { userId: userId }
-        });
+        const res = await axios.get(`${REST_SERVER_URL}/tripScore/driver/${userId}`)
         console.log(res);
 
         return res.data;
@@ -27,7 +25,7 @@ class PassengerService {
 
 
     async getAvailableDrivers(data: FormEntity) {
-        const response = await axios.get(`${REST_SERVER_URL}/driver/avaliable`, {
+        const response = await axios.get(`${REST_SERVER_URL}/driver/available`, {
             params: { 
                 date: data.date,
                 origin: data.origin,
