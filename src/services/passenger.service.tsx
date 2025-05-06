@@ -11,7 +11,7 @@ class PassengerService {
     }
     async profileRatings(userId: number): Promise<Recommendation[]> {
         const res = await axios.get(`${REST_SERVER_URL}/tripScore/driver/${userId}`,
-            {headers:{'Authorization': `Bearer ${token}`}}
+            {headers:{'Authorization': `Bearer ${token.getToken()}`}}
         )
         console.log(res);
 
@@ -22,7 +22,7 @@ class PassengerService {
     async getImg(id: number): Promise<string> {
         const response = await axios.get(`${REST_SERVER_URL}/passenger/img`, {
             params: { passengerId: id },
-            headers:{'Authorization': `Bearer ${token}`}
+            headers:{'Authorization': `Bearer ${token.getToken()}`}
         });
         return response.data.img;
     }
@@ -36,7 +36,7 @@ class PassengerService {
                 destination: data.destination,
                 numberpassengers: data.numberPassengers
             },
-            headers:{'Authorization': `Bearer ${token}`}
+            headers:{'Authorization': `Bearer ${token.getToken()}`}
         });
         
         return response.data;
@@ -45,7 +45,7 @@ class PassengerService {
 
     async getProfile(id: number): Promise<PassengerProfile> {
         const response = await axios.get(`${REST_SERVER_URL}/passenger/${id}`,{
-            headers:{'Authorization': `Bearer ${token}`}
+            headers:{'Authorization': `Bearer ${token.getToken()}`}
         })
         return passengerProfile.fromJson(response.data)
     }
@@ -53,7 +53,7 @@ class PassengerService {
 
     async getFriends(id: number): Promise<Friends[]> {
         const promise = axios.get(`${REST_SERVER_URL}/passenger/${id}/friends`,{
-            headers:{'Authorization': `Bearer ${token}`}
+            headers:{'Authorization': `Bearer ${token.getToken()}`}
         })
         const response = await promise
         return (response.data)
@@ -62,7 +62,7 @@ class PassengerService {
     async removeFriend(id: number, friendId: number) {
         const response = await axios.delete(`${REST_SERVER_URL}/passenger/friends`, 
             { params: { passengerId: id, friendId: friendId },
-            headers:{'Authorization': `Bearer ${token}`}
+            headers:{'Authorization': `Bearer ${token.getToken()}`}
         })
         return response
     }
@@ -70,14 +70,14 @@ class PassengerService {
     async addFriend(id: number, friendId: number) {
         const response = await axios.post(`${REST_SERVER_URL}/passenger/friends`, null, { 
             params: { passengerId: id, friendId: friendId },
-            headers:{'Authorization': `Bearer ${token}`} })
+            headers:{'Authorization': `Bearer ${token.getToken()}`} })
         return response
     }
 
     async searchFriend(id: number, filterText: string) {
         const response = await axios.get(`${REST_SERVER_URL}/passenger/${id}/friends/search`,
             { params: {filter: filterText },
-            headers:{'Authorization': `Bearer ${token}`} }
+            headers:{'Authorization': `Bearer ${token.getToken()}`} }
         )
         return response.data
     }
@@ -85,7 +85,7 @@ class PassengerService {
     async addBalance(id: number, money: number) {
         const response = await axios.put(`${REST_SERVER_URL}/passenger/addBalance`, null, { 
             params: { id: id, balance: money },
-            headers:{'Authorization': `Bearer ${token}`} })
+            headers:{'Authorization': `Bearer ${token.getToken()}`} })
         return response
     }
 
@@ -94,7 +94,7 @@ class PassengerService {
         // console.log("datos que se mandan al back" , data)
         const response = await axios.put(`${REST_SERVER_URL}/passenger`, data, { 
             params: { id: id },
-            headers:{'Authorization': `Bearer ${token}`} })
+            headers:{'Authorization': `Bearer ${token.getToken()}`} })
         console.log("response", response.data)
         return response
     }

@@ -2,6 +2,7 @@ import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import { AccountCircle, Home, Logout, Opacity } from '@mui/icons-material';
 import { NavLink } from 'react-router-dom';
+import {token} from "../../security/token"
 
 export const NavBar = () => {
 
@@ -18,6 +19,7 @@ export const NavBar = () => {
 
     const sxIcons = { color: "white" };
     const clearStorage = () => {
+        token.clearToken()
         sessionStorage.clear();
     }
 
