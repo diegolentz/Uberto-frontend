@@ -7,4 +7,5 @@ export async function tryLogin(loginRequest: loginRequest): Promise<void> {
     const response = await promise;
     sessionStorage.setItem("userId", response.data.id.toString());
     sessionStorage.setItem("isDriver", (response.data.rol.toLowerCase() === "driver").toString());
+    sessionStorage.setItem("token", response.data.token.toString());
 }
