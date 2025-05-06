@@ -6,7 +6,7 @@ class TravelService {
 
     async createTravel(data:CreateTravelDTO) {
         return await axios.post(`${REST_SERVER_URL}/trip/create`,data,
-            {headers:{'Authorization': `Bearer ${token}`}}
+            {headers:{'Authorization': `Bearer ${token.getToken()}`}}
         ) 
     } 
 
