@@ -21,7 +21,7 @@ export const ConfirmationPage = () => {
     const starTime = utils.setStartTime(travel.date)
     const endTime = utils.setEndTime(travel.date,travel.duration)
     const [recommendation, setRecommendation] = useState<Recommendation[]>()
-    const idUser = parseInt(sessionStorage.getItem("userId")!)
+    const idUser = parseInt(localStorage.getItem("userId")!)
 
     const recommended = async () => {
         try{

@@ -13,8 +13,8 @@ import { passengerService } from "../services/passenger.service";
 import { useNavigate } from "react-router-dom";
 
 export const Home = () => {
-    const idUser = parseInt(sessionStorage.getItem("userId")!);
-    const isDriver = sessionStorage.getItem("isDriver") === "true";
+    const idUser = parseInt(localStorage.getItem("userId")!);
+    const isDriver = localStorage.getItem("isDriver") === "true";
     const [card, setCard] = useState<DriverCard[] | TravelCard[] | null>(null);
     const [formInfo, setFormInfo] = useState<FormDriver | FormPassenger>();
     const { showToast } = useContext(msjContext);

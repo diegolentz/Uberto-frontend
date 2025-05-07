@@ -10,7 +10,7 @@ interface CardDriverProps {
 }
 
 export const CardDriver = ({ value, onClick }: CardDriverProps) => {
-  const isDriver = sessionStorage.getItem('isDriver') === 'driver';
+  const isDriver = localStorage.getItem('isDriver') === 'driver';
 
   const clickCard = () => {
     if (!isDriver) {

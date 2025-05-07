@@ -36,7 +36,7 @@ class DriverService {
     }
 
     async updateProfile(data: DriverProfile) {
-        const id = Number(sessionStorage.getItem('userId')!);
+        const id = Number(localStorage.getItem('userId')!);
         const updatedData = { ...data, id };
         const response = await axios.post(`${REST_SERVER_URL}/driver`, updatedData,
             {headers:{'Authorization': `Bearer ${token.getToken()}`}}

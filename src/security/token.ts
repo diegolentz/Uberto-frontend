@@ -4,9 +4,11 @@ class Token {
         this.token = '';
     }
 
+
     getToken() {
-        return sessionStorage.getItem('token') || '';
+        return localStorage.getItem('token') || '';
     }
 }
 
 export const token = new Token();
+//asd 

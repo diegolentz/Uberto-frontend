@@ -7,7 +7,7 @@ import { passengerService } from "../../services/passenger.service";
 import { SmallAvatar, StyledBadge } from "../../utils/profileStyles";
 
 export const ProfileImg = () => {
-  const isDriver = sessionStorage.getItem('isDriver') === 'true';
+  const isDriver = localStorage.getItem('isDriver') === 'true';
   const [myImg, setImg] = useState<string>("")
 
   const getImage = async () => {
