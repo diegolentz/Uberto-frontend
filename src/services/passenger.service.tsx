@@ -10,7 +10,7 @@ class PassengerService {
         // eliminar la recom de usuario, solo se eliminan las que crea el usuario
     }
     async profileRatings(userId: number): Promise<Recommendation[]> {
-        const res = await axios.get(`${REST_SERVER_URL}/tripScore/driver/${userId}`,
+        const res = await axios.get(`${REST_SERVER_URL}/tripScore/driver`,
             {headers:{'Authorization': `Bearer ${token.getToken()}`}}
         )
         console.log(res);
@@ -21,7 +21,6 @@ class PassengerService {
 
     async getImg(id: number): Promise<string> {
         const response = await axios.get(`${REST_SERVER_URL}/passenger/img`, {
-            params: { passengerId: id },
             headers:{'Authorization': `Bearer ${token.getToken()}`}
         });
         return response.data.img;
@@ -44,7 +43,7 @@ class PassengerService {
 
 
     async getProfile(id: number): Promise<PassengerProfile> {
-        const response = await axios.get(`${REST_SERVER_URL}/passenger/${id}`,{
+        const response = await axios.get(`${REST_SERVER_URL}/passenger`,{
             headers:{'Authorization': `Bearer ${token.getToken()}`}
         })
         return passengerProfile.fromJson(response.data)
@@ -52,7 +51,7 @@ class PassengerService {
 
 
     async getFriends(id: number): Promise<Friends[]> {
-        const promise = axios.get(`${REST_SERVER_URL}/passenger/${id}/friends`,{
+        const promise = axios.get(`${REST_SERVER_URL}/passenger/friends`,{
             headers:{'Authorization': `Bearer ${token.getToken()}`}
         })
         const response = await promise
@@ -75,7 +74,7 @@ class PassengerService {
     }
 
     async searchFriend(id: number, filterText: string) {
-        const response = await axios.get(`${REST_SERVER_URL}/passenger/${id}/friends/search`,
+        const response = await axios.get(`${REST_SERVER_URL}/passenger/friends/search`,
             { params: {filter: filterText },
             headers:{'Authorization': `Bearer ${token.getToken()}`} }
         )
