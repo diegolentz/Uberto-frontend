@@ -25,7 +25,7 @@ export const ConfirmationPage = () => {
 
     const recommended = async () => {
         try{
-            const res = await passengerService.profileRatings(driver.id)
+            const res = await passengerService.profileRatings()
             console.log(res)
             setRecommendation(res)
         }catch (e: unknown) {
