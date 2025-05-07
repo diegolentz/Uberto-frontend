@@ -8,9 +8,8 @@ import {token} from "../security/token"
 class PassengerService {
     
     async profileRatings(id: number): Promise<Recommendation[]> {
-        const res = await axios.get(`${REST_SERVER_URL}/tripScore/driver`,
-            {params:{driverId:id},
-            headers:{'Authorization': `Bearer ${token.getToken()}`}}
+        const res = await axios.get(`${REST_SERVER_URL}/tripScore/driver?driverId=${id}`,
+            {headers:{'Authorization': `Bearer ${token.getToken()}`}}
         )
         console.log(res);
 
