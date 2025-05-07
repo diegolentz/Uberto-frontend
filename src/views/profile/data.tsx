@@ -12,7 +12,6 @@ import { ProfileForm } from "../../components/forms/profileForm";
 import { msjContext } from "../../components/viewLayout/viewLayout";
 
 export const Data = () => {
-    const id = parseInt(sessionStorage.getItem('userId')!);
     const isDriver = sessionStorage.getItem('isDriver') === 'true';
     const [profile, setProfile] = useState<DriverProfile | PassengerProfile>(isDriver ? {} as DriverProfile : {} as PassengerProfile);
     const { showToast } = useContext(msjContext)
@@ -23,8 +22,8 @@ export const Data = () => {
     const fetchForm = async () => {
         try {
             const response = isDriver 
-                ? await driverService.getProfile(id) 
-                : await passengerService.getProfile(id);
+                ? await driverService.getProfile() 
+                : await passengerService.getProfile();
             setProfile(response);
         } catch (e: unknown) {
             showToast((e as AxiosError<unknown>).response!);
@@ -45,9 +44,9 @@ export const Data = () => {
                 <Divider aria-hidden="true" sx={{ borderColor: '#a737fc' }} />
                 {!isDriver && (
                     <>
-                        <MoneyForm money={(profile as PassengerProfile).money} id={id} func={setChanges} />
+                        <MoneyForm money={(profile as PassengerProfile).money} func={setChanges} />
                         <Divider aria-hidden="true" sx={{ borderColor: '#a737fc' }} />
-                        <FriendsComponent id={id} />
+                        <FriendsComponent/>
                     </>
                 )}
             </Box>

@@ -8,12 +8,10 @@ import { msjContext } from "../viewLayout/viewLayout";
 
 interface MoneyFormProps {
     money: number;
-    id: number;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     func: (data: any) => void;
 }
 
-export const MoneyForm = ({ money, func, id }: MoneyFormProps) => {
+export const MoneyForm = ({ money, func }: MoneyFormProps) => {
 
 
     const { showToast } = useContext(msjContext)
@@ -29,7 +27,7 @@ export const MoneyForm = ({ money, func, id }: MoneyFormProps) => {
             console.log("Formulario con errores:", errors);
         } else {
             try {
-                const response = await passengerService.addBalance(id, (data.money));
+                const response = await passengerService.addBalance(data.money);
                 func({ money: money + Number(data.money) }); // Llama a func con el nuevo valor atributo : valor
                 reset({ money: 0 }); // Resetea el formulario
                 showToast(response);

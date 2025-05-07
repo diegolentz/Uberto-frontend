@@ -10,7 +10,7 @@ import { msjContext } from '../viewLayout/viewLayout';
 import { AxiosError } from 'axios';
 import { AnimatePresence, motion } from "framer-motion";
 
-export const FriendsComponent = ({ id }: { id: number }) => {
+export const FriendsComponent = () => {
     const [visibility, setVisibility] = useState<boolean>(false);
     const [searchText, setSearchText] = useState<string>(""); 
     const [notFriends, setNotFriends] = useState<Friends[]>();
@@ -27,7 +27,7 @@ export const FriendsComponent = ({ id }: { id: number }) => {
 
     const fetchFriend = async () => {
         try{
-            const notFriends = await passengerService.searchFriend(id, searchText);
+            const notFriends = await passengerService.searchFriend(searchText);
             setNotFriends(notFriends);
         }catch (e: unknown) {
             showToast((e as AxiosError<unknown>).response!)
@@ -35,7 +35,7 @@ export const FriendsComponent = ({ id }: { id: number }) => {
     };
 
     const fetchFriends = async () => {
-        const currentFriends = await passengerService.getFriends(id);
+        const currentFriends = await passengerService.getFriends();
         setFriends(currentFriends);
     }
 
@@ -120,7 +120,7 @@ export const FriendsComponent = ({ id }: { id: number }) => {
                                 exit={{ opacity: 0, y: -10 }}
                                 transition={{ duration: 0.5, delay: index * 0.2 }}
                                 >
-                                    <CardFriends isFriend={false} friendData={friend} id={id} func={() => removeNotFriend(friend.id)} />
+                                    <CardFriends isFriend={false} friendData={friend} func={() => removeNotFriend(friend.id)} />
                                 </motion.div>
                             ))}
                             <Divider sx={{ borderColor: "#a737fc", width: "100%" }} />
@@ -131,7 +131,7 @@ export const FriendsComponent = ({ id }: { id: number }) => {
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}>
                 <h5>My friends</h5>
                 {friends.map((friend, index) => (
-                    <CardFriends key={index} isFriend={true} friendData={friend} id={id} func={fetchFriends} />
+                    <CardFriends key={index} isFriend={true} friendData={friend} func={fetchFriends} />
                 ))}
             </Box>
         </Box>

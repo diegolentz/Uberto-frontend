@@ -14,13 +14,13 @@ class TravelService {
 
 export const travelService = new TravelService()
 
-export async function getPassenger(id: number):Promise<PassengerTrips> {
+export async function getPassenger():Promise<PassengerTrips> {
     type ResponseType = {
         pendingTrips: TravelDTO[],
         finishedTrips: TravelDTO[]
     }
 
-    const response = await axios.get<ResponseType>(`${REST_SERVER_URL}/trip/profile/passenger/${id}`,
+    const response = await axios.get<ResponseType>(`${REST_SERVER_URL}/trip/profile/passenger`,
         {headers:{'Authorization': `Bearer ${token.getToken()}`}}
     )
 
@@ -34,9 +34,9 @@ export async function getPassenger(id: number):Promise<PassengerTrips> {
 }
 
 
-export async function getDriver(id: number):Promise<TravelCard[]> {
+export async function getDriver():Promise<TravelCard[]> {
     
-    const res = await axios.get(`${REST_SERVER_URL}/trip/profile/driver/${id}`,
+    const res = await axios.get(`${REST_SERVER_URL}/trip/profile/driver`,
         {headers:{'Authorization': `Bearer ${token.getToken()}`}}
     )
     return res.data.finishedTrips.map((item:TravelDTO)=> TravelCard.prototype.fromDTO(item));

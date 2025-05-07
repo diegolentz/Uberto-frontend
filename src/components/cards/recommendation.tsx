@@ -25,7 +25,7 @@ export const RecommendationCard = ({ recom,deleteRecommendation, createRecomenda
 
     const handleDelete = async () => {
         try {
-            const res = await scoreService.scoreDelete(userId, recom.tripId);
+            const res = await scoreService.scoreDelete(recom.tripId);
             deleteRecommendation(recom.tripId);
             showToast(res);
         } catch (e: unknown) {

@@ -7,7 +7,6 @@ import { scoreService } from "../../services/scores.service";
 
 
 export const Ratings = () => {
-    const idUser = parseInt(sessionStorage.getItem('userId')!)
     const isDriver = sessionStorage.getItem('isDriver') === 'true'
     const [scores, setScores] = useState<Recommendation[]>([]);
     const toast = useToast()
@@ -15,11 +14,11 @@ export const Ratings = () => {
     async function fetchData() {
         try {
             if (isDriver) {
-                const data = await scoreService.getDriverRatings(idUser)
+                const data = await scoreService.getDriverRatings()
                 setScores(data)
 
             }else {
-                const data = await scoreService.getPassengerRatings(idUser)
+                const data = await scoreService.getPassengerRatings()
                 setScores(data)
             }
         }

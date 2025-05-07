@@ -6,17 +6,16 @@ import {token} from "../security/token"
 class DriverService {
    
    
-    async getProfile(id: number): Promise<DriverProfile> {
-        const response = await axios.get(`${REST_SERVER_URL}/driver/${id}`,
+    async getProfile(): Promise<DriverProfile> {
+        const response = await axios.get(`${REST_SERVER_URL}/driver`,
             {headers:{'Authorization': `Bearer ${token.getToken()}`}}
         );
         return driverProfile.fromJson(response.data);
     }
     
     
-    async getImg(id: number): Promise<string> {
+    async getImg(): Promise<string> {
         const response = await axios.get(`${REST_SERVER_URL}/driver/img`, {
-            params: { driverid: id },
             headers:{'Authorization': `Bearer ${token.getToken()}`}
         });
         return response.data.img;
@@ -27,7 +26,6 @@ class DriverService {
             params:{
                 origin: data.origin,
                 destination: data.destination,
-                driverId: data.userId,
                 name: data.name,
                 numberPassenger: data.numberPassengers
             },

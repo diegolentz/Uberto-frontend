@@ -7,14 +7,13 @@ import { passengerService } from "../../services/passenger.service";
 import { SmallAvatar, StyledBadge } from "../../utils/profileStyles";
 
 export const ProfileImg = () => {
-  const id = parseInt(sessionStorage.getItem('userId')!);
   const isDriver = sessionStorage.getItem('isDriver') === 'true';
   const [myImg, setImg] = useState<string>("")
 
   const getImage = async () => {
     const img = isDriver 
-      ? await driverService.getImg(id) 
-      : await passengerService.getImg(id);
+      ? await driverService.getImg() 
+      : await passengerService.getImg();
     setImg(img);
   }
 
