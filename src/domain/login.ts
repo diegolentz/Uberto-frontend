@@ -7,4 +7,5 @@ export type loginRequest = {
 export type loginResponse = {
     id:number;
     rol:string;
+    token:string;
 }
