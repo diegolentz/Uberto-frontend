@@ -7,7 +7,7 @@ import { scoreService } from "../../services/scores.service";
 
 
 export const Ratings = () => {
-    const isDriver = sessionStorage.getItem('isDriver') === 'true'
+    const isDriver = localStorage.getItem('isDriver') === 'true'
     const [scores, setScores] = useState<Recommendation[]>([]);
     const toast = useToast()
 

@@ -15,7 +15,7 @@ interface ProfileFormProps {
 }
 
 export const ProfileForm = ({ entity, func }: ProfileFormProps) => {
-  const isDriver = sessionStorage.getItem("isDriver") === "true";
+  const isDriver = localStorage.getItem("isDriver") === "true";
   const toast = useToast();
 
   const {

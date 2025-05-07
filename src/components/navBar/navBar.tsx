@@ -20,7 +20,7 @@ export const NavBar = () => {
     const sxIcons = { color: "white" };
     const clearStorage = () => {
         token.clearToken()
-        sessionStorage.clear();
+        localStorage.clear();
     }
 
     return (

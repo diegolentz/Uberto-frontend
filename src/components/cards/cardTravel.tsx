@@ -11,7 +11,7 @@ import { RecommendationCard } from "./recommendation";
 export const CardTravel = ({ value }: { value: TravelCard }) => {
   const recomEmpty: Recommendation = new Recommendation(value.id, '', new Date, 0, '', 0, value.driverName, true, true, value.imgPassenger, value.imgDriver);
   const [flag, setFlag] = useState(false);
-  const isDriver = sessionStorage.getItem('isDriver') === 'true';
+  const isDriver = localStorage.getItem('isDriver') === 'true';
   const [travelCard, setTravelCard] = useState(value);
 
   const wasRecommended = async (isSave : boolean) => {

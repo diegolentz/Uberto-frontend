@@ -18,7 +18,7 @@ export type FormValues = {
 };
 
 export const HomeForm = ({ fetchData }: HomeFormProps) => {
-    const isDriver = sessionStorage.getItem("isDriver") === "true"
+    const isDriver = localStorage.getItem("isDriver") === "true"
 
     const form = useForm<FormValues>({
         defaultValues: {

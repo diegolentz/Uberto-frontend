@@ -20,8 +20,8 @@ export const RecommendationCard = ({ recom,deleteRecommendation, createRecomenda
     const recomEmpty: Recommendation = new Recommendation(0, "", new Date(), 0, "", 0, "", true, false, "", "");
     const [recommendation, setRecom] = useState(recom);
     const { showToast } = useContext(msjContext);
-    const userId = parseInt(sessionStorage.getItem("userId")!);
-    const isDriver = sessionStorage.getItem("isDriver") === "true";
+    const userId = parseInt(localStorage.getItem("userId")!);
+    const isDriver = localStorage.getItem("isDriver") === "true";
 
     const handleDelete = async () => {
         try {

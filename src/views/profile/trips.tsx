@@ -6,7 +6,7 @@ import { getDriver, getPassenger as tripsFromPassenger } from "../../services/tr
 
 
 export const Trips = () => {
-    const isDriver = sessionStorage.getItem('isDriver') === 'true'
+    const isDriver = localStorage.getItem('isDriver') === 'true'
     const [passengerTrip, setPassengerTrip] = useState<PassengerTrips>({
         pending: [],
         finished: []

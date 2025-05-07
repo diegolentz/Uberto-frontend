@@ -12,7 +12,7 @@ import { ProfileForm } from "../../components/forms/profileForm";
 import { msjContext } from "../../components/viewLayout/viewLayout";
 
 export const Data = () => {
-    const isDriver = sessionStorage.getItem('isDriver') === 'true';
+    const isDriver = localStorage.getItem('isDriver') === 'true';
     const [profile, setProfile] = useState<DriverProfile | PassengerProfile>(isDriver ? {} as DriverProfile : {} as PassengerProfile);
     const { showToast } = useContext(msjContext)
 
