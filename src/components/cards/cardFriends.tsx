@@ -7,13 +7,13 @@ import { useContext } from "react";
 import { msjContext } from "../viewLayout/viewLayout";
 import { AxiosError } from "axios";
 
-export const CardFriends = ({ isFriend, friendData, id, func }: { isFriend: boolean, friendData: Friends, id: number, func: (id?: number) => void }) => {
+export const CardFriends = ({ isFriend, friendData, func }: { isFriend: boolean, friendData: Friends, func: (id?: number) => void }) => {
 
     const { showToast } = useContext(msjContext)
 
     const removeFriend = async (friendId: number) => {
         try {
-            const response = await passengerService.removeFriend(id, friendId);
+            const response = await passengerService.removeFriend(friendId);
             func();
             showToast(response);
         }
@@ -24,7 +24,7 @@ export const CardFriends = ({ isFriend, friendData, id, func }: { isFriend: bool
 
     const addFriend = async (friendId: number) => {
         try {
-            const response = await passengerService.addFriend(id, friendId);
+            const response = await passengerService.addFriend(friendId);
             func(friendId);
             showToast(response);
         }

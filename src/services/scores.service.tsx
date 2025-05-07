@@ -4,21 +4,21 @@ import { Recommendation } from "../domain/recomendation";
 import {token} from "../security/token"
 class ScoreService{
     
-    async getDriverRatings(userId: number): Promise<Recommendation[]> {
+    async getDriverRatings(): Promise<Recommendation[]> {
         const response = await axios.get(`${REST_SERVER_URL}/tripScore/driver`,
             {headers:{'Authorization': `Bearer ${token.getToken()}`}}
         );
         return response.data;
     }
 
-    async getPassengerRatings(userId: number): Promise<Recommendation[]> {
+    async getPassengerRatings(): Promise<Recommendation[]> {
         const response = await axios.get(`${REST_SERVER_URL}/tripScore/passenger`,
             {headers:{'Authorization': `Bearer ${token.getToken()}`}}
         );
         return response.data;
     }
     
-    async scoreDelete(userId: number, tripId: number) {
+    async scoreDelete(tripId: number) {
         return await axios.delete(`${REST_SERVER_URL}/tripScore`, {
             params: { tripId },
             headers:{'Authorization': `Bearer ${token.getToken()}`}

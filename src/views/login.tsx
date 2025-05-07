@@ -5,7 +5,6 @@ import { tryLogin } from "../services/login.service";
 import { useToast } from "../hooks/toast/useToast";
 import { loginRequest } from "../domain/login";
 import { LoginFormContainerBox, StyledButton } from "../utils/loginStyles";
-import { TextField } from "@mui/material";
 import { InputTextSecretField } from "../components/inputs/textInputSecret";
 
 export const Login = () => {

@@ -6,7 +6,6 @@ import { getDriver, getPassenger as tripsFromPassenger } from "../../services/tr
 
 
 export const Trips = () => {
-    const idUser = parseInt(sessionStorage.getItem('userId')!)
     const isDriver = sessionStorage.getItem('isDriver') === 'true'
     const [passengerTrip, setPassengerTrip] = useState<PassengerTrips>({
         pending: [],
@@ -17,14 +16,15 @@ export const Trips = () => {
     async function fetchData() {
         try {
             if (isDriver) {
-                const res = await getDriver(idUser)
+                const res = await getDriver()
                 setDriverTrips(res);
             } else {
-                const res =(await tripsFromPassenger(idUser));
+                const res =(await tripsFromPassenger());
                 setPassengerTrip(res);
             }
-        } catch (error: any) {
-            // toast.open(error.response.data.message, 'error')
+        } catch (error: unknown) {
+            // toast.open(error.response.data.message, 'error') ???
+            // que paso muchachos??
         }
     }
 

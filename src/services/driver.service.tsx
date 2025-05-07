@@ -6,7 +6,7 @@ import {token} from "../security/token"
 class DriverService {
    
    
-    async getProfile(id: number): Promise<DriverProfile> {
+    async getProfile(): Promise<DriverProfile> {
         const response = await axios.get(`${REST_SERVER_URL}/driver`,
             {headers:{'Authorization': `Bearer ${token.getToken()}`}}
         );
@@ -14,7 +14,7 @@ class DriverService {
     }
     
     
-    async getImg(id: number): Promise<string> {
+    async getImg(): Promise<string> {
         const response = await axios.get(`${REST_SERVER_URL}/driver/img`, {
             headers:{'Authorization': `Bearer ${token.getToken()}`}
         });
