@@ -29,8 +29,6 @@ export const ProfileForm = ({ entity, func }: ProfileFormProps) => {
 
 
   const wasChanged = (data: any): boolean => {
-    //   console.log("Data:", data);
-    //   console.log("Entity:", entity);
     return JSON.stringify(data) !== JSON.stringify(entity);
   }
 

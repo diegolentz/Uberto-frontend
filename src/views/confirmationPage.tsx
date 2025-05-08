@@ -26,7 +26,6 @@ export const ConfirmationPage = () => {
     const recommended = async () => {
         try{
             const res = await scoreService.getScoreConfirmation(driver.id)
-            console.log(res)
             setRecommendation(res)
         }catch (e: unknown) {
             showToast((e as AxiosError<unknown>).response!);
