@@ -12,6 +12,7 @@ import { utils } from "../utils/formatDate"
 import { useLocation, useNavigate } from "react-router-dom"
 import { DriverCard } from "../domain/driver"
 import { FormPassenger } from "../domain/passenger"
+import { scoreService } from "../services/scores.service"
 
 export const ConfirmationPage = () => {
     const location = useLocation();
@@ -25,7 +26,7 @@ export const ConfirmationPage = () => {
 
     const recommended = async () => {
         try{
-            const res = await passengerService.profileRatings()
+            const res = await scoreService.getScoreConfirmation(driver.id)
             console.log(res)
             setRecommendation(res)
         }catch (e: unknown) {
