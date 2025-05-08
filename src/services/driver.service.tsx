@@ -2,22 +2,17 @@ import axios from "axios";
 import { driverProfile, DriverProfile, FormEntity } from "../domain/driver";
 import { TravelCard, TravelDTO } from "../domain/travel";
 import { REST_SERVER_URL } from "./urls";
-import {token} from "../security/token"
 class DriverService {
-   
-   
+
     async getProfile(): Promise<DriverProfile> {
-        const response = await axios.get(`${REST_SERVER_URL}/driver`,
-            {headers:{'Authorization': `Bearer ${token.getToken()}`}}
+        const response = await axios.get(`${REST_SERVER_URL}/driver`
         );
         return driverProfile.fromJson(response.data);
     }
     
     
     async getImg(): Promise<string> {
-        const response = await axios.get(`${REST_SERVER_URL}/driver/img`, {
-            headers:{'Authorization': `Bearer ${token.getToken()}`}
-        });
+        const response = await axios.get(`${REST_SERVER_URL}/driver/img`);
         return response.data.img;
     }
 
@@ -28,16 +23,14 @@ class DriverService {
                 destination: data.destination,
                 name: data.name,
                 numberPassenger: data.numberPassengers
-            },
-            headers:{'Authorization': `Bearer ${token.getToken()}`}
+            }
         });
         const travels = response.data.map((item: TravelDTO) => TravelCard.prototype.fromDTO(item));
         return travels;
     }
 
     async updateProfile(data: DriverProfile) {
-        const response = await axios.post(`${REST_SERVER_URL}/driver`, data,
-            {headers:{'Authorization': `Bearer ${token.getToken()}`}}
+        const response = await axios.post(`${REST_SERVER_URL}/driver`, data
         );
         return response;
     }

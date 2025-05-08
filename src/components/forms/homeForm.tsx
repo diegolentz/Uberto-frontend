@@ -52,7 +52,6 @@ export const HomeForm = ({ fetchData }: HomeFormProps) => {
                 form.getValues().date,
                 form.getValues().passengers,
             );
-            console.log(data.date)
             fetchData(data)
         }
     };

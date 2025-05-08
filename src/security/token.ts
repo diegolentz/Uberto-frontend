@@ -1,14 +1,16 @@
 class Token {
     token = ''
     clearToken() {
-        this.token = '';
+        localStorage.removeItem('token')
     }
 
+    setToken(newToken: string) {
+        localStorage.setItem('token', newToken)
+    }
 
     getToken() {
-        return localStorage.getItem('token') || '';
+        return localStorage.getItem('token') || ''
     }
 }
 
-export const token = new Token();
-//asd 
+export const token = new Token()
