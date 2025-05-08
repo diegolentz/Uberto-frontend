@@ -9,6 +9,7 @@ import { utils } from "../../utils/formatDate";
 import { StyledCard } from "../../utils/recommendationCardStyles";
 import { msjContext } from "../viewLayout/viewLayout";
 import { scoreService } from "../../services/scores.service";
+import { useLocation } from "react-router-dom";
 
 interface RecommendationCardProps {
     recom: Recommendation;
@@ -20,8 +21,9 @@ export const RecommendationCard = ({ recom,deleteRecommendation, createRecomenda
     const recomEmpty: Recommendation = new Recommendation(0, "", new Date(), 0, "", 0, "", true, false, "", "");
     const [recommendation, setRecom] = useState(recom);
     const { showToast } = useContext(msjContext);
-    const userId = parseInt(localStorage.getItem("userId")!);
     const isDriver = localStorage.getItem("isDriver") === "true";
+    const location = useLocation();
+    const isConfirmation = location.pathname.includes("confirmation-page");
 
     const handleDelete = async () => {
         try {
@@ -49,10 +51,18 @@ export const RecommendationCard = ({ recom,deleteRecommendation, createRecomenda
         }
     };
 
+    const getImgUrl = () => {
+        if (isDriver || isConfirmation ) {
+            return recom.avatarUrlPassenger;
+        }else{
+            return recom.avatarUrlDriver
+        }
+    }
+
     function cardHeaderTitle() {
         return (
             <Avatar
-                src={recom.editMode ? recom.avatarUrlPassenger : recom.avatarUrlDriver}
+                src={getImgUrl()}
                 alt={recom.name}
                 sx={{ width: 56, height: 56 }}
             />

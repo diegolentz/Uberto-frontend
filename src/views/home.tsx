@@ -13,7 +13,6 @@ import { passengerService } from "../services/passenger.service";
 import { useNavigate } from "react-router-dom";
 
 export const Home = () => {
-    const idUser = parseInt(localStorage.getItem("userId")!);
     const isDriver = localStorage.getItem("isDriver") === "true";
     const [card, setCard] = useState<DriverCard[] | TravelCard[] | null>(null);
     const [formInfo, setFormInfo] = useState<FormDriver | FormPassenger>();
@@ -26,7 +25,6 @@ export const Home = () => {
 
     const fetchData = async (formInfo: FormDriver | FormPassenger) => {
         const data = new FormEntity(formInfo);
-        data.userId = idUser;
         if (isDriver) {
             try {
                 const res = await driverService.getPendingTravels(data);
