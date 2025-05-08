@@ -1,18 +1,17 @@
 import { Box, Button, Divider, Typography } from "@mui/material"
-import {  useState, useContext, useEffect } from "react"
-import { CreateTravelDTO,  } from "../domain/travel"
-import * as styles from '../utils/confirmationStyles'
-import { Recommendation } from "../domain/recomendation"
-import { RecommendationCard } from "../components/cards/recommendation"
-import { passengerService } from "../services/passenger.service"
-import { travelService } from "../services/travel.service"
 import { AxiosError } from "axios"
-import { msjContext } from "../components/viewLayout/viewLayout"
-import { utils } from "../utils/formatDate"
+import { useContext, useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
+import { RecommendationCard } from "../components/cards/recommendation"
+import { msjContext } from "../components/viewLayout/viewLayout"
 import { DriverCard } from "../domain/driver"
 import { FormPassenger } from "../domain/passenger"
+import { Recommendation } from "../domain/recomendation"
+import { CreateTravelDTO, } from "../domain/travel"
 import { scoreService } from "../services/scores.service"
+import { travelService } from "../services/travel.service"
+import * as styles from '../utils/confirmationStyles'
+import { utils } from "../utils/formatDate"
 
 export const ConfirmationPage = () => {
     const location = useLocation();
@@ -145,8 +144,7 @@ export const ConfirmationPage = () => {
                 </Typography>
             </Typography>
             
-
-            <Box margin={2} marginBottom={10}>      
+            <Box margin={2} marginBottom={10} gap={2} display="flex" flexDirection="column">
                 {recommendation?.map((reco, index) => (
                     <RecommendationCard key={index} recom={reco} createRecomendation={function (): void {
                     } } deleteRecommendation={function (id: number): void {

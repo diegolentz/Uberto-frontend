@@ -26,7 +26,6 @@ export class FormDriver {
 }
 
 export class FormEntity {
-    public userId: number
     public origin: string;
     public destination: string;
     public date: Date; 
@@ -34,7 +33,6 @@ export class FormEntity {
     public name: string;
     
     constructor(data: FormDriver | FormPassenger) {
-        this.userId = 0
         this.origin = data.origin;
         this.destination = data.destination;
         this.date = (data instanceof FormPassenger) ? data.date : new Date(Date.now() + 2 * 24 * 60 * 60 * 1000);
