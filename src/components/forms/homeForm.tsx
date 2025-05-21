@@ -68,9 +68,9 @@ export const HomeForm = ({ fetchData }: HomeFormProps) => {
                         {...register("name", {
                             required: "name is required",
                             pattern: {
-                                value: /^[A-Za-z\s]{3,30}$/,
+                                value: /^[A-Za-zÁÉÍÓÚáéíóúÑñÜü\s]{3,30}$/,
                                 message:
-                                    "Name must only contain letters 3 - 25 characters",
+                                    "Name must only contain letters (including accents) and be 3 - 30 characters",
                             },
                         })}
                         error={!!errors.name}
@@ -82,13 +82,14 @@ export const HomeForm = ({ fetchData }: HomeFormProps) => {
                     label="Origin"
                     type="text"
                     sx={estilosInput}
-                    {...register("origin", {
-                        required: "Origin is required",
-                        pattern: {
-                            value: /^[A-Za-z0-9.\s]{3,}$/,
-                            message: "Destination must only contain letters, numbers, and periods with a minimum of 3 characters",
-                        },
-                    })}
+                    {...register("name", {
+                            required: "name is required",
+                            pattern: {
+                                value: /^[A-Za-zÁÉÍÓÚáéíóúÑñÜü\s]{3,30}$/,
+                                message:
+                                    "Name must only contain letters (including accents) and be 3 - 30 characters",
+                            },
+                        })}
                     error={!!errors.origin}
                     helperText={errors.origin?.message}
                 />
@@ -98,13 +99,14 @@ export const HomeForm = ({ fetchData }: HomeFormProps) => {
                     label="Destination"
                     type="text"
                     sx={estilosInput}
-                    {...register("destination", {
-                        required: "destination is required",
-                        pattern: {
-                            value: /^[A-Za-z0-9.\s]{3,}$/,
-                            message: "Destination must only contain letters, numbers, and periods with a minimum of 3 characters",
-                        },
-                    })}
+                   {...register("name", {
+                            required: "name is required",
+                            pattern: {
+                                value: /^[A-Za-zÁÉÍÓÚáéíóúÑñÜü\s]{3,30}$/,
+                                message:
+                                    "Name must only contain letters (including accents) and be 3 - 30 characters",
+                            },
+                        })}
                     error={!!errors.destination}
                     helperText={errors.destination?.message}
                 />
