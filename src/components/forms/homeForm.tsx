@@ -85,7 +85,7 @@ export const HomeForm = ({ fetchData }: HomeFormProps) => {
                     {...register("origin", {
                         required: "Origin is required",
                         pattern: {
-                            value: /^[A-Za-zÁÉÍÓÚáéíóúÑñÜü\s.]{3,30}$/,
+                            value: /^[A-Za-zÁÉÍÓÚáéíóúÑñÜü0-9\s.]{3,30}$/,
                             message: "Origin must only contain letters, spaces, and periods with a minimum of 3 characters",
                         },
                     })}
@@ -99,10 +99,10 @@ export const HomeForm = ({ fetchData }: HomeFormProps) => {
                     type="text"
                     sx={estilosInput}
                     {...register("destination", {
-                        required: "destination is required",
+                        required: "Destination is required",
                         pattern: {
-                            value: /^[A-Za-zÁÉÍÓÚáéíóúÑñÜü\s.]{3,30}$/,
-                            message: "Destination must only contain letters, numbers, and periods with a minimum of 3 characters",
+                            value: /^[A-Za-zÁÉÍÓÚáéíóúÑñÜü0-9\s.]{3,30}$/,
+                            message: "Destination must only contain letters, numbers, spaces, and periods with a minimum of 3 characters",
                         },
                     })}
                     error={!!errors.destination}
