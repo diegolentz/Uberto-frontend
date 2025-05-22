@@ -9,7 +9,7 @@ import { utils } from "../../utils/formatDate";
 import { RecommendationCard } from "./recommendation";
 
 export const CardTravel = ({ value }: { value: TravelCard }) => {
-  const recomEmpty: Recommendation = new Recommendation(value.id, '', new Date, 0, '', 0, value.driverName, true, true, value.imgPassenger, value.imgDriver);
+  const recomEmpty: Recommendation = new Recommendation(value.id, '', new Date, 0, '', 0, value.name, true, true, value.imgAvatar, value.imgAvatar);
   const [flag, setFlag] = useState(false);
   const isDriver = localStorage.getItem('isDriver') === 'true';
   const [travelCard, setTravelCard] = useState(value);
@@ -37,7 +37,7 @@ export const CardTravel = ({ value }: { value: TravelCard }) => {
         title={
           <Box>
             <Typography sx={styles.userNameLastnameStyle}>
-              {!isDriver ? value.driverName : value.passengerName}
+              {!isDriver ? value.name : value.name}
             </Typography>
             <Box sx={styles.iconUserStyle}>
               <GroupIcon sx={{ fontSize: '1.2rem' }} />
@@ -53,13 +53,13 @@ export const CardTravel = ({ value }: { value: TravelCard }) => {
               <Avatar
                 sx={{ ...styles.imgUserStyle, width: 45, height: 45 }}
                 alt="Remy Sharp"
-                src={value.imgDriver}
+                src={value.imgAvatar}
               />
             ) : (
               <Avatar
                 sx={{ ...styles.imgUserStyle, width: 45, height: 45 }}
                 alt="Remy Sharp"
-                src={value.imgPassenger}
+                src={value.imgAvatar}
               />
             )}
           </Box>
