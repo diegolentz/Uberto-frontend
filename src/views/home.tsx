@@ -11,6 +11,7 @@ import { TravelCard } from "../domain/travel";
 import { driverService } from "../services/driver.service";
 import { passengerService } from "../services/passenger.service";
 import { useNavigate } from "react-router-dom";
+import { analyticsService } from "../services/analytics.service";
 
 export const Home = () => {
     const isDriver = localStorage.getItem("isDriver") === "true";
@@ -45,6 +46,7 @@ export const Home = () => {
     };
 
     const changePage = (data: DriverCard | TravelCard) => {
+        analyticsService.logClick(data.name)
         navigate("/confirmation-page", { state: { driver: data, travel: formInfo } });
     };
 
