@@ -2,14 +2,14 @@ import GroupIcon from '@mui/icons-material/Group';
 import { Avatar, Box, Button, Card, CardContent, CardHeader, Typography } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { Recommendation } from "../../domain/recomendation";
+import { recomendationEmpty, Recommendation } from "../../domain/recomendation";
 import { TravelCard } from "../../domain/travel";
 import * as styles from '../../utils/cardDriverStyle';
 import { utils } from "../../utils/formatDate";
 import { RecommendationCard } from "./recommendation";
 
 export const CardTravel = ({ value }: { value: TravelCard }) => {
-  const recomEmpty: Recommendation = new Recommendation(value.id, '', new Date, 0, '', 0, value.name, true, true, value.imgAvatar, value.imgAvatar);
+  const recomEmpty: Recommendation = recomendationEmpty
   const [flag, setFlag] = useState(false);
   const isDriver = localStorage.getItem('isDriver') === 'true';
   const [travelCard, setTravelCard] = useState(value);
