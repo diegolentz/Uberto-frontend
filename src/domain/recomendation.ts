@@ -1,39 +1,44 @@
 export class Recommendation {
-    tripId : number;
+    tripId: number;
     name: string;
     date: Date;
     scorePoints: number;
     message: string;
-    avatarUrlDriver: string;
-    passengerName: number;
-    driverName: string;
-    avatarUrlPassenger: string;
-    delete: boolean;
-    editMode: boolean;
+    avatarUrlImg: string;
+    isDeleted: boolean;
+    isEditMode: boolean;
 
     constructor(
-        tripId : number,
+        tripId: number,
         name: string,
         date: Date,
         scorePoints: number,
         message: string,
-        passengerName: number,
-        driverName: string,
-        isEdit: boolean, //me rompe cuando cambia este valor no se que onda
-        editMode: boolean,
-        avatarUrlPassenger: string,
-        avatarUrlDriver: string
+        avatarUrlImg: string,
+        isDeleted: boolean,
+        isEditMode: boolean
     ) {
-        this.tripId = tripId;
-        this.name = name;
-        this.date = date;
-        this.scorePoints = scorePoints;
-        this.message = message;
-        this.avatarUrlDriver = avatarUrlDriver;
-        this.passengerName = passengerName;
-        this.driverName = driverName;
-        this.avatarUrlPassenger = avatarUrlPassenger;
-        this.delete = isEdit;
-        this.editMode = editMode;
-    }
+
+    this.tripId = tripId;
+    this.name = name;
+    this.date = date;
+    this.avatarUrlImg = avatarUrlImg;
+    this.scorePoints = scorePoints;
+    this.message = message;
+    this.isDeleted = isDeleted;
+    this.isEditMode = isEditMode;
+
 }
+}
+
+export const recomendationEmpty = new Recommendation(
+    0,
+    '',
+    new Date(),
+    0,
+    '',
+    '',
+    false,
+    false
+);
+

@@ -3,7 +3,7 @@ import StarIcon from "@mui/icons-material/Star";
 import { Avatar, Box, Button, CardContent, CardHeader, IconButton, Rating, TextField, Typography } from "@mui/material";
 import { AxiosError } from "axios";
 import { useContext, useState } from "react";
-import { Recommendation } from "../../domain/recomendation";
+import { recomendationEmpty, Recommendation } from "../../domain/recomendation";
 import * as styles from "../../utils/cardDriverStyle";
 import { utils } from "../../utils/formatDate";
 import { StyledCard } from "../../utils/recommendationCardStyles";
@@ -18,8 +18,8 @@ interface RecommendationCardProps {
 }
 
 export const RecommendationCard = ({ recom,deleteRecommendation, createRecomendation }: RecommendationCardProps) => {
-    const recomEmpty: Recommendation = new Recommendation(0, "", new Date(), 0, "", 0, "", true, false, "", "");
-    const [recommendation, setRecom] = useState(recom);
+    const recomEmpty: Recommendation = recomendationEmpty
+    const [recommendation, setRecom] = useState<Recommendation>(recom);
     const { showToast } = useContext(msjContext);
     const isDriver = localStorage.getItem("isDriver") === "true";
     const location = useLocation();
@@ -51,19 +51,12 @@ export const RecommendationCard = ({ recom,deleteRecommendation, createRecomenda
         }
     };
 
-    const getImgUrl = () => {
-        if (isDriver || isConfirmation ) {
-            return recom.avatarUrlPassenger;
-        }else{
-            return recom.avatarUrlDriver
-        }
-    }
-
+    
     function cardHeaderTitle() {
         return (
             <Avatar
-                src={getImgUrl()}
-                alt={recom.name}
+                src={recommendation.avatarUrlImg}
+                alt={recommendation.name}
                 sx={{ width: 56, height: 56 }}
             />
         );
@@ -72,8 +65,8 @@ export const RecommendationCard = ({ recom,deleteRecommendation, createRecomenda
     function cardHeaderAction() {
         return (
             <Box display="flex" alignItems="center" component="div" sx={{ height: "100%", width: "100%", justifyContent: "space-between" }}>
-                {!recom.editMode && <StarIcon sx={{ color: "gold" }} />}
-                {recom.editMode ? (
+                <StarIcon sx={{ color: "gold" }} />
+                {recom.isEditMode ? (
                     <Rating
                         value={recommendation.scorePoints || 0}
                         precision={0.5}
@@ -84,7 +77,7 @@ export const RecommendationCard = ({ recom,deleteRecommendation, createRecomenda
                 ) : (
                     recom.scorePoints
                 )}
-                {!recom.editMode && recom.delete && (
+                {!recom.isEditMode && recom.isDeleted && (
                     <IconButton aria-label="delete" color="primary" onClick={handleDelete}>
                         <DeleteIcon sx={{ color: "purple" }} />
                     </IconButton>
@@ -95,14 +88,14 @@ export const RecommendationCard = ({ recom,deleteRecommendation, createRecomenda
 
     return (
         <StyledCard sx={{ maxWidth: 400, p: 2, borderRadius: 3 }}>
-            <CardHeader sx={recom.editMode ? { margin: "0 auto" } : { display: "flex" }} title={cardHeaderTitle()} action={cardHeaderAction()} />
+            <CardHeader sx={recom.isEditMode ? { margin: "0 auto" } : { display: "flex" }} title={cardHeaderTitle()} action={cardHeaderAction()} />
 
             <Typography variant="body2" sx={styles.dataTravelStyle}>
                 {`Date: ${utils.setDate(recom.date)}`}
             </Typography>
 
             <Typography variant="body2" sx={styles.dataTravelStyle}>
-                {!isDriver ? `To: ${recom.driverName}` : `From: ${recom.passengerName}`}
+                {`To: ${recom.name}`}
             </Typography>
 
             <CardContent sx={{ display: "flex", flexDirection: "column" }}>
@@ -111,14 +104,14 @@ export const RecommendationCard = ({ recom,deleteRecommendation, createRecomenda
                     multiline
                     rows={3}
                     label="Comentario"
-                    disabled={!recom.editMode}
-                    value={recom.editMode ? recommendation.message : recom.message}
+                    disabled={!recom.isEditMode}
+                    value={recom.isEditMode ? recommendation.message : recom.message}
                     sx={{ mt: 2 }}
                     onChange={(e) => setRecom({ ...recommendation, message: e.target.value })}
                 />
             </CardContent>
 
-            {recom.editMode && (
+            {recom.isEditMode && (
                 <Box component="section" sx={{ display: "flex", justifyContent: "space-between", width: "90%", gap: 2, margin: "0 auto", padding: "1rem" }}>
                     <Button size="medium" sx={{ backgroundColor: "red", color: "white", fontWeight: "bold", padding: "0.5rem", width:'5rem' }} onClick={() => handlePush(false)}>
                         Cancel
