@@ -23,6 +23,7 @@ export const RecommendationCard = ({ recom,deleteRecommendation, createRecomenda
     const isDriver = localStorage.getItem("isDriver") === "true";
     const location = useLocation();
     const isConfirmation = location.pathname.includes("confirmation-page");
+    const ratigsDriver = location.pathname.includes("ratings");
 
     const handleDelete = async () => {
         try {
@@ -78,7 +79,7 @@ export const RecommendationCard = ({ recom,deleteRecommendation, createRecomenda
                     recom.scorePoints
                 )}
                 <StarIcon sx={{ color: "gold" }} />
-                {!recom.isEditMode && recom.isDeleted && (
+                {!isDriver && ratigsDriver  && (
                     <IconButton aria-label="delete" color="primary" onClick={handleDelete}>
                         <DeleteIcon sx={{ color: "purple" }} />
                     </IconButton>
