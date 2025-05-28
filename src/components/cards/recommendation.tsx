@@ -38,8 +38,6 @@ export const RecommendationCard = ({ recom,deleteRecommendation, createRecomenda
     const handlePush = async (isSave: boolean) => {
         if (isSave) {
             try {
-                recommendation.tripId = recom.tripId
-                console.log(recommendation)
                 const res = await scoreService.scoreCreate(recommendation);
                 setRecom(recommendation);
                 showToast(res);
@@ -67,10 +65,10 @@ export const RecommendationCard = ({ recom,deleteRecommendation, createRecomenda
     function cardHeaderAction() {
         return (
             <Box display="flex" alignItems="center" component="div" sx={{ height: "100%", width: "100%", justifyContent: "space-between" }}>
-                {recom.isEditMode ? (
+                {!recom.isEditMode ? (
                     <Rating
                     value={recommendation.scorePoints || 0}
-                    precision={0.5}
+                    precision={1}
                     size="large"
                     sx={{ margin: "0 auto" }}
                     onChange={(_, newValue) => setRecom({ ...recommendation, scorePoints: newValue ?? 0 })}
@@ -107,14 +105,14 @@ export const RecommendationCard = ({ recom,deleteRecommendation, createRecomenda
                     multiline
                     rows={3}
                     label="Comentario"
-                    disabled={!recom.isEditMode}
-                    value={recom.isEditMode ? recommendation.message : recom.message}
+                    disabled={recom.isEditMode}
+                    value={!recom.isEditMode ? recommendation.message : recom.message}
                     sx={{ mt: 2 }}
                     onChange={(e) => setRecom({ ...recommendation, message: e.target.value })}
                 />
             </CardContent>
 
-            {recom.isEditMode && (
+            {!recom.isEditMode && (
                 <Box component="section" sx={{ display: "flex", justifyContent: "space-between", width: "90%", gap: 2, margin: "0 auto", padding: "1rem" }}>
                     <Button size="medium" sx={{ backgroundColor: "red", color: "white", fontWeight: "bold", padding: "0.5rem", width:'5rem' }} onClick={() => handlePush(false)}>
                         Cancel
