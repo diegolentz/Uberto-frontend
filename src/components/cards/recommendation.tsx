@@ -3,7 +3,7 @@ import StarIcon from "@mui/icons-material/Star";
 import { Avatar, Box, Button, CardContent, CardHeader, IconButton, Rating, TextField, Typography } from "@mui/material";
 import { AxiosError } from "axios";
 import { useContext, useState } from "react";
-import { recomendationEmpty, Recommendation } from "../../domain/recomendation";
+import { Recommendation } from "../../domain/recomendation";
 import * as styles from "../../utils/cardDriverStyle";
 import { utils } from "../../utils/formatDate";
 import { StyledCard } from "../../utils/recommendationCardStyles";
@@ -18,7 +18,6 @@ interface RecommendationCardProps {
 }
 
 export const RecommendationCard = ({ recom,deleteRecommendation, createRecomendation }: RecommendationCardProps) => {
-    const recomEmpty: Recommendation = recomendationEmpty
     const [recommendation, setRecom] = useState<Recommendation>(recom);
     const { showToast } = useContext(msjContext);
     const isDriver = localStorage.getItem("isDriver") === "true";
@@ -38,6 +37,8 @@ export const RecommendationCard = ({ recom,deleteRecommendation, createRecomenda
     const handlePush = async (isSave: boolean) => {
         if (isSave) {
             try {
+                recommendation.tripId = recom.tripId
+                console.log(recommendation)
                 const res = await scoreService.scoreCreate(recommendation);
                 setRecom(recommendation);
                 showToast(res);
@@ -65,18 +66,18 @@ export const RecommendationCard = ({ recom,deleteRecommendation, createRecomenda
     function cardHeaderAction() {
         return (
             <Box display="flex" alignItems="center" component="div" sx={{ height: "100%", width: "100%", justifyContent: "space-between" }}>
-                <StarIcon sx={{ color: "gold" }} />
                 {recom.isEditMode ? (
                     <Rating
-                        value={recommendation.scorePoints || 0}
-                        precision={0.5}
-                        size="large"
-                        sx={{ margin: "0 auto" }}
-                        onChange={(_, newValue) => setRecom({ ...recommendation, scorePoints: newValue ?? 0 })}
+                    value={recommendation.scorePoints || 0}
+                    precision={0.5}
+                    size="large"
+                    sx={{ margin: "0 auto" }}
+                    onChange={(_, newValue) => setRecom({ ...recommendation, scorePoints: newValue ?? 0 })}
                     />
                 ) : (
                     recom.scorePoints
                 )}
+                <StarIcon sx={{ color: "gold" }} />
                 {!recom.isEditMode && recom.isDeleted && (
                     <IconButton aria-label="delete" color="primary" onClick={handleDelete}>
                         <DeleteIcon sx={{ color: "purple" }} />
@@ -97,6 +98,7 @@ export const RecommendationCard = ({ recom,deleteRecommendation, createRecomenda
             <Typography variant="body2" sx={styles.dataTravelStyle}>
                 {`To: ${recom.name}`}
             </Typography>
+
 
             <CardContent sx={{ display: "flex", flexDirection: "column" }}>
                 <TextField

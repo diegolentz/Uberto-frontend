@@ -39,6 +39,6 @@ export const recomendationEmpty = new Recommendation(
     '',
     '',
     false,
-    false
+    true
 );
 
