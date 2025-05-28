@@ -21,7 +21,7 @@
 			'',
 			'',
 			false,
-			true
+			value.scored
 		);
 
 	const wasRecommended = async (isSave : boolean) => {
