@@ -2,9 +2,9 @@ import axios from "axios";
 import { REST_SERVER_URL } from "./urls";
 
 class AnalyticsService {
-    async logClick(driverName: string) {
+    async logClick(driverId: string) {
         const response = await axios.post(`${REST_SERVER_URL}/analytics`, null, 
-            { params: { driver_name: driverName } })
+            { params: { driverId: driverId } })
         return response
     }
 }

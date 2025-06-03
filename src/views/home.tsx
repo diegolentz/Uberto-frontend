@@ -49,7 +49,7 @@ export const Home = () => {
     };
 
     const changePage = (data: DriverCard | TravelCard) => {
-        analyticsService.logClick(data.name);
+        analyticsService.logClick(String(data.id));
         navigate("/confirmation-page", { state: { driver: data, travel: formInfo } });
     };
 
