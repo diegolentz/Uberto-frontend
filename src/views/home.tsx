@@ -55,6 +55,7 @@ export const Home = () => {
 
     // Llamada inicial a homeService.getRedisData()
     useEffect(() => {
+        
         const initializeData = async () => {
             try {
                 const redisData = await homeService.getRedisData();
@@ -66,7 +67,9 @@ export const Home = () => {
             }
         };
 
-        initializeData();
+        if (!isDriver) {
+            initializeData();
+        }
     }, []); 
 
     useEffect(() => {
