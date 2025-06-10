@@ -9,24 +9,21 @@ import { Ratings } from "./views/profile/ratings";
 import { NotFound } from "./views/notFound";
 import { ConfirmationPage } from "./views/confirmationPage";
 
-// Hook para verificar si el usuario está autenticado
 const useAuth = (): boolean => {
-    const token = localStorage.getItem("token"); // Verifica si hay un token en localStorage
-    return !!token; // Devuelve true si hay un token, false si no
+    const token = localStorage.getItem("token");
+    return !!token;
 };
 
-// Componentes para manejar rutas privadas y públicas
 const PrivateRoute = () => {
     const isAuthenticated = useAuth();
-    return isAuthenticated ? <Outlet /> : <Navigate to="/login" />; // Si no está autenticado, redirige al login
+    return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
 };
 
 const PublicRoute = () => {
     const isAuthenticated = useAuth();
-    return isAuthenticated ? <Navigate to="/home" /> : <Outlet />; // Si está autenticado, redirige al home
+    return isAuthenticated ? <Navigate to="/home" /> : <Outlet />;
 };
 
-// Configuración del enrutador
 export const AppRouter = () => {
     return (
         <BrowserRouter>
