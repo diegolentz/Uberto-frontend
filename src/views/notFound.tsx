@@ -24,7 +24,7 @@ export const NotFound = () => {
       <Button
         variant="contained"
         color="secondary"
-        onClick={() => navigate("/Login")}
+        onClick={() => navigate("/login")}
       >
         Ir al login
       </Button>
