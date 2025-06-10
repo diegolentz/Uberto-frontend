@@ -53,36 +53,40 @@ export const Home = () => {
         navigate("/confirmation-page", { state: { driver: data, travel: formInfo } });
     };
 
-    // Llamada inicial a homeService.getRedisData()
-    useEffect(() => {
 
-        const initializeData = async () => {
-            try {
-                const redisData = await homeService.getRedisData();
-                const myCard = redisData.driversPlusTime.cardDrivers as DriverCard[];
-                if (redisData) {
-                    setStateInit(redisData);
-                    setCard(myCard);
-                    // setFormInfo(... formInfo , formInfo?.duration = redisData.driversPlusTime.time) ;
-                    infoForm(formInfo as FormDriver | FormPassenger);
-                    // formInfo.duration = Number(redisData.driverPlusTime.time);
-                    // infoForm(formInfo);
-                }
-            } catch (e: unknown) {
-                console.log("no se terajeron los datos del redis");
+
+    const initializeData = async () => {
+        try {
+            const redisData = await homeService.getRedisData();
+            const myCard = redisData.driversPlusTime.cardDrivers as DriverCard[];
+
+            const myForm = {
+                origin: redisData.origin,
+                destination: redisData.destination,
+                date: redisData.date,
+                passengers: redisData.numberPassengers,
+                duration: redisData.driversPlusTime.time,
+                name: redisData.name || "",
+                numberPassengers: redisData.numberPassengers || 0
+            };
+
+            if (myCard && myForm) {
+                setStateInit(myForm);
+                setCard(myCard);
+                setFormInfo(myForm);
             }
-        };
+        } catch (e: unknown) {
+            console.log("no se trajeron los datos del redis");
+        }
+    };
 
+
+    useEffect(() => {
         if (!isDriver) {
             initializeData();
         }
     }, []);
 
-    useEffect(() => {
-        if (formInfo) {
-            fetchData(formInfo);
-        }
-    }, [formInfo]);
 
     return (
         <Box sx={{ marginBottom: "4rem" }}>

@@ -17,7 +17,7 @@ export const ConfirmationPage = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const {showToast} = useContext(msjContext)
-    const { driver, travel }: { driver: DriverCard; travel: FormPassenger } = location.state || {};
+    const { driver, travel }: { driver: DriverCard; travel: FormPassenger } = location.state;
     const starTime = utils.setStartTime(travel.date)
     const endTime = utils.setEndTime(travel.date,travel.duration)
     const [recommendation, setRecommendation] = useState<Recommendation[]>()
