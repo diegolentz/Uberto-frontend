@@ -77,6 +77,11 @@ class PassengerService {
         return response
     }
 
+    async getSuggestions(): Promise<Friends[]> {
+        const response = await axios.get(`${REST_SERVER_URL}/suggestion`)
+        return response.data
+    }
+
 }
 
 export const passengerService = new PassengerService();

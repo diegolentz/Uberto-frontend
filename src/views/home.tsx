@@ -55,12 +55,18 @@ export const Home = () => {
 
     // Llamada inicial a homeService.getRedisData()
     useEffect(() => {
-        
+
         const initializeData = async () => {
             try {
                 const redisData = await homeService.getRedisData();
+                const myCard = redisData.driversPlusTime.cardDrivers as DriverCard[];
                 if (redisData) {
                     setStateInit(redisData);
+                    setCard(myCard);
+                    // setFormInfo(... formInfo , formInfo?.duration = redisData.driversPlusTime.time) ;
+                    infoForm(formInfo as FormDriver | FormPassenger);
+                    // formInfo.duration = Number(redisData.driverPlusTime.time);
+                    // infoForm(formInfo);
                 }
             } catch (e: unknown) {
                 console.log("no se terajeron los datos del redis");
@@ -70,7 +76,7 @@ export const Home = () => {
         if (!isDriver) {
             initializeData();
         }
-    }, []); 
+    }, []);
 
     useEffect(() => {
         if (formInfo) {

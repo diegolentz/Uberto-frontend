@@ -16,6 +16,8 @@ export type FormValues = {
     destination: string;
     date: string; // Debe ser string para el formato ISO
     numberPassengers: number; // Cambiar a `numberPassengers` para consistencia
+
+    
 };
 
 export const HomeForm = ({ fetchData, stateInit }: HomeFormProps) => {

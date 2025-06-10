@@ -17,8 +17,10 @@ export const FriendsComponent = () => {
     const [friends, setFriends] = useState<Friends[]>([]);
     const { showToast } = useContext(msjContext)
 
-    const changeVisibility = () => {
+    const changeVisibility = async () =>   {
         setVisibility(!visibility);
+        const amigetes = await passengerService.getSuggestions()
+        setNotFriends(amigetes);
     };
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -109,6 +111,8 @@ export const FriendsComponent = () => {
                                     >
                                     <ZoomInIcon />
                                 </Button>
+
+
                             </Box>
     
                             <h5>Results</h5>
