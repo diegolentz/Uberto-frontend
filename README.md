@@ -36,5 +36,4 @@ El objetivo principal de **Uberto-frontend** es ofrecer una interfaz web fácil 
 - **Gestión de Estado:** Context API o Redux (según implementación)
 - **Estilos:** Material UI, styled-components u otra librería moderna
 - **Ruteo:** React Router DOM
-- **Consumo de API:** Axios o fetch
-- **Testing:** Testing Library y/o Jest (si aplica)
+- **Consumo de API:** Axios 
